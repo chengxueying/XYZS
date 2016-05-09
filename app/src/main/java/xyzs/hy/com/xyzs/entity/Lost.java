@@ -6,6 +6,7 @@ import cn.bmob.v3.*;
 public class Lost extends BmobObject {
     private String title;
     private String describe;
+	private User publisher;
     private String phone;
     private String imageURL;
     private int status;
@@ -17,6 +18,14 @@ public class Lost extends BmobObject {
         this.imageURL = imageURL;
         this.status=status;
     }
+
+	public void setPublisher(User publisher) {
+		this.publisher = publisher;
+	}
+
+	public User getPublisher() {
+		return publisher;
+	}
 
     public int getStatus() {
         return status;
