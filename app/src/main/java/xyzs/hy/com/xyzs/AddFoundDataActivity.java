@@ -77,7 +77,7 @@ public class AddFoundDataActivity extends Activity implements OnClickListener, T
         phone = phoneEdittext.getText().toString();
         describe = describeEdittext.getText().toString();
         if (imagePath == null) {
-            Found found = new Found(title, describe, phone, null);
+            Found found = new Found(title, describe, phone, null, 0);
             found.save(this, new SaveListener() {
                 @Override
                 public void onSuccess() {
@@ -93,7 +93,7 @@ public class AddFoundDataActivity extends Activity implements OnClickListener, T
                 @Override
                 public void onSuccess() {
                     String image = bmobFile.getFileUrl(mContext);
-                    Found found = new Found(title, describe, phone, image);
+                    Found found = new Found(title, describe, phone, image, 1);
                     found.save(mContext, new SaveListener() {
                         @Override
                         public void onSuccess() {

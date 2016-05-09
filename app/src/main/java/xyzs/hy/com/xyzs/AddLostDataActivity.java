@@ -72,7 +72,7 @@ public class AddLostDataActivity extends Activity implements OnClickListener, Te
         phone = phoneEdittext.getText().toString();
         describe = describeEdittext.getText().toString();
         if (imagePath == null) {
-            Lost lost = new Lost(title, describe, phone, null);
+            Lost lost = new Lost(title, describe, phone, null,0);
             lost.save(this, new SaveListener() {
                 @Override
                 public void onSuccess() {
@@ -90,7 +90,7 @@ public class AddLostDataActivity extends Activity implements OnClickListener, Te
                 @Override
                 public void onSuccess() {
                     String image = bmobFile.getFileUrl(AddLostDataActivity.this);
-                    Lost lost = new Lost(title, describe, phone, image);
+                    Lost lost = new Lost(title, describe, phone, image,1);
                     lost.save(AddLostDataActivity.this, new SaveListener() {
                         @Override
                         public void onSuccess() {
