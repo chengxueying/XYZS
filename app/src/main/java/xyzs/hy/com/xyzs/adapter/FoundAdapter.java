@@ -15,19 +15,26 @@ import xyzs.hy.com.xyzs.R;
 import xyzs.hy.com.xyzs.entity.Found;
 
 
-public class FoundAdapter extends RecyclerView.Adapter<FoundAdapter.MyViewHolder> {
+public class FoundAdapter extends RecyclerView.Adapter<FoundAdapter.MyViewHolder>implements View.OnClickListener {
 
     private LayoutInflater mInflater;
     private ArrayList<Found> lostDatas;
+	private OnRecyclerViewItemClickListener mOnItemClickListemer = null;
 
     public FoundAdapter(Context context, ArrayList<Found> lostDatas) {
         this.lostDatas = lostDatas;
         mInflater = LayoutInflater.from(context);
     }
+	
+	//静态接口
+	public static interface OnRecyclerViewItemClickListener{
+		void onItemClick(View view,Found lostdata);
+	}
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.recyclerview_cardview_item, viewGroup, false);
+		view.setOnClickListener(this);
         return new MyViewHolder(view);
     }
 
@@ -41,13 +48,26 @@ public class FoundAdapter extends RecyclerView.Adapter<FoundAdapter.MyViewHolder
             Uri uri = Uri.parse(lostDatas.get(pos).getImageURL());
             holder.draweeViewImage.setImageURI(uri);
         } else return;
+		holder.itemView.setTag(lostDatas.get(pos));
     }
 
     @Override
     public int getItemCount() {
         return lostDatas.size();
     }
+	
+	public void setOnItemClickListener(OnRecyclerViewItemClickListener listener) {
+		mOnItemClickListemer = listener;
+	}
 
+	@Override
+	public void onClick(View v) {
+		if(mOnItemClickListemer != null) {
+			//getTag方法获取数据
+			mOnItemClickListemer.onItemClick(v,(Found)v.getTag());
+		}
+	}
+	
     public void refreshDatas() {
         lostDatas.clear();
         notifyDataSetChanged();

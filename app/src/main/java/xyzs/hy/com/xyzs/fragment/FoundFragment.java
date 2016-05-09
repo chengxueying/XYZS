@@ -22,6 +22,7 @@ import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.listener.FindListener;
 import xyzs.hy.com.xyzs.R;
 import xyzs.hy.com.xyzs.adapter.FoundAdapter;
+import xyzs.hy.com.xyzs.adapter.FoundAdapter.OnRecyclerViewItemClickListener;
 import xyzs.hy.com.xyzs.entity.Found;
 
 
@@ -59,6 +60,13 @@ public class FoundFragment extends Fragment {
             mRecycleView.setAdapter(adapter);
             LinearLayoutManager lin = new LinearLayoutManager(getActivity());
             mRecycleView.setLayoutManager(lin);
+			adapter.setOnItemClickListener(new OnRecyclerViewItemClickListener(){
+					@Override
+					public void onItemClick(View view, Found data) {
+						Toast.makeText(getActivity(), ""+data.getTitle(),Toast.LENGTH_SHORT)
+							.show();
+					}
+			});
         }
     }
 

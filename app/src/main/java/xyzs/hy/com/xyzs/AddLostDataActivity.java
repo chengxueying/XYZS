@@ -67,7 +67,6 @@ public class AddLostDataActivity extends Activity implements OnClickListener, Te
     //上传数据
     private void upDatas() {
         final String phone, title, describe;
-        Context c = mContext;
         title = titleEdittext.getText().toString();
         phone = phoneEdittext.getText().toString();
         describe = describeEdittext.getText().toString();
