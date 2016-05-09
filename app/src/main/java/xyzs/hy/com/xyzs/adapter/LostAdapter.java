@@ -31,13 +31,6 @@ public class LostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     }
 
 
-//    @Override
-//    public MyViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
-//        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.recyclerview_lost_item, viewGroup, false);
-//        //view.setOnClickListener(this);
-//        return new MyViewHolder(view);
-//    }
-
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if (viewType == FOOT_VIEW) {
@@ -82,19 +75,6 @@ public class LostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         }
     }
 
-//    @Override
-//    public void onBindViewHolder(MyViewHolder holder, int pos) {
-//
-//        holder.tv_describe.setText(lostDatas.get(pos).getDescribe());
-//        holder.tv_phone.setText(lostDatas.get(pos).getPhone());
-//        holder.tv_title.setText(lostDatas.get(pos).getTitle());
-//        holder.tv_time.setText(lostDatas.get(pos).getUpdatedAt());
-//        if (lostDatas.get(pos).getimageURL() != null) {
-//            Uri uri = Uri.parse(lostDatas.get(pos).getimageURL());
-//            holder.draweeView.setImageURI(uri);
-//        } else return;
-//        holder.itemView.setTag(lostDatas.get(pos));
-//    }
 
     @Override
     public int getItemCount() {

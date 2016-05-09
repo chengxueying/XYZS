@@ -81,6 +81,9 @@ public class AddFoundDataActivity extends Activity implements OnClickListener, T
             found.save(this, new SaveListener() {
                 @Override
                 public void onSuccess() {
+                    Toast.makeText(getApplicationContext(), "发布成功！", Toast.LENGTH_SHORT)
+                            .show();
+                    finish();
                 }
 
                 @Override
@@ -97,9 +100,10 @@ public class AddFoundDataActivity extends Activity implements OnClickListener, T
                     found.save(mContext, new SaveListener() {
                         @Override
                         public void onSuccess() {
+                            finish();
                             Toast.makeText(getApplicationContext(), "发布成功！", Toast.LENGTH_SHORT)
                                     .show();
-                            finish();
+
                         }
 
                         @Override
