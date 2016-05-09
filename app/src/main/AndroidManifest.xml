@@ -37,6 +37,10 @@
         <activity android:name=".AddFoundDataActivity"></activity>
         <activity android:name=".LostActivity"></activity>
         <activity android:name=".FoundActivity"></activity>
+        <activity android:name=".QueryActivity" />
+        <activity
+            android:name=".ScoreDialog"
+            android:theme="@android:style/Theme.Dialog" />
     </application>
 
 </manifest>

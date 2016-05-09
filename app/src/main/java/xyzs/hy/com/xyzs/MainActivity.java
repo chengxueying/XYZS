@@ -66,6 +66,8 @@ public class MainActivity extends Activity implements BaseSliderView.OnSliderCli
             case R.id.main_cardview_life:
                 break;
             case R.id.main_cardview_mark:
+                Intent intent=new Intent(MainActivity.this,ScoreDialog.class);
+                startActivity(intent);
                 break;
             case R.id.main_cardview_market:
                 break;
