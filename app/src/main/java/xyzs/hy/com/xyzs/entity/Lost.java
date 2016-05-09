@@ -2,6 +2,7 @@ package xyzs.hy.com.xyzs.entity;
 
 import cn.bmob.v3.*;
 
+
 public class Lost extends BmobObject {
     private String title;
     private String describe;
