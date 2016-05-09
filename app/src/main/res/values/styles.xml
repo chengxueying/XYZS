@@ -1,0 +1,24 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+    <style name="AppBaseTheme" parent="Theme.AppCompat.Light">
+        <!-- Both of these are needed -->
+
+        <item name="colorPrimary">@color/material_toolbar_black</item>
+        <item name="android:textColorPrimary">#DEDEDE</item>
+        <item name="android:colorPrimaryDark">@color/material_blue_700</item>
+        <item name="colorAccent">@color/material_green_A200</item>
+
+        <item name="actionOverflowButtonStyle">@style/OverflowButtonStyle</item>
+        <!--<item name="android:windowBackground">@color/colorPrimaryDark</item>-->
+        <!--<item name="android:windowIsTranslucent">true</item>-->
+    </style>
+    <style name="OverflowButtonStyle" parent="@android:style/Widget.ActionButton.Overflow">
+    </style>
+</resources>
