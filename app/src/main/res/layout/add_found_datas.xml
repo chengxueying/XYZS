@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_height="wrap_content"
+	android:layout_width="match_parent">
+	
+	<LinearLayout
+		
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent"
+		android:orientation="vertical"
+		android:gravity="center_horizontal">
+
+		<LinearLayout
+			android:layout_height="wrap_content"
+			android:layout_width="wrap_content"
+			android:orientation="horizontal"
+			android:gravity="center"
+			android:layout_marginTop="15dp">
+
+			<TextView
+				android:layout_height="wrap_content"
+				android:text="标题:"
+				android:textAppearance="?android:attr/textAppearanceLarge"
+				android:layout_width="wrap_content"/>
+
+			<EditText
+				android:layout_height="wrap_content"
+				android:ems="10"
+				android:id="@+id/add_found_title"
+				android:layout_width="wrap_content"/>
+
+		</LinearLayout>
+
+		<LinearLayout
+			android:layout_height="wrap_content"
+			android:layout_width="wrap_content"
+			android:orientation="horizontal"
+			android:layout_marginTop="10dp"
+			android:gravity="center">
+
+			<TextView
+				android:layout_height="wrap_content"
+				android:text="手机:"
+				android:textAppearance="?android:attr/textAppearanceLarge"
+				android:layout_width="wrap_content"/>
+
+			<EditText
+				android:layout_height="wrap_content"
+				android:ems="10"
+				android:id="@+id/add_found_phone"
+				android:layout_width="wrap_content"/>
+
+		</LinearLayout>
+
+		<LinearLayout
+			android:layout_height="wrap_content"
+			android:layout_width="wrap_content"
+			android:orientation="horizontal"
+			android:layout_marginTop="10dp"
+			android:gravity="center">
+
+			<TextView
+				android:layout_height="wrap_content"
+				android:text="内容:"
+				android:textAppearance="?android:attr/textAppearanceLarge"
+				android:layout_width="wrap_content"/>
+
+			<EditText
+				android:layout_height="wrap_content"
+				android:inputType="textMultiLine"
+				android:ems="10"
+				android:id="@+id/add_found_describe"
+				android:layout_width="wrap_content"/>
+
+		</LinearLayout>
+
+		<ImageView
+			android:layout_height="100dp"
+			android:layout_width="100dp"
+			android:id="@+id/add_found_imageview"
+			android:layout_marginTop="10dp"/>
+
+		<LinearLayout
+			android:layout_height="wrap_content"
+			android:layout_width="wrap_content"
+			android:orientation="horizontal"
+			android:layout_marginTop="10dp">
+
+			<Button
+				android:layout_height="wrap_content"
+				android:text="添加图片"
+				android:id="@+id/add_found_choosePhotoByAlbum"
+				android:layout_width="match_parent"/>
+
+		</LinearLayout>
+
+		<Button
+			android:layout_height="wrap_content"
+			android:text="发布"
+			android:layout_width="wrap_content"
+			android:id="@+id/add_found_finish"
+			android:layout_marginTop="15dp"/>
+</LinearLayout>
+</ScrollView>
