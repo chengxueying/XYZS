@@ -69,7 +69,8 @@ public class LostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         if (holder instanceof ItemViewHolder) {
             ((ItemViewHolder) holder).tv_describe.setText(lostDatas.get(position).getDescribe());
             ((ItemViewHolder) holder).tv_phone.setText(lostDatas.get(position).getPhone());
-			((MyViewHolder)holder).tv_name.setText(lostDatas.get(position).getPublisher().getUsername());
+			((ItemViewHolder)holder).tv_name.setText(lostDatas.get(position).getPublisher().getUsername());
+			((ItemViewHolder)holder).tv_name.setText(lostDatas.get(position).getPublisher().getUsername());
             ((ItemViewHolder) holder).tv_title.setText(lostDatas.get(position).getTitle());
             ((ItemViewHolder) holder).tv_time.setText(lostDatas.get(position).getUpdatedAt());
         } else if (holder instanceof MyViewHolder) {
@@ -125,6 +126,7 @@ public class LostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             tv_title = (TextView) itemView.findViewById(R.id.tv_title_no);
             tv_time = (TextView) itemView.findViewById(R.id.tv_time_no);
 			tv_name = (TextView) itemView.findViewById(R.id.tv_name);
+			tv_name = (TextView) itemView.findViewById(R.id.tv_name_no);
             tv_describe = (TextView) itemView.findViewById(R.id.tv_describe_no);
 
         }

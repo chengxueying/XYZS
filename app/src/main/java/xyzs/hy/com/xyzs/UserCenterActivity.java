@@ -1,4 +1,5 @@
 package xyzs.hy.com.xyzs;
+
 import android.app.*;
 import android.os.*;
 import com.facebook.drawee.view.*;
@@ -41,4 +42,5 @@ public class UserCenterActivity extends Activity
 		tv_name = (TextView) findViewById(R.id.tv_name);
 		btn_change = (Button) findViewById(R.id.btn_change);
 	}
+
 }
