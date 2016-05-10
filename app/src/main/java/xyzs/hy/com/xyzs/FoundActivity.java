@@ -54,10 +54,10 @@ public class FoundActivity extends Activity implements OnClickListener {
 
         switch (v.getId()) {
             case R.id.main_found:
-                toLostFragment.setBackgroundResource(R.color.white);
-                toFoundFragment.setBackgroundResource(R.drawable.all_left_bg);
-                toLostFragment.setTextColor(Color.rgb(102, 204, 255));
-                toFoundFragment.setTextColor(Color.WHITE);
+                toFoundFragment.setBackgroundResource(R.color.white);
+                toLostFragment.setBackgroundResource(R.drawable.all_right_bg);
+                toFoundFragment.setTextColor(Color.rgb(102, 204, 255));
+                toLostFragment.setTextColor(Color.WHITE);
                 hideFragment(Transaction);
                 isLost = false;
                 if (foundFragment == null) {
@@ -68,10 +68,10 @@ public class FoundActivity extends Activity implements OnClickListener {
                 }
                 break;
             case R.id.main_my:
-                toFoundFragment.setBackgroundResource(R.color.white);
-                toLostFragment.setBackgroundResource(R.drawable.all_right_bg);
-                toFoundFragment.setTextColor(Color.rgb(102, 204, 255));
-                toLostFragment.setTextColor(Color.WHITE);
+                toLostFragment.setBackgroundResource(R.color.white);
+                toFoundFragment.setBackgroundResource(R.drawable.all_left_bg);
+                toLostFragment.setTextColor(Color.rgb(102, 204, 255));
+                toFoundFragment.setTextColor(Color.WHITE);
                 hideFragment(Transaction);
                 isLost = true;
                 if (myFoundFragment == null) {

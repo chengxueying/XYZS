@@ -41,7 +41,7 @@ public class LostActivity extends Activity implements View.OnClickListener {
     //初始化控件
     private void initLayout() {
         toLostFragment = (Button) findViewById(R.id.main_lost);
-        toFoundFragment = (Button) findViewById(R.id.main_found);
+        toFoundFragment = (Button) findViewById(R.id.my_lost);
         addDates = (Button) findViewById(R.id.toolbar_button_add);
 
         addDates.setOnClickListener(this);
@@ -56,7 +56,7 @@ public class LostActivity extends Activity implements View.OnClickListener {
         FragmentTransaction Transaction = fragmentManager.beginTransaction();
 
         switch (v.getId()) {
-            case R.id.main_found:
+            case R.id.my_lost:
                 toFoundFragment.setBackgroundResource(R.color.white);
                 toLostFragment.setBackgroundResource(R.drawable.all_left_bg);
                 toFoundFragment.setTextColor(Color.rgb(102, 204, 255));
