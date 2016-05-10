@@ -78,6 +78,7 @@ public class AddLostDataActivity extends Activity implements OnClickListener, Te
                 public void onSuccess() {
                     Toast.makeText(getApplicationContext(), "发布成功！", Toast.LENGTH_SHORT)
                             .show();
+                    finish();
                 }
 
                 @Override
