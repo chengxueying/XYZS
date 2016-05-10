@@ -13,7 +13,7 @@ import com.facebook.drawee.view.SimpleDraweeView;
 /**
  * 详情页有图
  */
-public class DetailActivity extends Activity {
+public class DetailActivity extends Activity implements View.OnClickListener {
     private TextView tv_nameDetail;
     private TextView tv_timeDetail;
     private TextView tv_titleDetail;
@@ -22,6 +22,8 @@ public class DetailActivity extends Activity {
     private ImageButton ibtn_phoneDetail;
     private SimpleDraweeView lostDetail;
     private SimpleDraweeView headDetail;
+    private String phone;
+    private String url;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,9 +40,9 @@ public class DetailActivity extends Activity {
         String name = getIntent().getStringExtra("name");
         String time = getIntent().getStringExtra("time");
         String title = getIntent().getStringExtra("title");
-        String url = getIntent().getStringExtra("url");
         String describe = getIntent().getStringExtra("describe");
-        final String phone = getIntent().getStringExtra("phone");
+        url = getIntent().getStringExtra("url");
+        phone = getIntent().getStringExtra("phone");
 
         tv_nameDetail.setText(name);
         tv_timeDetail.setText(time);
@@ -49,16 +51,8 @@ public class DetailActivity extends Activity {
         tv_phoneDetail.setText(phone);
         Uri uri = Uri.parse(url);
         lostDetail.setImageURI(uri);
-        ibtn_phoneDetail.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String newPhone = phone.trim();
-                //调用系统的拨号服务实现电话拨打功能
-                //封装一个拨打电话的intent，并且将电话号码包装成一个Uri对象传入
-                Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + newPhone));
-                DetailActivity.this.startActivity(intent);
-            }
-        });
+        ibtn_phoneDetail.setOnClickListener(this);
+        lostDetail.setOnClickListener(this);
 
 
     }
@@ -73,5 +67,23 @@ public class DetailActivity extends Activity {
         tv_phoneDetail = (TextView) findViewById(R.id.tv_phoneDetail);
         ibtn_phoneDetail = (ImageButton) findViewById(R.id.ibtn_phoneDetail);
 
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.ibtn_phoneDetail:
+                String newPhone = phone.trim();
+                //调用系统的拨号服务实现电话拨打功能
+                //封装一个拨打电话的intent，并且将电话号码包装成一个Uri对象传入
+                Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + newPhone));
+                DetailActivity.this.startActivity(intent);
+                break;
+            case R.id.iv_lostDetail:
+                Intent intent1 = new Intent(DetailActivity.this, PhotoView.class);
+                intent1.putExtra("url", url);
+                startActivity(intent1);
+                break;
+        }
     }
 }

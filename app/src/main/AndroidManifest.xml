@@ -15,7 +15,7 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_LOGS" />
 
-    <uses-permission android:name="android.permission.CALL_PHONE"/>
+    <uses-permission android:name="android.permission.CALL_PHONE" />
 
     <application
         android:allowBackup="true"
@@ -47,6 +47,9 @@
         <activity
             android:name=".ScoreDialog"
             android:theme="@android:style/Theme.Dialog" />
+        <activity
+            android:name=".PhotoView"
+             />
     </application>
 
 </manifest>
