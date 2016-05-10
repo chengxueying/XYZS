@@ -10,12 +10,13 @@ public class Lost extends BmobObject {
     private String imageURL;
     private int status;
 
-    public Lost(String title, String describe, String phone, String imageURL,int status) {
+    public Lost(String title, String describe, String phone, String imageURL,int status, User publisher) {
         this.title = title;
         this.describe = describe;
         this.phone = phone;
         this.imageURL = imageURL;
         this.status=status;
+		this.publisher = publisher;
     }
 
 	public void setPublisher(User publisher) {

@@ -31,6 +31,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".MainActivity"></activity>
+		<activity android:name=".UserCenterActivity"></activity>
         <activity android:name=".RegisterActivity"></activity>
         <activity android:name=".LoginActivity"></activity>
         <activity android:name=".AddLostDataActivity"></activity>
@@ -38,6 +39,7 @@
         <activity android:name=".LostActivity"></activity>
         <activity android:name=".FoundActivity"></activity>
         <activity android:name=".QueryActivity" />
+		<activity android:name=".SetUserDatasActivity" />
         <activity
             android:name=".ScoreDialog"
             android:theme="@android:style/Theme.Dialog" />

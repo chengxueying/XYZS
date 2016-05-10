@@ -13,11 +13,12 @@ import android.widget.Button;
 
 import xyzs.hy.com.xyzs.fragment.FoundFragment;
 import xyzs.hy.com.xyzs.fragment.LostFragment;
+import xyzs.hy.com.xyzs.fragment.*;
 
 
 public class LostActivity extends Activity implements View.OnClickListener {
     private LostFragment lostFragment;
-    private FoundFragment foundFragment;
+    private MyLostFragment myLostFragment;
 
     private Button toFoundFragment;
     private Button toLostFragment;
@@ -57,11 +58,11 @@ public class LostActivity extends Activity implements View.OnClickListener {
             case R.id.main_found:
                 hideFragment(Transaction);
                 isLost = false;
-                if (foundFragment == null) {
-                    foundFragment = new FoundFragment();
-                    Transaction.add(R.id.content, foundFragment);
+                if (myLostFragment == null) {
+                    myLostFragment = new MyLostFragment();
+                    Transaction.add(R.id.content, myLostFragment);
                 } else {
-                    Transaction.show(foundFragment);
+                    Transaction.show(myLostFragment);
                 }
                 break;
             case R.id.main_lost:
@@ -90,8 +91,8 @@ public class LostActivity extends Activity implements View.OnClickListener {
         if (lostFragment != null) {
             Transaction.hide(lostFragment);
         }
-        if (foundFragment != null) {
-            Transaction.hide(foundFragment);
+        if (myLostFragment != null) {
+            Transaction.hide(myLostFragment);
         }
     }
 

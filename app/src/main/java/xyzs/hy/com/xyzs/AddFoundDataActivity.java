@@ -83,6 +83,7 @@ public class AddFoundDataActivity extends Activity implements OnClickListener, T
             found.save(this, new SaveListener() {
                 @Override
                 public void onSuccess() {
+                    finish();
                 }
 
                 @Override

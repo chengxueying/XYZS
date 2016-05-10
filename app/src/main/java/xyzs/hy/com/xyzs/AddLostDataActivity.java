@@ -18,6 +18,8 @@ import xyzs.hy.com.xyzs.entity.Lost;
 import java.io.*;
 
 import android.app.*;
+import cn.bmob.v3.*;
+import xyzs.hy.com.xyzs.entity.*;
 
 public class AddLostDataActivity extends Activity implements OnClickListener, TextWatcher {
     public static final int TAKE_PHOTO = 1;
@@ -67,16 +69,18 @@ public class AddLostDataActivity extends Activity implements OnClickListener, Te
     //上传数据
     private void upDatas() {
         final String phone, title, describe;
+		final User user = BmobUser.getCurrentUser(this, User.class);
         title = titleEdittext.getText().toString();
         phone = phoneEdittext.getText().toString();
         describe = describeEdittext.getText().toString();
         if (imagePath == null) {
-            Lost lost = new Lost(title, describe, phone, null,0);
+            Lost lost = new Lost(title, describe, phone, null,0, user);
             lost.save(this, new SaveListener() {
                 @Override
                 public void onSuccess() {
                     Toast.makeText(getApplicationContext(), "发布成功！", Toast.LENGTH_SHORT)
                             .show();
+                    finish();
                 }
 
                 @Override
@@ -89,7 +93,7 @@ public class AddLostDataActivity extends Activity implements OnClickListener, Te
                 @Override
                 public void onSuccess() {
                     String image = bmobFile.getFileUrl(AddLostDataActivity.this);
-                    Lost lost = new Lost(title, describe, phone, image,1);
+                    Lost lost = new Lost(title, describe, phone, image,1, user);
                     lost.save(AddLostDataActivity.this, new SaveListener() {
                         @Override
                         public void onSuccess() {
