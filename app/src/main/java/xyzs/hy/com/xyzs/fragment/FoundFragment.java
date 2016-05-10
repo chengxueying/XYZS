@@ -2,6 +2,7 @@ package xyzs.hy.com.xyzs.fragment;
 
 
 import android.app.Fragment;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
@@ -20,9 +21,10 @@ import java.util.List;
 
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.listener.FindListener;
+import xyzs.hy.com.xyzs.DetailActivity;
+import xyzs.hy.com.xyzs.DetailNoActivity;
 import xyzs.hy.com.xyzs.R;
 import xyzs.hy.com.xyzs.adapter.FoundAdapter;
-import xyzs.hy.com.xyzs.adapter.FoundAdapter.OnRecyclerViewItemClickListener;
 import xyzs.hy.com.xyzs.entity.Found;
 
 
@@ -60,20 +62,44 @@ public class FoundFragment extends Fragment {
             mRecycleView.setAdapter(adapter);
             LinearLayoutManager lin = new LinearLayoutManager(getActivity());
             mRecycleView.setLayoutManager(lin);
-			adapter.setOnItemClickListener(new OnRecyclerViewItemClickListener(){
-					@Override
-					public void onItemClick(View view, Found data) {
-						Toast.makeText(getActivity(), ""+data.getTitle(),Toast.LENGTH_SHORT)
-							.show();
-					}
-			});
+            adapter.setmOnItemClickListener(new FoundAdapter.OnItemClickListener() {
+                @Override
+                public void OnItemClick(int position) {
+                    Intent intent;
+                    if (FoundDatas.get(position).getStatus() == 0) {
+                        intent = new Intent(getActivity(), DetailNoActivity.class);
+                        intent.putExtra("name", FoundDatas.get(position).getPublisher().getUsername());
+                        intent.putExtra("time", FoundDatas.get(position).getUpdatedAt());
+                        intent.putExtra("title", FoundDatas.get(position).getTitle());
+                        intent.putExtra("describe", FoundDatas.get(position).getDescribe());
+                        intent.putExtra("phone", FoundDatas.get(position).getPhone());
+                        startActivity(intent);
+                    } else {
+                        intent = new Intent(getActivity(), DetailActivity.class);
+//                        intent.putExtra("head",lostDatas.get(position).g)
+                        intent.putExtra("name", FoundDatas.get(position).getPublisher().getUsername());
+                        intent.putExtra("time", FoundDatas.get(position).getUpdatedAt());
+                        intent.putExtra("title", FoundDatas.get(position).getTitle());
+                        intent.putExtra("describe", FoundDatas.get(position).getDescribe());
+                        intent.putExtra("phone", FoundDatas.get(position).getPhone());
+                        intent.putExtra("url", FoundDatas.get(position).getImageURL());
+                        startActivity(intent);
+
+                    }
+                }
+
+                @Override
+                public boolean OnItemLongClick(int position) {
+                    return false;
+                }
+            });
         }
     }
 
     private void getDatas() {
         BmobQuery<Found> query = new BmobQuery<Found>();
-		query.include("publisher");
-		query.order("-updatedAt");
+        query.include("publisher");
+        query.order("-updatedAt");
         query.findObjects(getActivity(), new FindListener<Found>() {
             @Override
             public void onSuccess(List<Found> object) {
@@ -97,8 +123,8 @@ public class FoundFragment extends Fragment {
                     public void run() {
                         adapter.refreshDatas();
                         BmobQuery<Found> query = new BmobQuery<Found>();
-						query.include("publisher");
-						query.order("-updatedAt");
+                        query.include("publisher");
+                        query.order("-updatedAt");
                         query.findObjects(getActivity(), new FindListener<Found>() {
                             @Override
                             public void onSuccess(List<Found> object) {

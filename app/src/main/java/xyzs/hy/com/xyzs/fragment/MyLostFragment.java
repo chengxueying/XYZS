@@ -1,7 +1,10 @@
 package xyzs.hy.com.xyzs.fragment;
 
 
+import android.app.AlertDialog;
 import android.app.Fragment;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
@@ -20,6 +23,8 @@ import java.util.List;
 
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.listener.FindListener;
+import xyzs.hy.com.xyzs.DetailActivity;
+import xyzs.hy.com.xyzs.DetailNoActivity;
 import xyzs.hy.com.xyzs.R;
 import xyzs.hy.com.xyzs.adapter.LostAdapter;
 import xyzs.hy.com.xyzs.entity.Lost;
@@ -61,6 +66,52 @@ public class MyLostFragment extends Fragment {
             mRecycleView.setAdapter(adapter);
             LinearLayoutManager lin = new LinearLayoutManager(getActivity());
             mRecycleView.setLayoutManager(lin);
+            adapter.setmOnItemClickListener(new LostAdapter.OnItemClickListener() {
+                @Override
+                public void OnItemClick(int position) {
+                    Intent intent;
+                    if (lostDatas.get(position).getStatus() == 0) {
+                        intent = new Intent(getActivity(), DetailNoActivity.class);
+                        intent.putExtra("name", lostDatas.get(position).getPublisher().getUsername());
+                        intent.putExtra("time", lostDatas.get(position).getUpdatedAt());
+                        intent.putExtra("title", lostDatas.get(position).getTitle());
+                        intent.putExtra("describe", lostDatas.get(position).getDescribe());
+                        intent.putExtra("phone", lostDatas.get(position).getPhone());
+                        startActivity(intent);
+                    } else {
+                        intent = new Intent(getActivity(), DetailActivity.class);
+//                        intent.putExtra("head",lostDatas.get(position).g)
+                        intent.putExtra("name", lostDatas.get(position).getPublisher().getUsername());
+                        intent.putExtra("time", lostDatas.get(position).getUpdatedAt());
+                        intent.putExtra("title", lostDatas.get(position).getTitle());
+                        intent.putExtra("describe", lostDatas.get(position).getDescribe());
+                        intent.putExtra("phone", lostDatas.get(position).getPhone());
+                        intent.putExtra("url", lostDatas.get(position).getimageURL());
+                        startActivity(intent);
+
+                    }
+
+                }
+
+                @Override
+                public boolean OnItemLongClick(int position) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                    builder.setMessage("确定要删除吗？").setTitle("提示").setPositiveButton("确认", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            Toast.makeText(getActivity(), "长安了++++", Toast.LENGTH_SHORT).show();
+                            dialog.dismiss();
+
+                        }
+                    }).setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    }).create().show();
+                    return true;
+                }
+            });
         }
     }
 

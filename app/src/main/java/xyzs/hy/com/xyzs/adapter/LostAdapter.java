@@ -19,18 +19,27 @@ public class LostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private static final int FOOT_VIEW = 1;//无图片
     private LayoutInflater mInflater;
     private ArrayList<Lost> lostDatas;
-    private OnRecyclerViewItemClickListener mOnItemClickListemer = null;
+    private OnItemClickListener mOnItemClickListener;
 
     public LostAdapter(Context context, ArrayList<Lost> lostDatas) {
         this.lostDatas = lostDatas;
         mInflater = LayoutInflater.from(context);
     }
 
-    public static interface OnRecyclerViewItemClickListener {
-        Void OnItemClickListener(View view, String data);
+
+    //回调
+    public interface OnItemClickListener {
+        //点击事件
+        void OnItemClick(int position);
+
+        //长按事件
+        boolean OnItemLongClick(int position);
     }
 
-
+    //设置回调
+    public void setmOnItemClickListener(OnItemClickListener mOnItemClickListener) {
+        this.mOnItemClickListener = mOnItemClickListener;
+    }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -48,6 +57,7 @@ public class LostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         return null;
     }
 
+    //多布局
     @Override
     public int getItemViewType(int position) {
         if (lostDatas.get(position).getStatus() == 0) {
@@ -59,22 +69,66 @@ public class LostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof ItemViewHolder) {
             ((ItemViewHolder) holder).tv_describe.setText(lostDatas.get(position).getDescribe());
             ((ItemViewHolder) holder).tv_phone.setText(lostDatas.get(position).getPhone());
-			((ItemViewHolder)holder).tv_name.setText(lostDatas.get(position).getPublisher().getUsername());
-			((ItemViewHolder)holder).tv_name.setText(lostDatas.get(position).getPublisher().getUsername());
+            ((ItemViewHolder) holder).tv_name.setText(lostDatas.get(position).getPublisher().getUsername());
             ((ItemViewHolder) holder).tv_title.setText(lostDatas.get(position).getTitle());
             ((ItemViewHolder) holder).tv_time.setText(lostDatas.get(position).getUpdatedAt());
+            ((ItemViewHolder) holder).itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (mOnItemClickListener != null) {
+                        //Returns the position of the ViewHolder in terms of the
+                        //latest layout pass.
+                        int pos = ((ItemViewHolder) holder).getLayoutPosition();
+                        mOnItemClickListener.OnItemClick(pos);
+                    }
+                }
+            });
+            ((ItemViewHolder) holder).itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    if (mOnItemClickListener != null) {
+                        int pos = ((ItemViewHolder) holder).getLayoutPosition();
+                        return mOnItemClickListener.OnItemLongClick(pos);
+                    }
+                    return false;
+                }
+            });
+
         } else if (holder instanceof MyViewHolder) {
             ((MyViewHolder) holder).tv_describe.setText(lostDatas.get(position).getDescribe());
             ((MyViewHolder) holder).tv_phone.setText(lostDatas.get(position).getPhone());
             ((MyViewHolder) holder).tv_title.setText(lostDatas.get(position).getTitle());
-			((MyViewHolder)holder).tv_name.setText(lostDatas.get(position).getPublisher().getUsername());
+            ((MyViewHolder) holder).tv_name.setText(lostDatas.get(position).getPublisher().getUsername());
             ((MyViewHolder) holder).tv_time.setText(lostDatas.get(position).getUpdatedAt());
             Uri uri = Uri.parse(lostDatas.get(position).getimageURL());
             ((MyViewHolder) holder).draweeView.setImageURI(uri);
+            //点击事件
+            ((MyViewHolder) holder).itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (mOnItemClickListener != null) {
+                        //Returns the position of the ViewHolder in terms of the
+                        //latest layout pass.
+                        int pos = ((MyViewHolder) holder).getLayoutPosition();
+                        mOnItemClickListener.OnItemClick(pos);
+                    }
+                }
+            });
+            //长按事件
+            ((MyViewHolder) holder).itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    if (mOnItemClickListener != null) {
+                        int pos = ((MyViewHolder) holder).getLayoutPosition();
+                        return mOnItemClickListener.OnItemLongClick(pos);
+                    }
+                    return false;
+                }
+            });
 
         }
     }
@@ -85,9 +139,6 @@ public class LostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         return lostDatas == null ? 0 : lostDatas.size();
     }
 
-    public void setOnItemClickListener(OnRecyclerViewItemClickListener listener) {
-        mOnItemClickListemer = listener;
-    }
 
     public void refreshDatas() {
         lostDatas.clear();
@@ -99,15 +150,15 @@ public class LostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         TextView tv_title;
         TextView tv_describe;
         TextView tv_phone;
-		TextView tv_name;
+        TextView tv_name;
 
         public ItemViewHolder(View itemView) {
             super(itemView);
             tv_phone = (TextView) itemView.findViewById(R.id.tv_phone_no);
             tv_title = (TextView) itemView.findViewById(R.id.tv_title_no);
             tv_time = (TextView) itemView.findViewById(R.id.tv_time_no);
-			tv_name = (TextView) itemView.findViewById(R.id.tv_name);
-			tv_name = (TextView) itemView.findViewById(R.id.tv_name_no);
+            tv_name = (TextView) itemView.findViewById(R.id.tv_name);
+            tv_name = (TextView) itemView.findViewById(R.id.tv_name_no);
             tv_describe = (TextView) itemView.findViewById(R.id.tv_describe_no);
 
         }
@@ -119,7 +170,7 @@ public class LostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         TextView tv_describe;
         TextView tv_phone;
         SimpleDraweeView draweeView;
-		TextView tv_name;
+        TextView tv_name;
 
         public MyViewHolder(View itemView) {
             super(itemView);
@@ -127,7 +178,7 @@ public class LostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             tv_phone = (TextView) itemView.findViewById(R.id.tv_phone);
             tv_title = (TextView) itemView.findViewById(R.id.tv_title);
             tv_time = (TextView) itemView.findViewById(R.id.tv_time);
-			tv_name = (TextView) itemView.findViewById(R.id.tv_name);
+            tv_name = (TextView) itemView.findViewById(R.id.tv_name);
             tv_describe = (TextView) itemView.findViewById(R.id.tv_describe);
         }
     }

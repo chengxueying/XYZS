@@ -15,23 +15,31 @@ import xyzs.hy.com.xyzs.R;
 import xyzs.hy.com.xyzs.entity.Found;
 
 
-public class FoundAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements View.OnClickListener {
+public class FoundAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private static final int ITEM_VIEW = 0;
     private static final int FOOT_VIEW = 1;//无图片
     private LayoutInflater mInflater;
     private ArrayList<Found> mFoundDatas;
-    private OnRecyclerViewItemClickListener mOnItemClickListemer = null;
+    private OnItemClickListener mOnItemClickListener;
 
     public FoundAdapter(Context context, ArrayList<Found> mFoundDatas) {
         this.mFoundDatas = mFoundDatas;
         mInflater = LayoutInflater.from(context);
     }
 
-    //静态接口
-    public static interface OnRecyclerViewItemClickListener {
-        void onItemClick(View view, Found lostdata);
+    //回调
+    public interface OnItemClickListener {
+        //点击事件
+        void OnItemClick(int position);
+
+        //长按事件
+        boolean OnItemLongClick(int position);
     }
 
+    //设置回调
+    public void setmOnItemClickListener(OnItemClickListener mOnItemClickListener) {
+        this.mOnItemClickListener = mOnItemClickListener;
+    }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -61,7 +69,7 @@ public class FoundAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof ItemViewHolder) {
             ((ItemViewHolder) holder).tv_describe.setText(mFoundDatas.get(position).getDescribe());
             ((ItemViewHolder) holder).tv_phone.setText(mFoundDatas.get(position).getPhone());
@@ -69,6 +77,27 @@ public class FoundAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             ((ItemViewHolder) holder).tv_name.setText(mFoundDatas.get(position).getPublisher().getUsername());
             ((ItemViewHolder) holder).tv_title.setText(mFoundDatas.get(position).getTitle());
             ((ItemViewHolder) holder).tv_time.setText(mFoundDatas.get(position).getUpdatedAt());
+            ((ItemViewHolder) holder).itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (mOnItemClickListener != null) {
+                        //Returns the position of the ViewHolder in terms of the
+                        //latest layout pass.
+                        int pos = ((ItemViewHolder) holder).getLayoutPosition();
+                        mOnItemClickListener.OnItemClick(pos);
+                    }
+                }
+            });
+            ((ItemViewHolder) holder).itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    if (mOnItemClickListener != null) {
+                        int pos = ((ItemViewHolder) holder).getLayoutPosition();
+                        return mOnItemClickListener.OnItemLongClick(pos);
+                    }
+                    return false;
+                }
+            });
         } else if (holder instanceof MyViewHolder) {
             ((MyViewHolder) holder).tv_describe.setText(mFoundDatas.get(position).getDescribe());
             ((MyViewHolder) holder).tv_phone.setText(mFoundDatas.get(position).getPhone());
@@ -77,6 +106,30 @@ public class FoundAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             ((MyViewHolder) holder).tv_time.setText(mFoundDatas.get(position).getUpdatedAt());
             Uri uri = Uri.parse(mFoundDatas.get(position).getImageURL());
             ((MyViewHolder) holder).draweeView.setImageURI(uri);
+            //点击事件
+            ((MyViewHolder) holder).itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (mOnItemClickListener != null) {
+                        //Returns the position of the ViewHolder in terms of the
+                        //latest layout pass.
+                        int pos = ((MyViewHolder) holder).getLayoutPosition();
+                        mOnItemClickListener.OnItemClick(pos);
+                    }
+                }
+            });
+            //长按事件
+            ((MyViewHolder) holder).itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    if (mOnItemClickListener != null) {
+                        int pos = ((MyViewHolder) holder).getLayoutPosition();
+                        return mOnItemClickListener.OnItemLongClick(pos);
+                    }
+                    return false;
+                }
+            });
+
 
         }
     }
@@ -87,17 +140,6 @@ public class FoundAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         return mFoundDatas == null ? 0 : mFoundDatas.size();
     }
 
-    public void setOnItemClickListener(OnRecyclerViewItemClickListener listener) {
-        mOnItemClickListemer = listener;
-    }
-
-    @Override
-    public void onClick(View v) {
-        if (mOnItemClickListemer != null) {
-            //getTag方法获取数据
-            mOnItemClickListemer.onItemClick(v, (Found) v.getTag());
-        }
-    }
 
     public void refreshDatas() {
         mFoundDatas.clear();
