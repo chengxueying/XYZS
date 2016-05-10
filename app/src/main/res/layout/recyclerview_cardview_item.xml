@@ -27,6 +27,7 @@
                 android:id="@+id/iv_headSculpture"
                 android:layout_width="44dp"
                 android:layout_height="44dp"
+				fresco:roundedCornerRadius="180dp"
                 fresco:placeholderImage="@drawable/ic_launcher" />
 
             <LinearLayout

@@ -16,6 +16,7 @@
         <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/iv_headNoDetail"
             android:layout_width="44dp"
+			fresco:roundedCornerRadius="180dp"
             android:layout_height="44dp"
             fresco:placeholderImage="@drawable/ic_launcher" />
 

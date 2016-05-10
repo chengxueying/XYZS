@@ -56,16 +56,10 @@ public class RegisterActivity extends Activity implements OnClickListener {
 
 
     private void register() {
-//		final BmobFile bmobFile = new BmobFile(new File(imagePath));
-//		bmobFile.uploadblock(this, new UploadFileListener() {
-//				@Override
-//				public void onSuccess()
-//				{
-        //String image = bmobFile.getFileUrl(RegisterActivity.this);
         User user = new User();
         user.setMobilePhoneNumber(phone);
         user.setPassword(password);
-        //user.setHeadSculpture(image);
+        user.setHeadSculpture("http://file.bmob.cn/M03/65/48/oYYBAFcyPeCAOKH5AAASPUfL_KA350.jpg");
         user.signOrLogin(RegisterActivity.this, captchaCode, new SaveListener() {
             @Override
             public void onSuccess() {
@@ -83,12 +77,6 @@ public class RegisterActivity extends Activity implements OnClickListener {
                         .show();
             }
         });
-//				}
-//				@Override
-//				public void onFailure(int p1, String p2)
-//				{
-//				}					
-//			});
     }
 
     private void getCaptcha() {

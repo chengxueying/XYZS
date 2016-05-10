@@ -77,6 +77,8 @@ public class FoundAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             ((ItemViewHolder) holder).tv_name.setText(mFoundDatas.get(position).getPublisher().getUsername());
             ((ItemViewHolder) holder).tv_title.setText(mFoundDatas.get(position).getTitle());
             ((ItemViewHolder) holder).tv_time.setText(mFoundDatas.get(position).getUpdatedAt());
+			Uri uri = Uri.parse(mFoundDatas.get(position).getPublisher().getHeadSculpture());
+			((ItemViewHolder)holder).head.setImageURI(uri);
             ((ItemViewHolder) holder).itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -104,6 +106,8 @@ public class FoundAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             ((MyViewHolder) holder).tv_title.setText(mFoundDatas.get(position).getTitle());
             ((MyViewHolder) holder).tv_name.setText(mFoundDatas.get(position).getPublisher().getUsername());
             ((MyViewHolder) holder).tv_time.setText(mFoundDatas.get(position).getUpdatedAt());
+			Uri imageUri = Uri.parse(mFoundDatas.get(position).getPublisher().getHeadSculpture());
+			((MyViewHolder)holder).head.setImageURI(imageUri);
             Uri uri = Uri.parse(mFoundDatas.get(position).getImageURL());
             ((MyViewHolder) holder).draweeView.setImageURI(uri);
             //点击事件
@@ -152,6 +156,7 @@ public class FoundAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         TextView tv_describe;
         TextView tv_phone;
         TextView tv_name;
+		SimpleDraweeView head;
 
         public ItemViewHolder(View itemView) {
             super(itemView);
@@ -161,6 +166,7 @@ public class FoundAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             tv_name = (TextView) itemView.findViewById(R.id.tv_name);
             tv_name = (TextView) itemView.findViewById(R.id.tv_name_no);
             tv_describe = (TextView) itemView.findViewById(R.id.tv_describe_no);
+			head = (SimpleDraweeView) itemView.findViewById(R.id.iv_headSculpture_no);
 
         }
     }
@@ -172,6 +178,7 @@ public class FoundAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         TextView tv_phone;
         SimpleDraweeView draweeView;
         TextView tv_name;
+		SimpleDraweeView head;
 
         public MyViewHolder(View itemView) {
             super(itemView);
@@ -181,6 +188,7 @@ public class FoundAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             tv_time = (TextView) itemView.findViewById(R.id.tv_time);
             tv_name = (TextView) itemView.findViewById(R.id.tv_name);
             tv_describe = (TextView) itemView.findViewById(R.id.tv_describe);
+			head = (SimpleDraweeView) itemView.findViewById(R.id.iv_headSculpture);
         }
     }
 }

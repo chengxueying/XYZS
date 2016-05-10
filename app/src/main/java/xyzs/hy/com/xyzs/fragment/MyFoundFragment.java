@@ -30,6 +30,7 @@ import xyzs.hy.com.xyzs.adapter.FoundAdapter;
 import xyzs.hy.com.xyzs.entity.Found;
 import cn.bmob.v3.*;
 import xyzs.hy.com.xyzs.entity.*;
+import cn.bmob.v3.listener.*;
 
 
 public class MyFoundFragment extends Fragment {
@@ -77,6 +78,7 @@ public class MyFoundFragment extends Fragment {
 						intent.putExtra("title", FoundDatas.get(position).getTitle());
 						intent.putExtra("describe", FoundDatas.get(position).getDescribe());
 						intent.putExtra("phone", FoundDatas.get(position).getPhone());
+						intent.putExtra("headURL",FoundDatas.get(position).getPublisher().getHeadSculpture());
 						startActivity(intent);
 					} else {
 						intent = new Intent(getActivity(), DetailActivity.class);
@@ -87,6 +89,7 @@ public class MyFoundFragment extends Fragment {
 						intent.putExtra("describe", FoundDatas.get(position).getDescribe());
 						intent.putExtra("phone", FoundDatas.get(position).getPhone());
 						intent.putExtra("url", FoundDatas.get(position).getImageURL());
+						intent.putExtra("headURL",FoundDatas.get(position).getPublisher().getHeadSculpture());
 						startActivity(intent);
 
 					}
@@ -94,11 +97,29 @@ public class MyFoundFragment extends Fragment {
 
 				@Override
 				public boolean OnItemLongClick(int position) {
+					final int pos = position;
 					AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 					builder.setMessage("确定要删除吗？").setTitle("提示").setPositiveButton("确认", new DialogInterface.OnClickListener() {
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
-							Toast.makeText(getActivity(), "长安了++++", Toast.LENGTH_SHORT).show();
+							Lost lost = new Lost();
+							lost.setObjectId(FoundDatas.get(pos).getObjectId());
+							lost.delete(getActivity(), new DeleteListener() {
+
+									@Override
+									public void onSuccess()
+									{
+										Toast.makeText(getActivity(), "删除成功", Toast.LENGTH_SHORT).show();
+										refreshDatas();
+									}
+
+									@Override
+									public void onFailure(int p1, String p2)
+									{
+										Toast.makeText(getActivity(), "删除失败", Toast.LENGTH_SHORT).show();
+									}
+								});
+							//Toast.makeText(getActivity(), "长安了++++", Toast.LENGTH_SHORT).show();
 							dialog.dismiss();
 
 						}

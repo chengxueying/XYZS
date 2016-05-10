@@ -24,6 +24,7 @@ public class DetailActivity extends Activity implements View.OnClickListener {
     private SimpleDraweeView headDetail;
     private String phone;
     private String url;
+	private String headURL;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +38,7 @@ public class DetailActivity extends Activity implements View.OnClickListener {
      * 初始化数据
      */
     private void initData() {
+		headURL = getIntent().getStringExtra("headURL");
         String name = getIntent().getStringExtra("name");
         String time = getIntent().getStringExtra("time");
         String title = getIntent().getStringExtra("title");
@@ -51,6 +53,9 @@ public class DetailActivity extends Activity implements View.OnClickListener {
         tv_phoneDetail.setText(phone);
         Uri uri = Uri.parse(url);
         lostDetail.setImageURI(uri);
+		Uri headUri = Uri.parse(headURL);
+		headDetail.setImageURI(headUri);
+		
         ibtn_phoneDetail.setOnClickListener(this);
         lostDetail.setOnClickListener(this);
 

@@ -10,6 +10,10 @@ public class Found extends BmobObject {
 	private User publisher;
     private int status;
 
+	public Found() {
+		
+	}
+	
     public Found(String title, String describe, String phone, String imageURL,int status,User publisher) {
         this.title = title;
         this.describe = describe;

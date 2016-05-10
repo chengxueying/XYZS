@@ -30,6 +30,7 @@ import xyzs.hy.com.xyzs.adapter.LostAdapter;
 import xyzs.hy.com.xyzs.entity.Lost;
 import xyzs.hy.com.xyzs.entity.*;
 import cn.bmob.v3.*;
+import cn.bmob.v3.listener.*;
 
 
 public class MyLostFragment extends Fragment {
@@ -77,6 +78,7 @@ public class MyLostFragment extends Fragment {
                         intent.putExtra("title", lostDatas.get(position).getTitle());
                         intent.putExtra("describe", lostDatas.get(position).getDescribe());
                         intent.putExtra("phone", lostDatas.get(position).getPhone());
+						intent.putExtra("headURL",lostDatas.get(position).getPublisher().getHeadSculpture());
                         startActivity(intent);
                     } else {
                         intent = new Intent(getActivity(), DetailActivity.class);
@@ -87,6 +89,7 @@ public class MyLostFragment extends Fragment {
                         intent.putExtra("describe", lostDatas.get(position).getDescribe());
                         intent.putExtra("phone", lostDatas.get(position).getPhone());
                         intent.putExtra("url", lostDatas.get(position).getimageURL());
+						intent.putExtra("headURL",lostDatas.get(position).getPublisher().getHeadSculpture());
                         startActivity(intent);
 
                     }
@@ -95,11 +98,29 @@ public class MyLostFragment extends Fragment {
 
                 @Override
                 public boolean OnItemLongClick(int position) {
+					final int pos = position;
                     AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                     builder.setMessage("确定要删除吗？").setTitle("提示").setPositiveButton("确认", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            Toast.makeText(getActivity(), "长安了++++", Toast.LENGTH_SHORT).show();
+							Lost lost = new Lost();
+							lost.setObjectId(lostDatas.get(pos).getObjectId());
+							lost.delete(getActivity(), new DeleteListener() {
+
+									@Override
+									public void onSuccess()
+									{
+										Toast.makeText(getActivity(), "删除成功", Toast.LENGTH_SHORT).show();
+										refreshDatas();
+									}
+
+									@Override
+									public void onFailure(int p1, String p2)
+									{
+										Toast.makeText(getActivity(), "删除失败", Toast.LENGTH_SHORT).show();
+									}
+							});
+							
                             dialog.dismiss();
 
                         }

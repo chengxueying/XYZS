@@ -73,6 +73,7 @@ public class FoundFragment extends Fragment {
                         intent.putExtra("title", FoundDatas.get(position).getTitle());
                         intent.putExtra("describe", FoundDatas.get(position).getDescribe());
                         intent.putExtra("phone", FoundDatas.get(position).getPhone());
+						intent.putExtra("headURL",FoundDatas.get(position).getPublisher().getHeadSculpture());
                         startActivity(intent);
                     } else {
                         intent = new Intent(getActivity(), DetailActivity.class);
@@ -82,6 +83,7 @@ public class FoundFragment extends Fragment {
                         intent.putExtra("title", FoundDatas.get(position).getTitle());
                         intent.putExtra("describe", FoundDatas.get(position).getDescribe());
                         intent.putExtra("phone", FoundDatas.get(position).getPhone());
+						intent.putExtra("headURL",FoundDatas.get(position).getPublisher().getHeadSculpture());
                         intent.putExtra("url", FoundDatas.get(position).getImageURL());
                         startActivity(intent);
 

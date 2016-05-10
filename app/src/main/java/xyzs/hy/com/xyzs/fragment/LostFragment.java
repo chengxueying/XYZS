@@ -73,6 +73,7 @@ public class LostFragment extends Fragment {
                         intent.putExtra("title", lostDatas.get(position).getTitle());
                         intent.putExtra("describe", lostDatas.get(position).getDescribe());
                         intent.putExtra("phone", lostDatas.get(position).getPhone());
+						intent.putExtra("headURL",lostDatas.get(position).getPublisher().getHeadSculpture());
                         startActivity(intent);
                     } else {
                         intent = new Intent(getActivity(), DetailActivity.class);
@@ -82,6 +83,7 @@ public class LostFragment extends Fragment {
                         intent.putExtra("title", lostDatas.get(position).getTitle());
                         intent.putExtra("describe", lostDatas.get(position).getDescribe());
                         intent.putExtra("phone", lostDatas.get(position).getPhone());
+						intent.putExtra("headURL",lostDatas.get(position).getPublisher().getHeadSculpture());
                         intent.putExtra("url", lostDatas.get(position).getimageURL());
                         startActivity(intent);
 

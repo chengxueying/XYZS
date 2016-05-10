@@ -21,6 +21,7 @@ public class DetailNoActivity extends Activity {
     private TextView tv_phoneDetail;
     private ImageButton ibtn_phoneDetail;
     private SimpleDraweeView headDetail;
+	private String headURL;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +35,7 @@ public class DetailNoActivity extends Activity {
      * 初始化数据
      */
     private void initData() {
+		headURL = getIntent().getStringExtra("headURL");
         String name = getIntent().getStringExtra("name");
         String time = getIntent().getStringExtra("time");
         String title = getIntent().getStringExtra("title");
@@ -43,6 +45,8 @@ public class DetailNoActivity extends Activity {
         tv_timeDetail.setText(time);
         tv_titleDetail.setText(title);
         tv_describeDetail.setText(describe);
+		Uri headUri = Uri.parse(headURL);
+		headDetail.setImageURI(headUri);
         tv_phoneDetail.setText(phone);
         ibtn_phoneDetail.setOnClickListener(new View.OnClickListener() {
             @Override
