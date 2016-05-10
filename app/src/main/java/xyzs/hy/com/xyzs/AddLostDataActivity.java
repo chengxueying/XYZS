@@ -72,8 +72,8 @@ public class AddLostDataActivity extends Activity implements OnClickListener, Te
         title = titleEdittext.getText().toString();
         phone = phoneEdittext.getText().toString();
         describe = describeEdittext.getText().toString();
-        if (title.equals("")||phone.equals("")||describe.equals("")){
-            Toast.makeText(AddLostDataActivity.this,"请完善信息...",Toast.LENGTH_SHORT).show();
+        if (title.equals("") || phone.equals("") || describe.equals("")) {
+            Toast.makeText(AddLostDataActivity.this, "请完善信息...", Toast.LENGTH_SHORT).show();
             return;
         }
         if (!IsPhone.isPhone(phone)) {

@@ -27,103 +27,93 @@ import xyzs.hy.com.xyzs.entity.*;
 import cn.bmob.v3.*;
 
 
-public class MyLostFragment extends Fragment
-{
-	private ArrayList<Lost> lostDatas;
-	private RecyclerView mRecycleView;
-	private SwipeRefreshLayout mSwipeRefreshLayout;
-	private LostAdapter adapter;
-	private View lost;
-	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-							 Bundle savedInstanceState)
-	{
-		lost = inflater.inflate(R.layout.fragment_lost, container, false);
+public class MyLostFragment extends Fragment {
+    private ArrayList<Lost> lostDatas;
+    private RecyclerView mRecycleView;
+    private SwipeRefreshLayout mSwipeRefreshLayout;
+    private LostAdapter adapter;
+    private View lost;
 
-		lostDatas = new ArrayList<Lost>();
-		mSwipeRefreshLayout = (SwipeRefreshLayout)lost.findViewById(R.id.SwipeRefreshLayout_lost);
-		mSwipeRefreshLayout.setColorSchemeColors(Color.BLUE);
-		mSwipeRefreshLayout.setProgressViewOffset(false, 0, (int) TypedValue
-												  .applyDimension(TypedValue.COMPLEX_UNIT_DIP, 24, getResources()
-																  .getDisplayMetrics()));
-		refreshDatas();
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        lost = inflater.inflate(R.layout.fragment_lost, container, false);
 
-		if (lostDatas == null || lostDatas.size() == 0)
-		{
-			getDatas();
-		}
+        lostDatas = new ArrayList<Lost>();
+        mSwipeRefreshLayout = (SwipeRefreshLayout) lost.findViewById(R.id.SwipeRefreshLayout_lost);
+        mSwipeRefreshLayout.setColorSchemeColors(Color.BLUE);
+        mSwipeRefreshLayout.setProgressViewOffset(false, 0, (int) TypedValue
+                .applyDimension(TypedValue.COMPLEX_UNIT_DIP, 24, getResources()
+                        .getDisplayMetrics()));
+        refreshDatas();
 
-		return lost;
-	}
+        if (lostDatas == null || lostDatas.size() == 0) {
+            getDatas();
+        }
 
-	private void setDatas()
-	{
-		if (lostDatas.size() != 0)
-		{
-			mRecycleView = (RecyclerView)lost.findViewById(R.id.Recyclerview_lost);
-			adapter = new LostAdapter(getActivity(), lostDatas);
-			mRecycleView.setAdapter(adapter);
-			LinearLayoutManager lin = new LinearLayoutManager(getActivity());
-			mRecycleView.setLayoutManager(lin);
-		}
-	}
+        return lost;
+    }
 
-	private void getDatas()
-	{
-		User user = BmobUser.getCurrentUser(getActivity(),User.class);
-		BmobQuery<Lost> query = new BmobQuery<Lost>();
-		query.addWhereEqualTo("publisher", user);
-		query.order("-updatedAt");
-		query.include("publisher");
-		query.findObjects(getActivity(), new FindListener<Lost>() {
-				@Override
-				public void onSuccess(List<Lost> object)
-				{					
-					lostDatas.addAll(object);
-					setDatas();
-				}
-				@Override
-				public void onError(int code, String msg)
-				{
-					Toast.makeText(getActivity(), code + msg, Toast.LENGTH_LONG).show();
-				}
-			});
-	}
+    private void setDatas() {
+        if (lostDatas.size() != 0) {
+            mRecycleView = (RecyclerView) lost.findViewById(R.id.Recyclerview_lost);
+            adapter = new LostAdapter(getActivity(), lostDatas);
+            mRecycleView.setAdapter(adapter);
+            LinearLayoutManager lin = new LinearLayoutManager(getActivity());
+            mRecycleView.setLayoutManager(lin);
+        }
+    }
 
-	private void refreshDatas()
-	{
-		mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener(){
-				@Override
-				public void onRefresh()
-				{
-					new Handler().postDelayed(new Runnable() {
-							@Override
-							public void run()
-							{
-								adapter.refreshDatas();
-								User user = BmobUser.getCurrentUser(getActivity(),User.class);
-								BmobQuery<Lost> query = new BmobQuery<Lost>();
-								query.addWhereEqualTo("publisher", user);
-								query.order("-updatedAt");
-								query.include("publisher");
-								query.findObjects(getActivity(), new FindListener<Lost>() {
-										@Override
-										public void onSuccess(List<Lost> object)
-										{
-											lostDatas.addAll(object);
-											setDatas();
-										}
-										@Override
-										public void onError(int code, String msg)
-										{
-											Toast.makeText(getActivity(), code + msg, Toast.LENGTH_LONG).show();
-										}
-									});
-								Toast.makeText(getActivity(), "刷新成功", Toast.LENGTH_LONG).show();
-								mSwipeRefreshLayout.setRefreshing(false);
-							}
-						}, 1000);
-				}
-			});
-	}
+    private void getDatas() {
+        User user = BmobUser.getCurrentUser(getActivity(), User.class);
+        BmobQuery<Lost> query = new BmobQuery<Lost>();
+        query.addWhereEqualTo("publisher", user);
+        query.order("-updatedAt");
+        query.include("publisher");
+        query.findObjects(getActivity(), new FindListener<Lost>() {
+            @Override
+            public void onSuccess(List<Lost> object) {
+                lostDatas.addAll(object);
+                setDatas();
+            }
+
+            @Override
+            public void onError(int code, String msg) {
+                Toast.makeText(getActivity(), code + msg, Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    private void refreshDatas() {
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        adapter.refreshDatas();
+                        User user = BmobUser.getCurrentUser(getActivity(), User.class);
+                        BmobQuery<Lost> query = new BmobQuery<Lost>();
+                        query.addWhereEqualTo("publisher", user);
+                        query.order("-updatedAt");
+                        query.include("publisher");
+                        query.findObjects(getActivity(), new FindListener<Lost>() {
+                            @Override
+                            public void onSuccess(List<Lost> object) {
+                                lostDatas.addAll(object);
+                                setDatas();
+                            }
+
+                            @Override
+                            public void onError(int code, String msg) {
+                                Toast.makeText(getActivity(), code + msg, Toast.LENGTH_LONG).show();
+                            }
+                        });
+                        Toast.makeText(getActivity(), "刷新成功", Toast.LENGTH_LONG).show();
+                        mSwipeRefreshLayout.setRefreshing(false);
+                    }
+                }, 1000);
+            }
+        });
+    }
 }
