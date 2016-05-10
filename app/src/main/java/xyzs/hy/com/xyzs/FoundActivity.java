@@ -11,9 +11,10 @@ import android.content.*;
 
 import xyzs.hy.com.xyzs.fragment.FoundFragment;
 import xyzs.hy.com.xyzs.fragment.LostFragment;
+import xyzs.hy.com.xyzs.fragment.*;
 
 public class FoundActivity extends Activity implements OnClickListener {
-    private LostFragment lostFragment;
+	private MyFoundFragment myFoundFragment;
     private FoundFragment foundFragment;
 
     private Button toFoundFragment;
@@ -64,16 +65,16 @@ public class FoundActivity extends Activity implements OnClickListener {
             case R.id.main_my:
                 hideFragment(Transaction);
                 isLost = true;
-                if (lostFragment == null) {
-                    lostFragment = new LostFragment();
-                    Transaction.add(R.id.content, lostFragment);
+                if (myFoundFragment == null) {
+                    myFoundFragment = new MyFoundFragment();
+                    Transaction.add(R.id.content, myFoundFragment);
                 } else {
-                    Transaction.show(lostFragment);
+                    Transaction.show(myFoundFragment);
                 }
                 break;
             case R.id.toolbar_button_add:
                 Intent intent = new Intent();
-                intent.setClass(this, AddLostDataActivity.class);
+                intent.setClass(this, AddFoundDataActivity.class);
                 startActivity(intent);
                 break;
             default:
@@ -84,8 +85,8 @@ public class FoundActivity extends Activity implements OnClickListener {
 
     //隐藏Fragment
     private void hideFragment(FragmentTransaction Transaction) {
-        if (lostFragment != null) {
-            Transaction.hide(lostFragment);
+        if (myFoundFragment != null) {
+            Transaction.hide(myFoundFragment);
         }
         if (foundFragment != null) {
             Transaction.hide(foundFragment);
@@ -96,7 +97,7 @@ public class FoundActivity extends Activity implements OnClickListener {
         FragmentManager = getFragmentManager();
         FragmentTransaction Transaction = FragmentManager.beginTransaction();
         isLost = true;
-        if (lostFragment == null) {
+        if (myFoundFragment == null) {
             foundFragment = new FoundFragment();
             Transaction.add(R.id.content, foundFragment);
         } else {

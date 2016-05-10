@@ -72,6 +72,8 @@ public class FoundFragment extends Fragment {
 
     private void getDatas() {
         BmobQuery<Found> query = new BmobQuery<Found>();
+		query.include("publisher");
+		query.order("-updatedAt");
         query.findObjects(getActivity(), new FindListener<Found>() {
             @Override
             public void onSuccess(List<Found> object) {
@@ -95,6 +97,8 @@ public class FoundFragment extends Fragment {
                     public void run() {
                         adapter.refreshDatas();
                         BmobQuery<Found> query = new BmobQuery<Found>();
+						query.include("publisher");
+						query.order("-updatedAt");
                         query.findObjects(getActivity(), new FindListener<Found>() {
                             @Override
                             public void onSuccess(List<Found> object) {

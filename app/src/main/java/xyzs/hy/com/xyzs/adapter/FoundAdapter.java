@@ -44,6 +44,7 @@ public class FoundAdapter extends RecyclerView.Adapter<FoundAdapter.MyViewHolder
         holder.tv_phone.setText(lostDatas.get(pos).getPhone());
         holder.tv_title.setText(lostDatas.get(pos).getTitle());
         holder.tv_time.setText(lostDatas.get(pos).getUpdatedAt());
+		holder.tv_name.setText(lostDatas.get(pos).getPublisher().getUsername());
         if (lostDatas.get(pos).getImageURL() != null) {
             Uri uri = Uri.parse(lostDatas.get(pos).getImageURL());
             holder.draweeViewImage.setImageURI(uri);
@@ -78,7 +79,7 @@ public class FoundAdapter extends RecyclerView.Adapter<FoundAdapter.MyViewHolder
         TextView tv_title;
         TextView tv_describe;
         TextView tv_phone;
-        private TextView tv_nama;
+        private TextView tv_name;
         private SimpleDraweeView draweeViewCaptcha;
         SimpleDraweeView draweeViewImage;
 
@@ -88,6 +89,8 @@ public class FoundAdapter extends RecyclerView.Adapter<FoundAdapter.MyViewHolder
             tv_phone = (TextView) arg0.findViewById(R.id.tv_phone);
             tv_title = (TextView) arg0.findViewById(R.id.tv_title);
             tv_time = (TextView) arg0.findViewById(R.id.tv_time);
+			tv_name = (TextView) arg0.findViewById(R.id.tv_name);
+			draweeViewCaptcha = (SimpleDraweeView) arg0.findViewById(R.id.iv_headSculpture);
             tv_describe = (TextView) arg0.findViewById(R.id.tv_describe);
         }
     }

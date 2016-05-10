@@ -69,12 +69,14 @@ public class LostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         if (holder instanceof ItemViewHolder) {
             ((ItemViewHolder) holder).tv_describe.setText(lostDatas.get(position).getDescribe());
             ((ItemViewHolder) holder).tv_phone.setText(lostDatas.get(position).getPhone());
+			((MyViewHolder)holder).tv_name.setText(lostDatas.get(position).getPublisher().getUsername());
             ((ItemViewHolder) holder).tv_title.setText(lostDatas.get(position).getTitle());
             ((ItemViewHolder) holder).tv_time.setText(lostDatas.get(position).getUpdatedAt());
         } else if (holder instanceof MyViewHolder) {
             ((MyViewHolder) holder).tv_describe.setText(lostDatas.get(position).getDescribe());
             ((MyViewHolder) holder).tv_phone.setText(lostDatas.get(position).getPhone());
             ((MyViewHolder) holder).tv_title.setText(lostDatas.get(position).getTitle());
+			((MyViewHolder)holder).tv_name.setText(lostDatas.get(position).getPublisher().getUsername());
             ((MyViewHolder) holder).tv_time.setText(lostDatas.get(position).getUpdatedAt());
             Uri uri = Uri.parse(lostDatas.get(position).getimageURL());
             ((MyViewHolder) holder).draweeView.setImageURI(uri);
@@ -115,12 +117,14 @@ public class LostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         TextView tv_title;
         TextView tv_describe;
         TextView tv_phone;
+		TextView tv_name;
 
         public ItemViewHolder(View itemView) {
             super(itemView);
             tv_phone = (TextView) itemView.findViewById(R.id.tv_phone_no);
             tv_title = (TextView) itemView.findViewById(R.id.tv_title_no);
             tv_time = (TextView) itemView.findViewById(R.id.tv_time_no);
+			tv_name = (TextView) itemView.findViewById(R.id.tv_name);
             tv_describe = (TextView) itemView.findViewById(R.id.tv_describe_no);
 
         }
@@ -132,6 +136,7 @@ public class LostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         TextView tv_describe;
         TextView tv_phone;
         SimpleDraweeView draweeView;
+		TextView tv_name;
 
         public MyViewHolder(View itemView) {
             super(itemView);
@@ -139,6 +144,7 @@ public class LostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             tv_phone = (TextView) itemView.findViewById(R.id.tv_phone);
             tv_title = (TextView) itemView.findViewById(R.id.tv_title);
             tv_time = (TextView) itemView.findViewById(R.id.tv_time);
+			tv_name = (TextView) itemView.findViewById(R.id.tv_name);
             tv_describe = (TextView) itemView.findViewById(R.id.tv_describe);
         }
     }
