@@ -10,9 +10,13 @@ import android.view.*;
 import cn.bmob.v3.*;
 import cn.bmob.v3.listener.*;
 import cn.bmob.v3.exception.*;
+import xyzs.hy.com.xyzs.common.IsPhone;
 import xyzs.hy.com.xyzs.entity.User;
 
 import android.content.*;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class RegisterActivity extends Activity implements OnClickListener {
     private Button btnCaptcha;
@@ -35,6 +39,9 @@ public class RegisterActivity extends Activity implements OnClickListener {
         initLayout();
     }
 
+    /**
+     * 初始化视图
+     */
     private void initLayout() {
         btnCaptcha = (Button) findViewById(R.id.btn_captcha);
         register = (Button) findViewById(R.id.btn_register);
@@ -45,6 +52,8 @@ public class RegisterActivity extends Activity implements OnClickListener {
         editCaptcha = (EditText) findViewById(R.id.edit_captcha);
         editPassword = (EditText) findViewById(R.id.edit_password);
     }
+
+
 
     private void register() {
 //		final BmobFile bmobFile = new BmobFile(new File(imagePath));
@@ -83,6 +92,11 @@ public class RegisterActivity extends Activity implements OnClickListener {
     }
 
     private void getCaptcha() {
+        if (!IsPhone.isPhone(phone)){
+            Toast.makeText(getApplicationContext(), "请输入正确的手机号", Toast.LENGTH_SHORT)
+                    .show();
+            return;
+        }
         BmobSMS.requestSMSCode(this, phone, "XYZS_y", new RequestSMSCodeListener() {
             @Override
             public void done(Integer p1, BmobException p2) {
@@ -97,6 +111,7 @@ public class RegisterActivity extends Activity implements OnClickListener {
         });
     }
 
+
     @Override
     public void onClick(View p1) {
         phone = editUsername.getText().toString();
@@ -104,7 +119,8 @@ public class RegisterActivity extends Activity implements OnClickListener {
         password = editPassword.getText().toString();
         switch (p1.getId()) {
             case R.id.btn_captcha:
-                if (phone == null) {
+                if (phone.equals("")) {
+//                    IsPhone.isPhone(phone);
                     Toast.makeText(getApplicationContext(), "手机号码不能为空！", Toast.LENGTH_SHORT)
                             .show();
                 } else {
@@ -112,7 +128,7 @@ public class RegisterActivity extends Activity implements OnClickListener {
                 }
                 break;
             case R.id.btn_register:
-                if (phone == null && password == null && captchaCode == null) {
+                if (phone.equals("")|| password.equals("") && captchaCode.equals("")) {
                     Toast.makeText(getApplicationContext(), "请完善密码和手机号！", Toast.LENGTH_SHORT)
                             .show();
                 } else {

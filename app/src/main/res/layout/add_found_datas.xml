@@ -1,105 +1,124 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-	xmlns:android="http://schemas.android.com/apk/res/android"
-	android:layout_height="wrap_content"
-	android:layout_width="match_parent">
-	
-	<LinearLayout
-		
-		android:layout_width="fill_parent"
-		android:layout_height="fill_parent"
-		android:orientation="vertical"
-		android:gravity="center_horizontal">
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-		<LinearLayout
-			android:layout_height="wrap_content"
-			android:layout_width="wrap_content"
-			android:orientation="horizontal"
-			android:gravity="center"
-			android:layout_marginTop="15dp">
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
 
-			<TextView
-				android:layout_height="wrap_content"
-				android:text="标题:"
-				android:textAppearance="?android:attr/textAppearanceLarge"
-				android:layout_width="wrap_content"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#6cf"
+            android:gravity="center"
+            android:padding="2dp"
+            android:text="发布寻物"
+            android:textColor="#fff"
+            android:textSize="34dp" />
 
-			<EditText
-				android:layout_height="wrap_content"
-				android:ems="10"
-				android:id="@+id/add_found_title"
-				android:layout_width="wrap_content"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="15dp"
+            android:gravity="center"
+            android:orientation="horizontal">
 
-		</LinearLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="标题:"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
 
-		<LinearLayout
-			android:layout_height="wrap_content"
-			android:layout_width="wrap_content"
-			android:orientation="horizontal"
-			android:layout_marginTop="10dp"
-			android:gravity="center">
+            <EditText
+                android:id="@+id/add_found_title"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginLeft="5dp"
+                android:layout_weight="1.0"
+                android:background="@drawable/common_add_bg"
+                android:ems="10" />
 
-			<TextView
-				android:layout_height="wrap_content"
-				android:text="手机:"
-				android:textAppearance="?android:attr/textAppearanceLarge"
-				android:layout_width="wrap_content"/>
+        </LinearLayout>
 
-			<EditText
-				android:layout_height="wrap_content"
-				android:ems="10"
-				android:id="@+id/add_found_phone"
-				android:layout_width="wrap_content"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
 
-		</LinearLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="手机:"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
 
-		<LinearLayout
-			android:layout_height="wrap_content"
-			android:layout_width="wrap_content"
-			android:orientation="horizontal"
-			android:layout_marginTop="10dp"
-			android:gravity="center">
+            <EditText
+                android:id="@+id/add_found_phone"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginLeft="5dp"
+                android:layout_weight="1.0"
+                android:background="@drawable/common_add_bg"
+                android:ems="10" />
 
-			<TextView
-				android:layout_height="wrap_content"
-				android:text="内容:"
-				android:textAppearance="?android:attr/textAppearanceLarge"
-				android:layout_width="wrap_content"/>
+        </LinearLayout>
 
-			<EditText
-				android:layout_height="wrap_content"
-				android:inputType="textMultiLine"
-				android:ems="10"
-				android:id="@+id/add_found_describe"
-				android:layout_width="wrap_content"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/common_add_bg"
+            android:gravity="center"
+            android:orientation="vertical">
 
-		</LinearLayout>
+            <EditText
+                android:id="@+id/add_found_describe"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:background="@null"
+                android:hint="说点什么..."
+                android:inputType="textMultiLine"
+                android:paddingLeft="10dp"
+                android:paddingRight="5dp"
+                android:paddingTop="3dp" />
 
-		<ImageView
-			android:layout_height="100dp"
-			android:layout_width="100dp"
-			android:id="@+id/add_found_imageview"
-			android:layout_marginTop="10dp"/>
+            <ImageView
+                android:id="@+id/add_found_imageview"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_gravity="bottom|left"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="20dp"
+                android:src="@drawable/img_normal" />
 
-		<LinearLayout
-			android:layout_height="wrap_content"
-			android:layout_width="wrap_content"
-			android:orientation="horizontal"
-			android:layout_marginTop="10dp">
+        </LinearLayout>
 
-			<Button
-				android:layout_height="wrap_content"
-				android:text="添加图片"
-				android:id="@+id/add_found_choosePhotoByAlbum"
-				android:layout_width="match_parent"/>
+        <Button
+            android:id="@+id/add_found_finish"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/com_lost_found_bg"
+            android:gravity="center"
+            android:text="发布"
+            android:textColor="@drawable/com_found_text_color"
+            android:textSize="18sp" />
 
-		</LinearLayout>
+    </LinearLayout>
 
-		<Button
-			android:layout_height="wrap_content"
-			android:text="发布"
-			android:layout_width="wrap_content"
-			android:id="@+id/add_found_finish"
-			android:layout_marginTop="15dp"/>
-</LinearLayout>
 </ScrollView>
+

@@ -17,10 +17,12 @@ import cn.bmob.v3.listener.*;
 import android.text.*;
 
 import cn.bmob.v3.datatype.*;
+import xyzs.hy.com.xyzs.common.IsPhone;
 import xyzs.hy.com.xyzs.entity.Found;
 
 import android.database.*;
 import android.app.*;
+
 import cn.bmob.v3.*;
 import xyzs.hy.com.xyzs.entity.*;
 
@@ -41,7 +43,6 @@ public class AddFoundDataActivity extends Activity implements OnClickListener, T
 
     private Context mContext;
 
-    private Button choosePhotoByAlbum;
     private Button finish;
 
     @Override
@@ -65,19 +66,27 @@ public class AddFoundDataActivity extends Activity implements OnClickListener, T
         phoneEdittext.addTextChangedListener(this);
         describeEdittext.addTextChangedListener(this);
         image = (ImageView) findViewById(R.id.add_found_imageview);
-        choosePhotoByAlbum = (Button) findViewById(R.id.add_found_choosePhotoByAlbum);
         finish = (Button) findViewById(R.id.add_found_finish);
-        choosePhotoByAlbum.setOnClickListener(this);
+        image.setOnClickListener(this);
         finish.setOnClickListener(this);
     }
 
     //上传数据
     private void upDatas() {
         final String phone, title, describe;
-		final User user = BmobUser.getCurrentUser(this,User.class);
+        final User user = BmobUser.getCurrentUser(this, User.class);
         title = titleEdittext.getText().toString();
         phone = phoneEdittext.getText().toString();
         describe = describeEdittext.getText().toString();
+        if (title.equals("") || phone.equals("") || describe.equals("")) {
+            Toast.makeText(AddFoundDataActivity.this, "请完善信息...", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (!IsPhone.isPhone(phone)) {
+            Toast.makeText(AddFoundDataActivity.this, "输入正确的手机号", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         if (imagePath == null) {
             Found found = new Found(title, describe, phone, null, 0, user);
             found.save(this, new SaveListener() {
@@ -122,32 +131,27 @@ public class AddFoundDataActivity extends Activity implements OnClickListener, T
     @Override
     public void onClick(View p1) {
         switch (p1.getId()) {
-            case R.id.add_found_choosePhotoByAlbum:
-                choosePhotoByAlbum.setOnClickListener(new OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        // 创建File对象，用于存储选择的照片
-                        File outputImage = new File(Environment.
-                                getExternalStorageDirectory(), "tempImage.jpg");
-                        try {
-                            if (outputImage.exists()) {
-                                outputImage.delete();
-                            }
-                            outputImage.createNewFile();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                        imageUri = Uri.fromFile(outputImage);
-                        Intent intent = new Intent("android.intent.action.PICK");
-                        intent.setType("image/*");
-                        intent.putExtra("crop", true);
-                        intent.putExtra("aspectX", 1);
-                        intent.putExtra("aspectY", 1);
-                        intent.putExtra("scale", true);
-                        intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
-                        startActivityForResult(intent, TAKE_PHOTO);
+            case R.id.add_found_imageview:
+                // 创建File对象，用于存储选择的照片
+                File outputImage = new File(Environment.
+                        getExternalStorageDirectory(), "tempImage.jpg");
+                try {
+                    if (outputImage.exists()) {
+                        outputImage.delete();
                     }
-                });
+                    outputImage.createNewFile();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                imageUri = Uri.fromFile(outputImage);
+                Intent intent = new Intent("android.intent.action.PICK");
+                intent.setType("image/*");
+                intent.putExtra("crop", true);
+                intent.putExtra("aspectX", 1);
+                intent.putExtra("aspectY", 1);
+                intent.putExtra("scale", true);
+                intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
+                startActivityForResult(intent, TAKE_PHOTO);
                 break;
 
             case R.id.add_found_finish:

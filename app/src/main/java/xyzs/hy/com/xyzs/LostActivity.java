@@ -6,6 +6,7 @@ import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import android.view.View;
@@ -56,6 +57,10 @@ public class LostActivity extends Activity implements View.OnClickListener {
 
         switch (v.getId()) {
             case R.id.main_found:
+                toFoundFragment.setBackgroundResource(R.color.white);
+                toLostFragment.setBackgroundResource(R.drawable.all_left_bg);
+                toFoundFragment.setTextColor(Color.rgb(102, 204, 255));
+                toLostFragment.setTextColor(Color.WHITE);
                 hideFragment(Transaction);
                 isLost = false;
                 if (myLostFragment == null) {
@@ -66,6 +71,10 @@ public class LostActivity extends Activity implements View.OnClickListener {
                 }
                 break;
             case R.id.main_lost:
+                toLostFragment.setBackgroundResource(R.color.white);
+                toFoundFragment.setBackgroundResource(R.drawable.all_right_bg);
+                toLostFragment.setTextColor(Color.rgb(102, 204, 255));
+                toFoundFragment.setTextColor(Color.WHITE);
                 hideFragment(Transaction);
                 isLost = true;
                 if (lostFragment == null) {

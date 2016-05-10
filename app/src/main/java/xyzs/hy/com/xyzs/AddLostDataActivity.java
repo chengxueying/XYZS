@@ -13,11 +13,13 @@ import android.widget.*;
 
 import cn.bmob.v3.datatype.*;
 import cn.bmob.v3.listener.*;
+import xyzs.hy.com.xyzs.common.IsPhone;
 import xyzs.hy.com.xyzs.entity.Lost;
 
 import java.io.*;
 
 import android.app.*;
+
 import cn.bmob.v3.*;
 import xyzs.hy.com.xyzs.entity.*;
 
@@ -35,13 +37,11 @@ public class AddLostDataActivity extends Activity implements OnClickListener, Te
 
     private Context mContext;
 
-    private Button choosePhotoByAlbum;
     private Button finish;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.add_lost_datas);
 
         mContext = getBaseContext();
@@ -59,22 +59,29 @@ public class AddLostDataActivity extends Activity implements OnClickListener, Te
 
         image = (ImageView) findViewById(R.id.add_lost_datasImageView);
 
-        choosePhotoByAlbum = (Button) findViewById(R.id.add_lost_addImage);
         finish = (Button) findViewById(R.id.add_lost_finish);
 
-        choosePhotoByAlbum.setOnClickListener(this);
+        image.setOnClickListener(this);
         finish.setOnClickListener(this);
     }
 
     //上传数据
     private void upDatas() {
         final String phone, title, describe;
-		final User user = BmobUser.getCurrentUser(this, User.class);
+        final User user = BmobUser.getCurrentUser(this, User.class);
         title = titleEdittext.getText().toString();
         phone = phoneEdittext.getText().toString();
         describe = describeEdittext.getText().toString();
+        if (title.equals("")||phone.equals("")||describe.equals("")){
+            Toast.makeText(AddLostDataActivity.this,"请完善信息...",Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (!IsPhone.isPhone(phone)) {
+            Toast.makeText(AddLostDataActivity.this, "请输入正确的手机号", Toast.LENGTH_SHORT).show();
+            return;
+        }
         if (imagePath == null) {
-            Lost lost = new Lost(title, describe, phone, null,0, user);
+            Lost lost = new Lost(title, describe, phone, null, 0, user);
             lost.save(this, new SaveListener() {
                 @Override
                 public void onSuccess() {
@@ -93,7 +100,7 @@ public class AddLostDataActivity extends Activity implements OnClickListener, Te
                 @Override
                 public void onSuccess() {
                     String image = bmobFile.getFileUrl(AddLostDataActivity.this);
-                    Lost lost = new Lost(title, describe, phone, image,1, user);
+                    Lost lost = new Lost(title, describe, phone, image, 1, user);
                     lost.save(AddLostDataActivity.this, new SaveListener() {
                         @Override
                         public void onSuccess() {
@@ -119,32 +126,27 @@ public class AddLostDataActivity extends Activity implements OnClickListener, Te
     @Override
     public void onClick(View p1) {
         switch (p1.getId()) {
-            case R.id.add_lost_addImage:
-                choosePhotoByAlbum.setOnClickListener(new OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        // 创建File对象，用于存储选择的照片
-                        File outputImage = new File(Environment.
-                                getExternalStorageDirectory(), "tempImage.jpg");
-                        try {
-                            if (outputImage.exists()) {
-                                outputImage.delete();
-                            }
-                            outputImage.createNewFile();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                        imageUri = Uri.fromFile(outputImage);
-                        Intent intent = new Intent("android.intent.action.PICK");
-                        intent.setType("image/*");
-                        intent.putExtra("crop", true);
-                        intent.putExtra("aspectX", 1);
-                        intent.putExtra("aspectY", 1);
-                        intent.putExtra("scale", true);
-                        intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
-                        startActivityForResult(intent, TAKE_PHOTO);
+            case R.id.add_lost_datasImageView:
+                // 创建File对象，用于存储选择的照片
+                File outputImage = new File(Environment.
+                        getExternalStorageDirectory(), "tempImage.jpg");
+                try {
+                    if (outputImage.exists()) {
+                        outputImage.delete();
                     }
-                });
+                    outputImage.createNewFile();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                imageUri = Uri.fromFile(outputImage);
+                Intent intent = new Intent("android.intent.action.PICK");
+                intent.setType("image/*");
+                intent.putExtra("crop", true);
+                intent.putExtra("aspectX", 1);
+                intent.putExtra("aspectY", 1);
+                intent.putExtra("scale", true);
+                intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
+                startActivityForResult(intent, TAKE_PHOTO);
                 break;
 
             case R.id.add_lost_finish:
@@ -199,8 +201,6 @@ public class AddLostDataActivity extends Activity implements OnClickListener, Te
                         e.printStackTrace();
                     }
                 }
-                break;
-            default:
                 break;
         }
     }
