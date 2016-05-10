@@ -12,12 +12,14 @@ import java.io.*;
 
 import android.graphics.*;
 
+import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.listener.*;
 
 import android.text.*;
 
 import cn.bmob.v3.datatype.*;
 import xyzs.hy.com.xyzs.entity.Found;
+import xyzs.hy.com.xyzs.entity.User;
 
 import android.database.*;
 import android.app.*;
@@ -71,13 +73,13 @@ public class AddFoundDataActivity extends Activity implements OnClickListener, T
 
     //上传数据
     private void upDatas() {
-        final String phone, title, describe, imageURL;
-        Context c = mContext;
+        final String phone, title, describe;
+        final User user = BmobUser.getCurrentUser(this, User.class);
         title = titleEdittext.getText().toString();
         phone = phoneEdittext.getText().toString();
         describe = describeEdittext.getText().toString();
         if (imagePath == null) {
-            Found found = new Found(title, describe, phone, null, 0);
+            Found found = new Found(title, describe, phone, null, 0, user);
             found.save(this, new SaveListener() {
                 @Override
                 public void onSuccess() {
@@ -96,7 +98,7 @@ public class AddFoundDataActivity extends Activity implements OnClickListener, T
                 @Override
                 public void onSuccess() {
                     String image = bmobFile.getFileUrl(mContext);
-                    Found found = new Found(title, describe, phone, image, 1);
+                    Found found = new Found(title, describe, phone, image, 1, user);
                     found.save(mContext, new SaveListener() {
                         @Override
                         public void onSuccess() {

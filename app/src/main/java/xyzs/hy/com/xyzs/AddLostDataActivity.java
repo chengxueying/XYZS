@@ -11,9 +11,11 @@ import android.view.*;
 import android.view.View.*;
 import android.widget.*;
 
+import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.datatype.*;
 import cn.bmob.v3.listener.*;
 import xyzs.hy.com.xyzs.entity.Lost;
+import xyzs.hy.com.xyzs.entity.User;
 
 import java.io.*;
 
@@ -67,12 +69,12 @@ public class AddLostDataActivity extends Activity implements OnClickListener, Te
     //上传数据
     private void upDatas() {
         final String phone, title, describe;
-        Context c = mContext;
+        final User user = BmobUser.getCurrentUser(this, User.class);
         title = titleEdittext.getText().toString();
         phone = phoneEdittext.getText().toString();
         describe = describeEdittext.getText().toString();
         if (imagePath == null) {
-            Lost lost = new Lost(title, describe, phone, null, 0);
+            Lost lost = new Lost(title, describe, phone, null, 0, user);
             lost.save(this, new SaveListener() {
                 @Override
                 public void onSuccess() {
@@ -91,7 +93,8 @@ public class AddLostDataActivity extends Activity implements OnClickListener, Te
                 @Override
                 public void onSuccess() {
                     String image = bmobFile.getFileUrl(AddLostDataActivity.this);
-                    Lost lost = new Lost(title, describe, phone, image, 1);
+
+                    Lost lost = new Lost(title, describe, phone, image, 1, user);
                     lost.save(AddLostDataActivity.this, new SaveListener() {
                         @Override
                         public void onSuccess() {

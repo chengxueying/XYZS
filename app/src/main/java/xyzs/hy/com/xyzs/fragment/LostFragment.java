@@ -45,8 +45,8 @@ public class LostFragment extends Fragment
 		mSwipeRefreshLayout = (SwipeRefreshLayout)lost.findViewById(R.id.SwipeRefreshLayout_lost);
 		mSwipeRefreshLayout.setColorSchemeColors(Color.BLUE);
 		mSwipeRefreshLayout.setProgressViewOffset(false, 0, (int) TypedValue
-												  .applyDimension(TypedValue.COMPLEX_UNIT_DIP, 24, getResources()
-														  .getDisplayMetrics()));
+				.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 24, getResources()
+						.getDisplayMetrics()));
 		refreshDatas();
 
 		if (lostDatas == null || lostDatas.size() == 0)
@@ -72,51 +72,55 @@ public class LostFragment extends Fragment
 	private void getDatas()
 	{
 		BmobQuery<Lost> query = new BmobQuery<Lost>();
+		query.order("-updatedAt");
+		query.include("publisher");
 		query.findObjects(getActivity(), new FindListener<Lost>() {
-				@Override
-				public void onSuccess(List<Lost> object)
-				{					
-					lostDatas.addAll(object);
-					setDatas();
-				}
-				@Override
-				public void onError(int code, String msg)
-				{
-					Toast.makeText(getActivity(), code + msg, Toast.LENGTH_LONG).show();
-				}
-			});
+			@Override
+			public void onSuccess(List<Lost> object)
+			{
+				lostDatas.addAll(object);
+				setDatas();
+			}
+			@Override
+			public void onError(int code, String msg)
+			{
+				Toast.makeText(getActivity(), code + msg, Toast.LENGTH_LONG).show();
+			}
+		});
 	}
 
 	private void refreshDatas()
 	{
 		mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener(){
-				@Override
-				public void onRefresh()
-				{
-					new Handler().postDelayed(new Runnable() {
+			@Override
+			public void onRefresh()
+			{
+				new Handler().postDelayed(new Runnable() {
+					@Override
+					public void run()
+					{
+						adapter.refreshDatas();
+						BmobQuery<Lost> query = new BmobQuery<Lost>();
+						query.order("-updatedAt");
+						query.include("publisher");
+						query.findObjects(getActivity(), new FindListener<Lost>() {
 							@Override
-							public void run()
+							public void onSuccess(List<Lost> object)
 							{
-								adapter.refreshDatas();
-								BmobQuery<Lost> query = new BmobQuery<Lost>();
-								query.findObjects(getActivity(), new FindListener<Lost>() {
-										@Override
-										public void onSuccess(List<Lost> object)
-										{
-											lostDatas.addAll(object);
-											setDatas();
-										}
-										@Override
-										public void onError(int code, String msg)
-										{
-											Toast.makeText(getActivity(), code + msg, Toast.LENGTH_LONG).show();
-										}
-									});
-								Toast.makeText(getActivity(), "刷新成功", Toast.LENGTH_LONG).show();
-								mSwipeRefreshLayout.setRefreshing(false);
+								lostDatas.addAll(object);
+								setDatas();
 							}
-						}, 1000);
-				}
-			});
+							@Override
+							public void onError(int code, String msg)
+							{
+								Toast.makeText(getActivity(), code + msg, Toast.LENGTH_LONG).show();
+							}
+						});
+						Toast.makeText(getActivity(), "刷新成功", Toast.LENGTH_LONG).show();
+						mSwipeRefreshLayout.setRefreshing(false);
+					}
+				}, 1000);
+			}
+		});
 	}
 }
