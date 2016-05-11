@@ -82,7 +82,7 @@ public class LiftActivity extends Activity implements View.OnClickListener {
     private void sendIntent(String name) {
         Intent intent = new Intent(LiftActivity.this, QueryActivity.class);
         intent.putExtra("name", name);
-
+         startActivity(intent);
         finish();
     }
 }
