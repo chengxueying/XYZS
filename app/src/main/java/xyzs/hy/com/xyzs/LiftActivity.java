@@ -19,8 +19,6 @@ public class LiftActivity extends Activity implements View.OnClickListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_left);
 
@@ -47,42 +45,39 @@ public class LiftActivity extends Activity implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.btn_mei:
                 sendIntent(HttpUtils.MEI_TUAN);
-            break;
+                break;
             case R.id.btn_e:
-                sendIntent(HttpUtils.MEI_TUAN);
-
+                sendIntent(HttpUtils.E_MA);
                 break;
             case R.id.btn_ru:
-                sendIntent(HttpUtils.MEI_TUAN);
+                sendIntent(HttpUtils.RU_JIA);
                 break;
             case R.id.btn_qi:
-                sendIntent(HttpUtils.MEI_TUAN);
+                sendIntent(HttpUtils.QI_TIAN);
                 break;
             case R.id.btn_huo:
-                sendIntent(HttpUtils.MEI_TUAN);
+                sendIntent(HttpUtils.HUO_CHE_PIAO);
                 break;
             case R.id.btn_xie:
-                sendIntent(HttpUtils.MEI_TUAN);
+                sendIntent(HttpUtils.XIE_CHENG);
                 break;
             case R.id.btn_kuai:
-                sendIntent(HttpUtils.MEI_TUAN);
+                sendIntent(HttpUtils.KUAI_DI);
                 break;
             case R.id.btn_ai:
-                sendIntent(HttpUtils.MEI_TUAN);
+                sendIntent(HttpUtils.AI_CHA);
                 break;
-
-
         }
 
 
     }
+
     private void sendIntent(String name) {
         Intent intent = new Intent(LiftActivity.this, QueryActivity.class);
-        intent.putExtra("name", name);
-         startActivity(intent);
-        finish();
+        intent.putExtra("http", name);
+        startActivity(intent);
     }
 }

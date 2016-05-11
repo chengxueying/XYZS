@@ -63,7 +63,8 @@ public class MainActivity extends Activity implements BaseSliderView.OnSliderCli
                 switchActivity(FoundActivity.class);
                 break;
             case R.id.main_cardview_express:
-                break;
+                switchActivity(LiftActivity.class);
+            break;
             case R.id.main_cardview_life:
                 Intent intent1 = new Intent(MainActivity.this, UserCenterActivity.class);
                 startActivityForResult(intent1, REQUEST);

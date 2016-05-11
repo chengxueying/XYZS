@@ -25,7 +25,7 @@ public class HttpUtils {
     public static String FOUR_SCORE = "http://cet.99sushe.com/";
 
     //成绩查询
-    public static String SCORE = "http://jw.qdu.edu.cn/academic/common/security/electiveLogin.jsp";
+    public static String SCORE = "http://jwglxt.qau.edu.cn/";
 
 
 }
