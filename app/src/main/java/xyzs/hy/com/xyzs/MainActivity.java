@@ -15,6 +15,7 @@ import com.facebook.drawee.backends.pipeline.Fresco;
 
 
 public class MainActivity extends Activity implements BaseSliderView.OnSliderClickListener, OnClickListener {
+    public static final int REQUEST = 3;
     private SliderLayout sliderLayout;
     private CardView lost;
     private CardView found;
@@ -64,11 +65,12 @@ public class MainActivity extends Activity implements BaseSliderView.OnSliderCli
             case R.id.main_cardview_express:
                 break;
             case R.id.main_cardview_life:
-				switchActivity(UserCenterActivity.class);
+                Intent intent1 = new Intent(MainActivity.this, UserCenterActivity.class);
+                startActivityForResult(intent1, REQUEST);
+
                 break;
             case R.id.main_cardview_mark:
-                Intent intent=new Intent(MainActivity.this,ScoreDialog.class);
-                startActivity(intent);
+                switchActivity(ScoreDialog.class);
                 break;
             case R.id.main_cardview_market:
                 break;
@@ -79,6 +81,14 @@ public class MainActivity extends Activity implements BaseSliderView.OnSliderCli
         Intent intent = new Intent();
         intent.setClass(MainActivity.this, activity);
         startActivity(intent);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == RESULT_OK) {
+            MainActivity.this.finish();
+        }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     //代码家的轮播框架

@@ -106,12 +106,14 @@ public class UserCenterActivity extends Activity implements OnClickListener {
                 Intent intent4 = new Intent();
                 intent4.setClass(UserCenterActivity.this, LoginActivity.class);
                 startActivity(intent4);
+                this.setResult(RESULT_OK, intent4);
                 finish();
                 break;
             case R.id.change_password:
                 Intent intent2 = new Intent();
                 intent2.setClass(UserCenterActivity.this, ChangePasswordActivity.class);
                 startActivity(intent2);
+
                 break;
         }
     }
