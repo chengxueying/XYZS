@@ -42,7 +42,9 @@
         <activity android:name=".FoundActivity"></activity>
         <activity android:name=".QueryActivity" />
         <activity android:name=".DetailActivity" />
-        <activity android:name=".ChangeNameActivity" />
+        <activity
+            android:name=".ChangeNameActivity"
+            android:theme="@android:style/Theme.Dialog" />
         <activity
             android:name=".ChangePasswordActivity"
             android:theme="@android:style/Theme.Dialog" />

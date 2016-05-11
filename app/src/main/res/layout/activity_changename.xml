@@ -1,23 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-	xmlns:android="http://schemas.android.com/apk/res/android"
-	android:layout_width="fill_parent"
-	android:layout_height="fill_parent"
-	android:orientation="vertical">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="#fff"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="30dp">
 
-	<EditText
-		android:layout_height="wrap_content"
-		android:ems="10"
-		android:layout_width="wrap_content"
-		android:layout_gravity="center"
-		android:id="@+id/edi_context"/>
+    <EditText
+        android:id="@+id/new_person_name"
+        android:layout_width="190dp"
+        android:layout_height="35dp"
+        android:background="@drawable/common_add_bg"
+        android:hint="新用户名"
+        android:maxLength="10"
+        android:paddingLeft="9dp"
+        android:paddingRight="9dp"
+        android:singleLine="true"
+        android:textColor="#aaa"
+        android:textColorHint="#aaa"
+        android:textCursorDrawable="@null"
+        android:textSize="18sp" />
 
-	<Button
-		android:layout_height="wrap_content"
-		android:text="保存"
-		android:layout_width="wrap_content"
-		android:layout_gravity="center"
-		android:id="@+id/btn_finish"/>
+
+    <LinearLayout
+        android:id="@+id/changename_linearlayout"
+        android:layout_width="190dp"
+        android:layout_height="35dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/dialog_scorce_bg"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="6dp"
+            android:layout_marginStart="6dp"
+            android:text="确认修改"
+            android:textColor="#ffffff"
+            android:textSize="11sp" />
+    </LinearLayout>
+
 
 </LinearLayout>
 

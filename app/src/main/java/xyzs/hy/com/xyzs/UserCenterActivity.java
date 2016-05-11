@@ -27,6 +27,7 @@ import cn.bmob.v3.listener.*;
 public class UserCenterActivity extends Activity implements OnClickListener {
     public static final int TAKE_PHOTO = 1;
     public static final int CROP_PHOTO = 2;
+    public static final int REQUEST = 3;
     private String imagePath = null;
     private Bitmap bitmap;
     private Uri imageUri;
@@ -94,7 +95,8 @@ public class UserCenterActivity extends Activity implements OnClickListener {
             case R.id.ibn_person_name:
                 Intent intent1 = new Intent();
                 intent1.setClass(UserCenterActivity.this, ChangeNameActivity.class);
-                startActivity(intent1);
+                startActivityForResult(intent1, REQUEST);
+//                startActivity(intent1);
                 break;
             case R.id.ibn_person_account:
                 Toast.makeText(UserCenterActivity.this, "亲，暂时不提供账号修改...", Toast.LENGTH_SHORT).show();
@@ -158,7 +160,12 @@ public class UserCenterActivity extends Activity implements OnClickListener {
                     }
                 }
                 break;
-            default:
+            case REQUEST:
+                if (resultCode == RESULT_OK) {
+                    String newName = data.getStringExtra("name");
+                    mPersonName.setText(newName);
+                }
+//
                 break;
         }
         upLodeImage();
@@ -184,17 +191,18 @@ public class UserCenterActivity extends Activity implements OnClickListener {
                             Uri uri = Uri.parse(head);
                             iv_head.setImageURI(uri);
                         }
-								@Override
-								public void onFailure(int p1, String p2)
-								{
-									Toast.makeText(getApplication(), "修改失败", Toast.LENGTH_SHORT).show();
-								}
-							});
-					}
-					@Override
-					public void onFailure(int p1, String p2) {
-					}
-				});
+
+                        @Override
+                        public void onFailure(int p1, String p2) {
+                            Toast.makeText(getApplication(), "修改失败", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
+
+                @Override
+                public void onFailure(int p1, String p2) {
+                }
+            });
         }
     }
 
