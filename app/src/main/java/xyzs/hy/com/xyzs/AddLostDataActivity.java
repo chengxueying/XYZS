@@ -146,8 +146,8 @@ public class AddLostDataActivity extends Activity implements OnClickListener, Te
                 Intent intent = new Intent("android.intent.action.PICK");
                 intent.setType("image/*");
                 intent.putExtra("crop", true);
-                intent.putExtra("aspectX", 1);
-                intent.putExtra("aspectY", 1);
+                //intent.putExtra("aspectX", 1);
+                //intent.putExtra("aspectY", 1);
                 intent.putExtra("scale", true);
                 intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
                 startActivityForResult(intent, TAKE_PHOTO);
@@ -171,8 +171,8 @@ public class AddLostDataActivity extends Activity implements OnClickListener, Te
                     }
                     Intent intent = new Intent("com.android.camera.action.CROP");
                     intent.setDataAndType(imageUri, "image/*");
-                    intent.putExtra("aspectX", 1);
-                    intent.putExtra("aspectY", 1);
+                    //intent.putExtra("aspectX", 1);
+                    //intent.putExtra("aspectY", 1);
                     intent.putExtra("scale", true);
                     intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
                     startActivityForResult(intent, CROP_PHOTO); // 启动裁剪程序
