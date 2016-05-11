@@ -17,7 +17,7 @@ public class QueryActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_common_query);
 		mWebView = (WebView) findViewById(R.id.webView);
-		urlString = getIntent().getStringExtra("four_score");
+		urlString = getIntent().getStringExtra("http");
 		initView();
 
 	}

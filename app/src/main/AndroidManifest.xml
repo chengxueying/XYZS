@@ -53,6 +53,7 @@
             android:name=".ScoreDialog"
             android:theme="@android:style/Theme.Dialog" />
         <activity android:name=".PhotoView" />
+        <activity android:name=".LiftActivity" />
     </application>
 
 </manifest>
