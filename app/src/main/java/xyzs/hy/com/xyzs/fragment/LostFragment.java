@@ -108,7 +108,6 @@ public class LostFragment extends Fragment {
 
             @Override
             public void onError(int code, String msg) {
-                Toast.makeText(getActivity(), code + msg, Toast.LENGTH_LONG).show();
             }
         });
 

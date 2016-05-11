@@ -20,10 +20,8 @@ public class HttpUtils {
     public static String KUAI_DI = "http://www.kuaidi100.com/";
     //爱查
     public static String AI_CHA = "http://www.ickd.cn/";
-
     // 四六级查询网址
     public static String FOUR_SCORE = "http://cet.99sushe.com/";
-
     //成绩查询
     public static String SCORE = "http://jwglxt.qau.edu.cn/";
 
