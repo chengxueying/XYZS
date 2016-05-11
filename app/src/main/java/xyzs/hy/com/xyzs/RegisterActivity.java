@@ -85,7 +85,7 @@ public class RegisterActivity extends Activity implements OnClickListener {
                     .show();
             return;
         }
-        BmobSMS.requestSMSCode(this, phone, "XYZS_y", new RequestSMSCodeListener() {
+        BmobSMS.requestSMSCode(this, phone, "XYZS", new RequestSMSCodeListener() {
             @Override
             public void done(Integer p1, BmobException p2) {
                 if (p2 == null) {

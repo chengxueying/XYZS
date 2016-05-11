@@ -21,7 +21,7 @@ public class WelcomeActivity extends Activity {
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_welcome);
 
-        Bmob.initialize(this, "4de3a6f96b63b37633d2c1ae5fb7cb07");
+        Bmob.initialize(this, "f1e40b53a6e2d8c021db58e4e0b8fa43");
 
         new Handler().postDelayed(new Runnable() {
 
