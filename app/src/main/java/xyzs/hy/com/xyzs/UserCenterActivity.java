@@ -31,7 +31,6 @@ public class UserCenterActivity extends Activity implements OnClickListener
 	private Button btn_finish;
 	private Button btn_changePassword;
 	private TableRow changeName;
-	private TableRow changeHead;
 	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,12 +48,11 @@ public class UserCenterActivity extends Activity implements OnClickListener
 
 	private void initLayout() {
 		iv_head = (SimpleDraweeView) findViewById(R.id.head);
+		iv_head.setOnClickListener(this);
 		tv_name = (TextView) findViewById(R.id.tab_name);
 		tv_phone = (TextView) findViewById(R.id.tab_phone);
 		
-		changeHead = (TableRow) findViewById(R.id.change_head);
 		changeName = (TableRow) findViewById(R.id.change_name);
-		changeHead.setOnClickListener(this);
 		changeName.setOnClickListener(this);
 		
 		btn_finish = (Button) findViewById(R.id.finish);
@@ -67,7 +65,7 @@ public class UserCenterActivity extends Activity implements OnClickListener
 	public void onClick(View p1)
 	{
 		switch(p1.getId()){
-			case R.id.change_head:
+			case R.id.head:
 				// 创建File对象，用于存储选择的照片
                 File outputImage = new File(Environment.
 											getExternalStorageDirectory(), "tempImage.jpg");

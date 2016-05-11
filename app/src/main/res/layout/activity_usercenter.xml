@@ -7,6 +7,16 @@
 	android:orientation="vertical"
 	android:layout_gravity="center">
 
+
+	<com.facebook.drawee.view.SimpleDraweeView
+		android:id="@+id/head"
+		android:layout_width="100dp"
+		android:layout_height="100dp"
+		android:layout_gravity="center_horizontal"
+		android:layout_marginRight="10dp"
+		fresco:roundedCornerRadius="180dp"
+		fresco:placeholderImage="@drawable/ic_launcher"/>
+	
 	<TableLayout
 		android:layout_height="wrap_content"
 		android:layout_width="match_parent"
@@ -14,33 +24,10 @@
 		android:stretchColumns="0"
 		android:paddingTop="15dp">
 
-		<TableRow
-			android:layout_height="100dp"
-			android:layout_width="match_parent"
-			android:id="@+id/change_head">
-
-			<TextView
-				android:layout_height="wrap_content"
-				android:text="头像"
-				android:layout_width="wrap_content"
-				android:layout_gravity="center_vertical"
-				android:layout_marginLeft="10dp"/>
-
-			<com.facebook.drawee.view.SimpleDraweeView
-				android:id="@+id/head"
-				android:layout_width="100dp"
-				fresco:roundedCornerRadius="180dp"
-				android:layout_height="100dp"
-				android:layout_gravity="right"
-				fresco:placeholderImage="@drawable/ic_launcher"
-				android:layout_marginRight="10dp"/>
-
-		</TableRow>
 
 		<TableRow
 			android:layout_height="50dp"
-			android:layout_width="match_parent"
-			>
+			android:layout_width="match_parent">
 
 			<TextView
 				android:layout_height="wrap_content"
