@@ -32,6 +32,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+		<activity android:name=".ProductActivity"></activity>
+		<activity android:name=".AddProductDataActivity"></activity>
         <activity android:name=".MainActivity"></activity>
         <activity android:name=".UserCenterActivity"></activity>
         <activity android:name=".RegisterActivity"></activity>

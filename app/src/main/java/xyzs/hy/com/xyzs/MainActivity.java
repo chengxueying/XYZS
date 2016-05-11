@@ -73,6 +73,7 @@ public class MainActivity extends Activity implements BaseSliderView.OnSliderCli
                 switchActivity(ScoreDialog.class);
                 break;
             case R.id.main_cardview_market:
+				switchActivity(ProductActivity.class);
                 break;
         }
     }
