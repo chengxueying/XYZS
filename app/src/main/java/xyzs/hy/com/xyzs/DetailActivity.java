@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -14,17 +15,18 @@ import com.facebook.drawee.view.SimpleDraweeView;
  * 详情页有图
  */
 public class DetailActivity extends Activity implements View.OnClickListener {
-    private TextView tv_nameDetail;
-    private TextView tv_timeDetail;
-    private TextView tv_titleDetail;
-    private TextView tv_describeDetail;
-    private TextView tv_phoneDetail;
-    private ImageButton ibtn_phoneDetail;
-    private SimpleDraweeView lostDetail;
-    private SimpleDraweeView headDetail;
+    private TextView tv_nameDetail;//名字
+    private TextView tv_timeDetail;//时间
+    private TextView tv_titleDetail;//标题
+    private TextView tv_describeDetail;//内容
+    private TextView tv_phoneDetail;//电话
+    private ImageButton ibtn_phoneDetail;//拨号
+    private SimpleDraweeView lostDetail;//图片
+    private SimpleDraweeView headDetail;//头像
+    private LinearLayout lg_detail_back;
     private String phone;
     private String url;
-	private String headURL;
+    private String headURL;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +40,7 @@ public class DetailActivity extends Activity implements View.OnClickListener {
      * 初始化数据
      */
     private void initData() {
-		headURL = getIntent().getStringExtra("headURL");
+        headURL = getIntent().getStringExtra("headURL");
         String name = getIntent().getStringExtra("name");
         String time = getIntent().getStringExtra("time");
         String title = getIntent().getStringExtra("title");
@@ -53,11 +55,12 @@ public class DetailActivity extends Activity implements View.OnClickListener {
         tv_phoneDetail.setText(phone);
         Uri uri = Uri.parse(url);
         lostDetail.setImageURI(uri);
-		Uri headUri = Uri.parse(headURL);
-		headDetail.setImageURI(headUri);
-		
+        Uri headUri = Uri.parse(headURL);
+        headDetail.setImageURI(headUri);
+
         ibtn_phoneDetail.setOnClickListener(this);
         lostDetail.setOnClickListener(this);
+        lg_detail_back.setOnClickListener(this);
 
 
     }
@@ -71,6 +74,7 @@ public class DetailActivity extends Activity implements View.OnClickListener {
         tv_describeDetail = (TextView) findViewById(R.id.tv_describeDetail);
         tv_phoneDetail = (TextView) findViewById(R.id.tv_phoneDetail);
         ibtn_phoneDetail = (ImageButton) findViewById(R.id.ibtn_phoneDetail);
+        lg_detail_back = (LinearLayout) findViewById(R.id.lg_detail_back);
 
     }
 
@@ -88,6 +92,9 @@ public class DetailActivity extends Activity implements View.OnClickListener {
                 Intent intent1 = new Intent(DetailActivity.this, PhotoView.class);
                 intent1.putExtra("url", url);
                 startActivity(intent1);
+                break;
+            case R.id.lg_detail_back:
+                finish();
                 break;
         }
     }

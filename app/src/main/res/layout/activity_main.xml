@@ -9,7 +9,7 @@
 	<com.daimajia.slider.library.SliderLayout
 		android:id="@+id/sliderLayout"
 		android:layout_width="match_parent"
-		android:layout_height="200dp">
+		android:layout_height="250dp">
 
 	</com.daimajia.slider.library.SliderLayout>
 
@@ -106,7 +106,7 @@
 					android:layout_height="wrap_content"
 					android:layout_width="wrap_content"
 					android:layout_gravity="center"
-					android:text="表白墙"/>
+					android:text="生活查询"/>
 
 			</android.support.v7.widget.CardView>
 
@@ -134,7 +134,7 @@
 					android:layout_height="wrap_content"
 					android:layout_gravity="center"
 					android:layout_width="wrap_content"
-					android:text="生活查询"/>
+					android:text="个人中心"/>
 
 			</android.support.v7.widget.CardView>
 

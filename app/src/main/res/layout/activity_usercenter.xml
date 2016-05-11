@@ -1,93 +1,140 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-	xmlns:android="http://schemas.android.com/apk/res/android"
-	xmlns:fresco="http://schemas.android.com/apk/res-auto"
-	android:layout_width="fill_parent"
-	android:layout_height="fill_parent"
-	android:orientation="vertical"
-	android:layout_gravity="center">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:layout_gravity="center"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/id_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="#ec6f56"
+        android:padding="0dp"
+        android:theme="@style/AppBaseTheme">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="个人中心"
+            android:textColor="#fff"
+            android:textSize="18sp" />
+    </android.support.v7.widget.Toolbar>
 
 
-	<com.facebook.drawee.view.SimpleDraweeView
-		android:id="@+id/head"
-		android:layout_width="100dp"
-		android:layout_height="100dp"
-		android:layout_gravity="center_horizontal"
-		android:layout_marginRight="10dp"
-		fresco:roundedCornerRadius="180dp"
-		fresco:placeholderImage="@drawable/ic_launcher"/>
-	
-	<TableLayout
-		android:layout_height="wrap_content"
-		android:layout_width="match_parent"
-		android:shrinkColumns="0"
-		android:stretchColumns="0"
-		android:paddingTop="15dp">
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/head"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="15dp"
+        fresco:placeholderImage="@drawable/ic_launcher"
+        fresco:roundedCornerRadius="180dp" />
 
 
-		<TableRow
-			android:layout_height="50dp"
-			android:layout_width="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="15dp"
+        android:gravity="center"
+        android:orientation="horizontal">
 
-			<TextView
-				android:layout_height="wrap_content"
-				android:text="帐号"
-				android:layout_width="wrap_content"
-				android:layout_gravity="center_vertical"
-				android:layout_marginLeft="10dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="账    号:"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
 
-			<TextView
-				android:layout_height="wrap_content"
-				android:text="文本"
-				android:layout_width="wrap_content"
-				android:layout_gravity="right|center_vertical"
-				android:layout_marginRight="10dp"
-				android:id="@+id/tab_phone"
-				android:paddingRight="10dp"/>
+        <EditText
+            android:id="@+id/person_account"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginLeft="5dp"
+            android:layout_weight="1.0"
+            android:background="@drawable/common_add_bg"
+            android:ems="10"
+            android:enabled="false" />
 
-		</TableRow>
+        <ImageButton
+            android:id="@+id/ibn_person_account"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="2dp"
+            android:background="@null"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_xiu" />
 
-		<TableRow
-			android:layout_height="50dp"
-			android:layout_width="match_parent"
-			android:id="@+id/change_name">
+    </LinearLayout>
 
-			<TextView
-				android:layout_height="wrap_content"
-				android:text="用户名"
-				android:layout_width="wrap_content"
-				android:gravity="center_vertical"
-				android:layout_gravity="center_vertical"
-				android:layout_marginLeft="10dp"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="15dp"
+        android:orientation="horizontal">
 
-			<TextView
-				android:layout_height="wrap_content"
-				android:text="文本"
-				android:layout_width="wrap_content"
-				android:layout_gravity="right|center_vertical"
-				android:gravity="center_vertical"
-				android:layout_marginRight="10dp"
-				android:id="@+id/tab_name"
-				android:paddingRight="10dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="用户名:"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
 
-		</TableRow>
+        <EditText
+            android:id="@+id/person_name"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginLeft="5dp"
+            android:layout_weight="1.0"
+            android:background="@drawable/common_add_bg"
+            android:enabled="false"
+            android:maxLength="8" />
 
-	</TableLayout>
+        <ImageButton
+            android:id="@+id/ibn_person_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="2dp"
+            android:background="@null"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_xiu" />
 
-	<Button
-		android:layout_height="wrap_content"
-		android:text="更改密码"
-		android:layout_width="match_parent"
-		android:layout_marginTop="10dp"
-		android:id="@+id/change_password"/>
+    </LinearLayout>
 
-	<Button
-		android:layout_height="wrap_content"
-		android:text="退出登录"
-		android:layout_width="match_parent"
-		android:layout_marginTop="10dp"
-		android:textColor="#F50E00"
-		android:id="@+id/finish"/>
+    <Button
+        android:id="@+id/change_password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/dialog_scorce_bg"
+        android:gravity="center"
+        android:text="更改密码"
+        android:textColor="#fff"
+        android:textSize="18sp" />
+
+    <Button
+        android:id="@+id/person_exit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/dialog_scorce_bg"
+        android:gravity="center"
+        android:text="退出登录"
+        android:textColor="#fff"
+        android:textSize="18sp" />
 
 </LinearLayout>
 

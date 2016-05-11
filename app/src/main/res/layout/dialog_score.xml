@@ -22,7 +22,7 @@
             android:layout_marginLeft="6dp"
             android:layout_marginStart="6dp"
             android:text="成绩查询"
-            android:textColor="@drawable/dialog_score_text_color"
+            android:textColor="#fff"
             android:textSize="13sp" />
     </LinearLayout>
 
@@ -41,7 +41,7 @@
             android:layout_marginLeft="6dp"
             android:layout_marginStart="6dp"
             android:text="四六级查询"
-            android:textColor="@drawable/dialog_score_text_color"
+            android:textColor="#fff"
             android:textSize="13sp" />
     </LinearLayout>
 
