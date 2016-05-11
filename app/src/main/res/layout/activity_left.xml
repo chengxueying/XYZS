@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:text="美食"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textSize="18dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="5dp">
+
+        <Button
+            android:id="@+id/btn_mei"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@drawable/shape_life_bg"
+            android:gravity="center"
+            android:text="美团"
+            android:textColor="@drawable/shape_life_text_color" />
+
+        <Button
+            android:id="@+id/btn_e"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="5dp"
+            android:background="@drawable/shape_life_bg"
+            android:gravity="center"
+            android:text="饿了么"
+            android:textColor="@drawable/shape_life_text_color" />
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:text="住宿"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textSize="18dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="5dp">
+
+        <Button
+            android:id="@+id/btn_ru"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@drawable/shape_life_bg"
+            android:gravity="center"
+            android:text="如家"
+            android:textColor="@drawable/shape_life_text_color" />
+
+        <Button
+            android:id="@+id/btn_qi"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="5dp"
+            android:background="@drawable/shape_life_bg"
+            android:gravity="center"
+            android:text="7天"
+            android:textColor="@drawable/shape_life_text_color" />
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:text="出行"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textSize="18dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="5dp">
+
+        <Button
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@drawable/shape_life_bg"
+            android:id="@+id/btn_huo"
+            android:gravity="center"
+            android:text="火车票"
+            android:textColor="@drawable/shape_life_text_color" />
+
+        <Button
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="5dp"
+            android:background="@drawable/shape_life_bg"
+            android:gravity="center"
+            android:id="@+id/btn_xie"
+            android:text="携程"
+            android:textColor="@drawable/shape_life_text_color" />
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:text="快递"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textSize="18dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="5dp">
+
+        <Button
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@drawable/shape_life_bg"
+            android:gravity="center"
+            android:id="@+id/btn_kuai"
+            android:text="快递100"
+            android:textColor="@drawable/shape_life_text_color" />
+
+        <Button
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="5dp"
+            android:background="@drawable/shape_life_bg"
+            android:gravity="center"
+            android:id="@+id/btn_ai"
+            android:text="爱查快递"
+            android:textColor="@drawable/shape_life_text_color" />
+
+    </LinearLayout>
+
+</LinearLayout>
