@@ -10,7 +10,6 @@ import android.view.*;
 import cn.bmob.v3.*;
 import cn.bmob.v3.listener.*;
 import cn.bmob.v3.exception.*;
-import xyzs.hy.com.xyzs.common.ActivityCollector;
 import xyzs.hy.com.xyzs.entity.User;
 
 import android.content.*;
@@ -81,12 +80,4 @@ public class LoginActivity extends Activity implements OnClickListener {
         }
     }
 
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK) {
-            ActivityCollector.finishAll();
-//            return true;
-        }
-        return super.onKeyDown(keyCode, event);
-    }
 }
