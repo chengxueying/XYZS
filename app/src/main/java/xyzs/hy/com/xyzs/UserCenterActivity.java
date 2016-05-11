@@ -187,7 +187,6 @@ public class UserCenterActivity extends Activity implements OnClickListener
 								}
 							});
 					}
-
 					@Override
 					public void onFailure(int p1, String p2) {
 					}
