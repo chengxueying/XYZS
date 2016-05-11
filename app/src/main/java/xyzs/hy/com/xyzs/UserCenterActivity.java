@@ -28,6 +28,7 @@ public class UserCenterActivity extends Activity implements OnClickListener {
     public static final int TAKE_PHOTO = 1;
     public static final int CROP_PHOTO = 2;
     public static final int REQUEST = 3;
+    public static final int REQUES = 4;
     private String imagePath = null;
     private Bitmap bitmap;
     private Uri imageUri;
@@ -96,7 +97,6 @@ public class UserCenterActivity extends Activity implements OnClickListener {
                 Intent intent1 = new Intent();
                 intent1.setClass(UserCenterActivity.this, ChangeNameActivity.class);
                 startActivityForResult(intent1, REQUEST);
-//                startActivity(intent1);
                 break;
             case R.id.ibn_person_account:
                 Toast.makeText(UserCenterActivity.this, "亲，暂时不提供账号修改...", Toast.LENGTH_SHORT).show();
@@ -112,7 +112,8 @@ public class UserCenterActivity extends Activity implements OnClickListener {
             case R.id.change_password:
                 Intent intent2 = new Intent();
                 intent2.setClass(UserCenterActivity.this, ChangePasswordActivity.class);
-                startActivity(intent2);
+                startActivityForResult(intent2,REQUES);
+//                startActivity(intent2);
 
                 break;
         }
@@ -169,6 +170,11 @@ public class UserCenterActivity extends Activity implements OnClickListener {
                 }
 //
                 break;
+            case REQUES:
+                if (resultCode==RESULT_OK){
+                    this.setResult(RESULT_OK, data);
+                    finish();
+                }
         }
         upLodeImage();
     }

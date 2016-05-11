@@ -89,6 +89,7 @@ public class ChangePasswordActivity extends Activity implements View.OnClickList
                 Intent intent = new Intent();
                 intent.setClass(ChangePasswordActivity.this, LoginActivity.class);
                 startActivity(intent);
+                ChangePasswordActivity.this.setResult(RESULT_OK, intent);
                 finish();
             }
 
