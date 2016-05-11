@@ -17,7 +17,6 @@
 		<TableRow
 			android:layout_height="100dp"
 			android:layout_width="match_parent"
-			android:background="@drawable/qihoo_accounts_select_item_normal"
 			android:id="@+id/change_head">
 
 			<TextView
@@ -41,7 +40,7 @@
 		<TableRow
 			android:layout_height="50dp"
 			android:layout_width="match_parent"
-			android:background="@drawable/qihoo_accounts_select_item_normal">
+			>
 
 			<TextView
 				android:layout_height="wrap_content"
@@ -64,7 +63,6 @@
 		<TableRow
 			android:layout_height="50dp"
 			android:layout_width="match_parent"
-			android:background="@drawable/qihoo_accounts_select_item_normal"
 			android:id="@+id/change_name">
 
 			<TextView
@@ -94,7 +92,6 @@
 		android:text="更改密码"
 		android:layout_width="match_parent"
 		android:layout_marginTop="10dp"
-		android:background="@drawable/qihoo_accounts_select_item_normal"
 		android:id="@+id/change_password"/>
 
 	<Button
@@ -102,7 +99,6 @@
 		android:text="退出登录"
 		android:layout_width="match_parent"
 		android:layout_marginTop="10dp"
-		android:background="@drawable/qihoo_accounts_select_item_normal"
 		android:textColor="#F50E00"
 		android:id="@+id/finish"/>
 

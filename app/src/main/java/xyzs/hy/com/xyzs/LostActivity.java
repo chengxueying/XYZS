@@ -88,6 +88,7 @@ public class LostActivity extends Activity implements View.OnClickListener {
                 Intent intent = new Intent();
                 intent.setClass(this, AddLostDataActivity.class);
                 startActivity(intent);
+                finish();
                 break;
             default:
                 break;

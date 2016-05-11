@@ -34,109 +34,108 @@ import cn.bmob.v3.listener.*;
 
 
 public class MyLostFragment extends Fragment {
-    private ArrayList<Lost> lostDatas;
+    private ArrayList<Lost> mLostDatas;
     private RecyclerView mRecycleView;
     private SwipeRefreshLayout mSwipeRefreshLayout;
-    private LostAdapter adapter;
-    private View lost;
+    private LostAdapter mLostAdapter;
+    private View mLostView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        lost = inflater.inflate(R.layout.fragment_lost, container, false);
-
-        lostDatas = new ArrayList<Lost>();
-        mSwipeRefreshLayout = (SwipeRefreshLayout) lost.findViewById(R.id.SwipeRefreshLayout_lost);
+        mLostView = inflater.inflate(R.layout.fragment_lost, container, false);
+        mSwipeRefreshLayout = (SwipeRefreshLayout) mLostView.findViewById(R.id.SwipeRefreshLayout_lost);
         mSwipeRefreshLayout.setColorSchemeColors(Color.BLUE);
         mSwipeRefreshLayout.setProgressViewOffset(false, 0, (int) TypedValue
                 .applyDimension(TypedValue.COMPLEX_UNIT_DIP, 24, getResources()
                         .getDisplayMetrics()));
-        refreshDatas();
-
-        if (lostDatas == null || lostDatas.size() == 0) {
-            getDatas();
-        }
-
-        return lost;
+        initData();
+        initView();
+        return mLostView;
     }
 
-    private void setDatas() {
-        if (lostDatas.size() != 0) {
-            mRecycleView = (RecyclerView) lost.findViewById(R.id.Recyclerview_lost);
-            adapter = new LostAdapter(getActivity(), lostDatas);
-            mRecycleView.setAdapter(adapter);
-            LinearLayoutManager lin = new LinearLayoutManager(getActivity());
-            mRecycleView.setLayoutManager(lin);
-            adapter.setmOnItemClickListener(new LostAdapter.OnItemClickListener() {
-                @Override
-                public void OnItemClick(int position) {
-                    Intent intent;
-                    if (lostDatas.get(position).getStatus() == 0) {
-                        intent = new Intent(getActivity(), DetailNoActivity.class);
-                        intent.putExtra("name", lostDatas.get(position).getPublisher().getUsername());
-                        intent.putExtra("time", lostDatas.get(position).getUpdatedAt());
-                        intent.putExtra("title", lostDatas.get(position).getTitle());
-                        intent.putExtra("describe", lostDatas.get(position).getDescribe());
-                        intent.putExtra("phone", lostDatas.get(position).getPhone());
-						intent.putExtra("headURL",lostDatas.get(position).getPublisher().getHeadSculpture());
-                        startActivity(intent);
-                    } else {
-                        intent = new Intent(getActivity(), DetailActivity.class);
-//                        intent.putExtra("head",lostDatas.get(position).g)
-                        intent.putExtra("name", lostDatas.get(position).getPublisher().getUsername());
-                        intent.putExtra("time", lostDatas.get(position).getUpdatedAt());
-                        intent.putExtra("title", lostDatas.get(position).getTitle());
-                        intent.putExtra("describe", lostDatas.get(position).getDescribe());
-                        intent.putExtra("phone", lostDatas.get(position).getPhone());
-                        intent.putExtra("url", lostDatas.get(position).getimageURL());
-						intent.putExtra("headURL",lostDatas.get(position).getPublisher().getHeadSculpture());
-                        startActivity(intent);
+    private void initView() {
+        mRecycleView = (RecyclerView) mLostView.findViewById(R.id.Recyclerview_lost);
+        mLostAdapter = new LostAdapter(getActivity(), mLostDatas);
+        mRecycleView.setAdapter(mLostAdapter);
+        LinearLayoutManager lin = new LinearLayoutManager(getActivity());
+        mRecycleView.setLayoutManager(lin);
+        refreshDatas();
+        mLostAdapter.setmOnItemClickListener(new LostAdapter.OnItemClickListener() {
+            @Override
+            public void OnItemClick(int position) {
+                Intent intent;
+                if (mLostDatas.get(position).getStatus() == 0) {
+                    intent = new Intent(getActivity(), DetailNoActivity.class);
+                    intent.putExtra("name", mLostDatas.get(position).getPublisher().getUsername());
+                    intent.putExtra("time", mLostDatas.get(position).getUpdatedAt());
+                    intent.putExtra("title", mLostDatas.get(position).getTitle());
+                    intent.putExtra("describe", mLostDatas.get(position).getDescribe());
+                    intent.putExtra("phone", mLostDatas.get(position).getPhone());
+                    intent.putExtra("headURL", mLostDatas.get(position).getPublisher().getHeadSculpture());
+                    startActivity(intent);
+                } else {
+                    intent = new Intent(getActivity(), DetailActivity.class);
+                    intent.putExtra("name", mLostDatas.get(position).getPublisher().getUsername());
+                    intent.putExtra("time", mLostDatas.get(position).getUpdatedAt());
+                    intent.putExtra("title", mLostDatas.get(position).getTitle());
+                    intent.putExtra("describe", mLostDatas.get(position).getDescribe());
+                    intent.putExtra("phone", mLostDatas.get(position).getPhone());
+                    intent.putExtra("url", mLostDatas.get(position).getimageURL());
+                    intent.putExtra("headURL", mLostDatas.get(position).getPublisher().getHeadSculpture());
+                    startActivity(intent);
+
+                }
+
+            }
+
+            @Override
+            public boolean OnItemLongClick(int position) {
+                final int pos = position;
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setMessage("确定要删除吗？").setTitle("提示").setPositiveButton("确认", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Lost lost = new Lost();
+                        lost.setObjectId(mLostDatas.get(pos).getObjectId());
+                        lost.delete(getActivity(), new DeleteListener() {
+
+                            @Override
+                            public void onSuccess() {
+                                Toast.makeText(getActivity(), "删除成功", Toast.LENGTH_SHORT).show();
+
+                                new Handler().post(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        initData();
+                                        mLostAdapter.notifyDataSetChanged();
+                                    }
+                                });
+                            }
+
+                            @Override
+                            public void onFailure(int p1, String p2) {
+                                Toast.makeText(getActivity(), "删除失败", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+
+                        dialog.dismiss();
 
                     }
+                }).setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                }).create().show();
+                return true;
+            }
+        });
 
-                }
-
-                @Override
-                public boolean OnItemLongClick(int position) {
-					final int pos = position;
-                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                    builder.setMessage("确定要删除吗？").setTitle("提示").setPositiveButton("确认", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-							Lost lost = new Lost();
-							lost.setObjectId(lostDatas.get(pos).getObjectId());
-							lost.delete(getActivity(), new DeleteListener() {
-
-									@Override
-									public void onSuccess()
-									{
-										Toast.makeText(getActivity(), "删除成功", Toast.LENGTH_SHORT).show();
-										refreshDatas();
-									}
-
-									@Override
-									public void onFailure(int p1, String p2)
-									{
-										Toast.makeText(getActivity(), "删除失败", Toast.LENGTH_SHORT).show();
-									}
-							});
-							
-                            dialog.dismiss();
-
-                        }
-                    }).setNegativeButton("取消", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.dismiss();
-                        }
-                    }).create().show();
-                    return true;
-                }
-            });
-        }
     }
 
-    private void getDatas() {
+    private void initData() {
+        mLostDatas = new ArrayList<Lost>();
         User user = BmobUser.getCurrentUser(getActivity(), User.class);
         BmobQuery<Lost> query = new BmobQuery<Lost>();
         query.addWhereEqualTo("publisher", user);
@@ -145,8 +144,9 @@ public class MyLostFragment extends Fragment {
         query.findObjects(getActivity(), new FindListener<Lost>() {
             @Override
             public void onSuccess(List<Lost> object) {
-                lostDatas.addAll(object);
-                setDatas();
+                mLostDatas.addAll(object);
+                initView();
+                refreshDatas();
             }
 
             @Override
@@ -154,7 +154,9 @@ public class MyLostFragment extends Fragment {
                 Toast.makeText(getActivity(), code + msg, Toast.LENGTH_LONG).show();
             }
         });
+
     }
+
 
     private void refreshDatas() {
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -163,7 +165,6 @@ public class MyLostFragment extends Fragment {
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        adapter.refreshDatas();
                         User user = BmobUser.getCurrentUser(getActivity(), User.class);
                         BmobQuery<Lost> query = new BmobQuery<Lost>();
                         query.addWhereEqualTo("publisher", user);
@@ -172,8 +173,7 @@ public class MyLostFragment extends Fragment {
                         query.findObjects(getActivity(), new FindListener<Lost>() {
                             @Override
                             public void onSuccess(List<Lost> object) {
-                                lostDatas.addAll(object);
-                                setDatas();
+                                mLostAdapter.addItem(object);
                             }
 
                             @Override

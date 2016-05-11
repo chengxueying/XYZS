@@ -50,10 +50,7 @@ public class AddFoundDataActivity extends Activity implements OnClickListener, T
         super.onCreate(savedInstanceState);
         //	supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.add_found_datas);
-
         mContext = AddFoundDataActivity.this;
-
-
         initLayout();
     }
 
@@ -92,6 +89,8 @@ public class AddFoundDataActivity extends Activity implements OnClickListener, T
             found.save(this, new SaveListener() {
                 @Override
                 public void onSuccess() {
+                    Intent intent = new Intent(AddFoundDataActivity.this, FoundActivity.class);
+                    startActivity(intent);
                     finish();
                 }
 
@@ -111,6 +110,8 @@ public class AddFoundDataActivity extends Activity implements OnClickListener, T
                         public void onSuccess() {
                             Toast.makeText(getApplicationContext(), "发布成功！", Toast.LENGTH_SHORT)
                                     .show();
+                            Intent intent = new Intent(AddFoundDataActivity.this, FoundActivity.class);
+                            startActivity(intent);
                             finish();
                         }
 

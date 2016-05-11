@@ -9,6 +9,7 @@ import android.net.*;
 import com.facebook.drawee.view.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import xyzs.hy.com.xyzs.R;
 import xyzs.hy.com.xyzs.entity.Lost;
@@ -18,11 +19,11 @@ public class LostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private static final int ITEM_VIEW = 0;
     private static final int FOOT_VIEW = 1;//无图片
     private LayoutInflater mInflater;
-    private ArrayList<Lost> lostDatas;
+    private ArrayList<Lost> mLostDatas;
     private OnItemClickListener mOnItemClickListener;
 
-    public LostAdapter(Context context, ArrayList<Lost> lostDatas) {
-        this.lostDatas = lostDatas;
+    public LostAdapter(Context context, ArrayList<Lost> mLostDatas) {
+        this.mLostDatas = mLostDatas;
         mInflater = LayoutInflater.from(context);
     }
 
@@ -60,9 +61,9 @@ public class LostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     //多布局
     @Override
     public int getItemViewType(int position) {
-        if (lostDatas.get(position).getStatus() == 0) {
+        if (mLostDatas.get(position).getStatus() == 0) {
             return FOOT_VIEW;
-        } else if (lostDatas.get(position).getStatus() == 1) {
+        } else if (mLostDatas.get(position).getStatus() == 1) {
             return ITEM_VIEW;
         }
         return super.getItemViewType(position);
@@ -71,13 +72,13 @@ public class LostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     @Override
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof ItemViewHolder) {
-            ((ItemViewHolder) holder).tv_describe.setText(lostDatas.get(position).getDescribe());
-            ((ItemViewHolder) holder).tv_phone.setText(lostDatas.get(position).getPhone());
-            ((ItemViewHolder) holder).tv_name.setText(lostDatas.get(position).getPublisher().getUsername());
-            ((ItemViewHolder) holder).tv_title.setText(lostDatas.get(position).getTitle());
-            ((ItemViewHolder) holder).tv_time.setText(lostDatas.get(position).getUpdatedAt());
-			Uri uri = Uri.parse(lostDatas.get(position).getPublisher().getHeadSculpture());
-			((ItemViewHolder)holder).head.setImageURI(uri);
+            ((ItemViewHolder) holder).tv_describe.setText(mLostDatas.get(position).getDescribe());
+            ((ItemViewHolder) holder).tv_phone.setText(mLostDatas.get(position).getPhone());
+            ((ItemViewHolder) holder).tv_name.setText(mLostDatas.get(position).getPublisher().getUsername());
+            ((ItemViewHolder) holder).tv_title.setText(mLostDatas.get(position).getTitle());
+            ((ItemViewHolder) holder).tv_time.setText(mLostDatas.get(position).getUpdatedAt());
+            Uri uri = Uri.parse(mLostDatas.get(position).getPublisher().getHeadSculpture());
+            ((ItemViewHolder) holder).head.setImageURI(uri);
             ((ItemViewHolder) holder).itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -101,14 +102,14 @@ public class LostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             });
 
         } else if (holder instanceof MyViewHolder) {
-            ((MyViewHolder) holder).tv_describe.setText(lostDatas.get(position).getDescribe());
-            ((MyViewHolder) holder).tv_phone.setText(lostDatas.get(position).getPhone());
-            ((MyViewHolder) holder).tv_title.setText(lostDatas.get(position).getTitle());
-            ((MyViewHolder) holder).tv_name.setText(lostDatas.get(position).getPublisher().getUsername());
-            ((MyViewHolder) holder).tv_time.setText(lostDatas.get(position).getUpdatedAt());
-			Uri imageuri = Uri.parse(lostDatas.get(position).getPublisher().getHeadSculpture());
-			((MyViewHolder)holder).head.setImageURI(imageuri);
-            Uri uri = Uri.parse(lostDatas.get(position).getimageURL());
+            ((MyViewHolder) holder).tv_describe.setText(mLostDatas.get(position).getDescribe());
+            ((MyViewHolder) holder).tv_phone.setText(mLostDatas.get(position).getPhone());
+            ((MyViewHolder) holder).tv_title.setText(mLostDatas.get(position).getTitle());
+            ((MyViewHolder) holder).tv_name.setText(mLostDatas.get(position).getPublisher().getUsername());
+            ((MyViewHolder) holder).tv_time.setText(mLostDatas.get(position).getUpdatedAt());
+            Uri imageuri = Uri.parse(mLostDatas.get(position).getPublisher().getHeadSculpture());
+            ((MyViewHolder) holder).head.setImageURI(imageuri);
+            Uri uri = Uri.parse(mLostDatas.get(position).getimageURL());
             ((MyViewHolder) holder).draweeView.setImageURI(uri);
             //点击事件
             ((MyViewHolder) holder).itemView.setOnClickListener(new View.OnClickListener() {
@@ -140,14 +141,18 @@ public class LostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     @Override
     public int getItemCount() {
-        return lostDatas == null ? 0 : lostDatas.size();
+        return mLostDatas == null ? 0 : mLostDatas.size();
     }
 
 
-    public void refreshDatas() {
-        lostDatas.clear();
+    //刷新新数据
+    public void addItem(List<Lost> mNewData) {
+        mLostDatas.clear();
+        mLostDatas.addAll(mNewData);
         notifyDataSetChanged();
+
     }
+
 
     public class ItemViewHolder extends RecyclerView.ViewHolder {
         TextView tv_time;
@@ -155,7 +160,7 @@ public class LostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         TextView tv_describe;
         TextView tv_phone;
         TextView tv_name;
-		SimpleDraweeView head;
+        SimpleDraweeView head;
 
         public ItemViewHolder(View itemView) {
             super(itemView);
@@ -165,7 +170,7 @@ public class LostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             tv_name = (TextView) itemView.findViewById(R.id.tv_name);
             tv_name = (TextView) itemView.findViewById(R.id.tv_name_no);
             tv_describe = (TextView) itemView.findViewById(R.id.tv_describe_no);
-			head = (SimpleDraweeView) itemView.findViewById(R.id.iv_headSculpture_no);
+            head = (SimpleDraweeView) itemView.findViewById(R.id.iv_headSculpture_no);
 
         }
     }
@@ -177,7 +182,7 @@ public class LostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         TextView tv_phone;
         SimpleDraweeView draweeView;
         TextView tv_name;
-		SimpleDraweeView head;
+        SimpleDraweeView head;
 
         public MyViewHolder(View itemView) {
             super(itemView);
@@ -187,7 +192,7 @@ public class LostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             tv_time = (TextView) itemView.findViewById(R.id.tv_time);
             tv_name = (TextView) itemView.findViewById(R.id.tv_name);
             tv_describe = (TextView) itemView.findViewById(R.id.tv_describe);
-			head = (SimpleDraweeView) itemView.findViewById(R.id.iv_headSculpture);
+            head = (SimpleDraweeView) itemView.findViewById(R.id.iv_headSculpture);
         }
     }
 }

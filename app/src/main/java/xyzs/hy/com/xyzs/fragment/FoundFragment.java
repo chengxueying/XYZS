@@ -29,84 +29,86 @@ import xyzs.hy.com.xyzs.entity.Found;
 
 
 public class FoundFragment extends Fragment {
-    private ArrayList<Found> FoundDatas;
+    private ArrayList<Found> mFoundDatas;
     private RecyclerView mRecycleView;
     private SwipeRefreshLayout mSwipeRefreshLayout;
-    private FoundAdapter adapter;
-    private View Found;
+    private FoundAdapter mFoundAdapter;
+    private View mFoundView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        Found = inflater.inflate(R.layout.fragment_found, container, false);
 
-        FoundDatas = new ArrayList<Found>();
-        mSwipeRefreshLayout = (SwipeRefreshLayout) Found.findViewById(R.id.SwipeRefreshLayout_found);
+        mFoundView = inflater.inflate(R.layout.fragment_found, container, false);
+        //设置SwipeRefreshLayout
+        mSwipeRefreshLayout = (SwipeRefreshLayout) mFoundView.findViewById(R.id.SwipeRefreshLayout_found);
         mSwipeRefreshLayout.setColorSchemeColors(Color.BLUE);
         mSwipeRefreshLayout.setProgressViewOffset(false, 0, (int) TypedValue
                 .applyDimension(TypedValue.COMPLEX_UNIT_DIP, 24, getResources()
                         .getDisplayMetrics()));
+        initData();
+        initView();
+        return mFoundView;
+    }
+
+    /**
+     * 初始化视图
+     */
+
+    private void initView() {
+        mRecycleView = (RecyclerView) mFoundView.findViewById(R.id.recyclerview_found);
+        mFoundAdapter = new FoundAdapter(getActivity(), mFoundDatas);
+        mRecycleView.setAdapter(mFoundAdapter);
+        LinearLayoutManager lin = new LinearLayoutManager(getActivity());
+        mRecycleView.setLayoutManager(lin);
         refreshDatas();
+        mFoundAdapter.setmOnItemClickListener(new FoundAdapter.OnItemClickListener() {
+            @Override
+            public void OnItemClick(int position) {
+                Intent intent;
+                if (mFoundDatas.get(position).getStatus() == 0) {
+                    intent = new Intent(getActivity(), DetailNoActivity.class);
+                    intent.putExtra("name", mFoundDatas.get(position).getPublisher().getUsername());
+                    intent.putExtra("time", mFoundDatas.get(position).getUpdatedAt());
+                    intent.putExtra("title", mFoundDatas.get(position).getTitle());
+                    intent.putExtra("describe", mFoundDatas.get(position).getDescribe());
+                    intent.putExtra("phone", mFoundDatas.get(position).getPhone());
+                    intent.putExtra("headURL", mFoundDatas.get(position).getPublisher().getHeadSculpture());
+                    startActivity(intent);
+                } else {
+                    intent = new Intent(getActivity(), DetailActivity.class);
+                    intent.putExtra("name", mFoundDatas.get(position).getPublisher().getUsername());
+                    intent.putExtra("time", mFoundDatas.get(position).getUpdatedAt());
+                    intent.putExtra("title", mFoundDatas.get(position).getTitle());
+                    intent.putExtra("describe", mFoundDatas.get(position).getDescribe());
+                    intent.putExtra("phone", mFoundDatas.get(position).getPhone());
+                    intent.putExtra("headURL", mFoundDatas.get(position).getPublisher().getHeadSculpture());
+                    intent.putExtra("url", mFoundDatas.get(position).getImageURL());
+                    startActivity(intent);
 
-        if (FoundDatas == null || FoundDatas.size() == 0) {
-            getDatas();
-        }
+                }
+            }
 
-        return Found;
+            @Override
+            public boolean OnItemLongClick(int position) {
+                return false;
+            }
+        });
+
     }
 
-    private void setDatas() {
-        if (FoundDatas.size() != 0) {
-            mRecycleView = (RecyclerView) Found.findViewById(R.id.recyclerview_found);
-            adapter = new FoundAdapter(getActivity(), FoundDatas);
-            mRecycleView.setAdapter(adapter);
-            LinearLayoutManager lin = new LinearLayoutManager(getActivity());
-            mRecycleView.setLayoutManager(lin);
-            adapter.setmOnItemClickListener(new FoundAdapter.OnItemClickListener() {
-                @Override
-                public void OnItemClick(int position) {
-                    Intent intent;
-                    if (FoundDatas.get(position).getStatus() == 0) {
-                        intent = new Intent(getActivity(), DetailNoActivity.class);
-                        intent.putExtra("name", FoundDatas.get(position).getPublisher().getUsername());
-                        intent.putExtra("time", FoundDatas.get(position).getUpdatedAt());
-                        intent.putExtra("title", FoundDatas.get(position).getTitle());
-                        intent.putExtra("describe", FoundDatas.get(position).getDescribe());
-                        intent.putExtra("phone", FoundDatas.get(position).getPhone());
-						intent.putExtra("headURL",FoundDatas.get(position).getPublisher().getHeadSculpture());
-                        startActivity(intent);
-                    } else {
-                        intent = new Intent(getActivity(), DetailActivity.class);
-//                        intent.putExtra("head",lostDatas.get(position).g)
-                        intent.putExtra("name", FoundDatas.get(position).getPublisher().getUsername());
-                        intent.putExtra("time", FoundDatas.get(position).getUpdatedAt());
-                        intent.putExtra("title", FoundDatas.get(position).getTitle());
-                        intent.putExtra("describe", FoundDatas.get(position).getDescribe());
-                        intent.putExtra("phone", FoundDatas.get(position).getPhone());
-						intent.putExtra("headURL",FoundDatas.get(position).getPublisher().getHeadSculpture());
-                        intent.putExtra("url", FoundDatas.get(position).getImageURL());
-                        startActivity(intent);
-
-                    }
-                }
-
-                @Override
-                public boolean OnItemLongClick(int position) {
-                    return false;
-                }
-            });
-        }
-    }
-
-    private void getDatas() {
+    //初始化数据
+    private void initData() {
+        mFoundDatas = new ArrayList<Found>();
         BmobQuery<Found> query = new BmobQuery<Found>();
         query.include("publisher");
         query.order("-updatedAt");
         query.findObjects(getActivity(), new FindListener<Found>() {
             @Override
             public void onSuccess(List<Found> object) {
-                FoundDatas.addAll(object);
-                setDatas();
+                mFoundDatas.addAll(object);
+                initView();
+                refreshDatas();
             }
 
             @Override
@@ -116,6 +118,7 @@ public class FoundFragment extends Fragment {
         });
     }
 
+    //下拉刷新
     private void refreshDatas() {
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -123,15 +126,14 @@ public class FoundFragment extends Fragment {
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        adapter.refreshDatas();
                         BmobQuery<Found> query = new BmobQuery<Found>();
                         query.include("publisher");
                         query.order("-updatedAt");
                         query.findObjects(getActivity(), new FindListener<Found>() {
                             @Override
                             public void onSuccess(List<Found> object) {
-                                FoundDatas.addAll(object);
-                                setDatas();
+                                mFoundAdapter.addItem(object);
+
                             }
 
                             @Override

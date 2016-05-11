@@ -85,6 +85,7 @@ public class FoundActivity extends Activity implements OnClickListener {
                 Intent intent = new Intent();
                 intent.setClass(this, AddFoundDataActivity.class);
                 startActivity(intent);
+                finish();
                 break;
             default:
                 break;
