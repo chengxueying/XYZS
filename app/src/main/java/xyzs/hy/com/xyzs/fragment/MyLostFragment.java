@@ -93,7 +93,7 @@ public class MyLostFragment extends Fragment {
             public boolean OnItemLongClick(int position) {
                 final int pos = position;
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                builder.setMessage("确定要删除吗？").setTitle("提示").setPositiveButton("确认", new DialogInterface.OnClickListener() {
+                builder.setMessage("确定要删除吗？").setTitle("温馨提示").setPositiveButton("确认", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         Lost lost = new Lost();

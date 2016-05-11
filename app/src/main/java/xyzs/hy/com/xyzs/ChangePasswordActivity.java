@@ -61,24 +61,41 @@ public class ChangePasswordActivity extends Activity implements View.OnClickList
                     Toast.makeText(getApplication(), "新密码两次输入不相同", Toast.LENGTH_SHORT).show();
                     return;
                 }
-
-                BmobUser.updateCurrentUserPassword(ChangePasswordActivity.this, oldPassword, newPassword, new UpdateListener() {
-
+                AlertDialog.Builder builder = new AlertDialog.Builder(ChangePasswordActivity.this);
+                builder.setMessage("您确定修改密码吗？").setTitle("温馨提示").setPositiveButton("确定", new DialogInterface.OnClickListener() {
                     @Override
-                    public void onSuccess() {
-                        Toast.makeText(getApplication(), "修改成功，请重新登录", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent();
-                        intent.setClass(ChangePasswordActivity.this, LoginActivity.class);
-                        startActivity(intent);
-                        finish();
+                    public void onClick(DialogInterface dialog, int which) {
+                        changePassword();
+                        dialog.dismiss();
                     }
-
+                }).setNegativeButton("取消", new DialogInterface.OnClickListener() {
                     @Override
-                    public void onFailure(int p1, String p2) {
-                        Toast.makeText(getApplication(), "修改失败,当前密码不正确...", Toast.LENGTH_SHORT).show();
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
                     }
-                });
+                }).create().show();
+
                 break;
         }
+    }
+
+    private void changePassword() {
+
+        BmobUser.updateCurrentUserPassword(ChangePasswordActivity.this, oldPassword, newPassword, new UpdateListener() {
+
+            @Override
+            public void onSuccess() {
+                Toast.makeText(getApplication(), "修改成功，请重新登录", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent();
+                intent.setClass(ChangePasswordActivity.this, LoginActivity.class);
+                startActivity(intent);
+                finish();
+            }
+
+            @Override
+            public void onFailure(int p1, String p2) {
+                Toast.makeText(getApplication(), "修改失败,当前密码不正确...", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }
