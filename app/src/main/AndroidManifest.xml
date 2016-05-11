@@ -35,24 +35,22 @@
         <activity android:name=".MainActivity"></activity>
         <activity android:name=".UserCenterActivity"></activity>
         <activity android:name=".RegisterActivity"></activity>
-		<activity android:name=".ChangeActivity"></activity>
         <activity android:name=".LoginActivity"></activity>
         <activity android:name=".AddLostDataActivity"></activity>
         <activity android:name=".AddFoundDataActivity"></activity>
         <activity android:name=".LostActivity"></activity>
         <activity android:name=".FoundActivity"></activity>
         <activity android:name=".QueryActivity" />
-        <activity android:name=".SetNewUserDatasActivity" />
         <activity android:name=".DetailActivity" />
-		<activity android:name=".ChangeNameActivity" />
-		<activity android:name=".ChangePasswordActivity" />
+        <activity android:name=".ChangeNameActivity" />
+        <activity
+            android:name=".ChangePasswordActivity"
+            android:theme="@android:style/Theme.Dialog" />
         <activity android:name=".DetailNoActivity" />
         <activity
             android:name=".ScoreDialog"
             android:theme="@android:style/Theme.Dialog" />
-        <activity
-            android:name=".PhotoView"
-             />
+        <activity android:name=".PhotoView" />
     </application>
 
 </manifest>

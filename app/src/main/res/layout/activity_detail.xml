@@ -6,6 +6,47 @@
     android:layout_margin="5dp"
     android:orientation="vertical">
 
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/id_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="#6cf"
+        android:padding="0dp"
+        android:theme="@style/AppBaseTheme">
+
+        <LinearLayout
+            android:id="@+id/lg_detail_back"
+            android:layout_width="wrap_content"
+            android:layout_height="45dp"
+            android:layout_gravity="left"
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_go_back" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:gravity="center"
+                android:text="返回"
+                android:textColor="@drawable/ic_go_back_color"
+                android:textSize="18sp" />
+        </LinearLayout>
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="45dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="详情"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
+    </android.support.v7.widget.Toolbar>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
@@ -17,8 +58,8 @@
             android:id="@+id/iv_headDetail"
             android:layout_width="44dp"
             android:layout_height="44dp"
-			fresco:roundedCornerRadius="180dp"
-            fresco:placeholderImage="@drawable/ic_launcher" />
+            fresco:placeholderImage="@drawable/ic_launcher"
+            fresco:roundedCornerRadius="180dp" />
 
         <LinearLayout
             android:layout_width="wrap_content"
