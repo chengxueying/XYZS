@@ -48,7 +48,6 @@ public class AddProductDataActivity extends Activity implements OnClickListener,
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //	supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.add_product_datas);
         mContext = AddProductDataActivity.this;
         initLayout();
