@@ -7,7 +7,7 @@ public class HttpUtils {
     //美团
     public static String MEI_TUAN = "http://qd.meituan.com/?utm_campaign=baidu&utm_medium=organic&utm_source=baidu&utm_content=homepage&utm_term=";
     //饿了么
-    public static String E_MA = "https://www.ele.me/home/http://cet.99sushe.com/";
+    public static String E_MA = "https://www.ele.me/home/";
     //如家
     public static String RU_JIA = "http://www.homeinns.com/";
     //7天
