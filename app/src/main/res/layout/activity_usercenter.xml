@@ -132,7 +132,7 @@
         android:layout_marginTop="20dp"
         android:background="@drawable/dialog_scorce_bg"
         android:gravity="center"
-        android:text="退出登录"
+        android:text="注销账户"
         android:textColor="#fff"
         android:textSize="18sp" />
 

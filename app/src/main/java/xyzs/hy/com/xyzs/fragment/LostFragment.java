@@ -27,7 +27,9 @@ import xyzs.hy.com.xyzs.R;
 import xyzs.hy.com.xyzs.adapter.LostAdapter;
 import xyzs.hy.com.xyzs.entity.Lost;
 
-
+/**
+ * 失物全部碎片
+ */
 public class LostFragment extends Fragment {
     private ArrayList<Lost> mLostDatas;
     private RecyclerView mRecycleView;
@@ -73,7 +75,6 @@ public class LostFragment extends Fragment {
                     startActivity(intent);
                 } else {
                     intent = new Intent(getActivity(), DetailActivity.class);
-//                        intent.putExtra("head",lostDatas.get(position).g)
                     intent.putExtra("name", mLostDatas.get(position).getPublisher().getUsername());
                     intent.putExtra("time", mLostDatas.get(position).getUpdatedAt());
                     intent.putExtra("title", mLostDatas.get(position).getTitle());

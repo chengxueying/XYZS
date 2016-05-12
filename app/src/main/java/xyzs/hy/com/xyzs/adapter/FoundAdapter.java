@@ -14,13 +14,15 @@ import com.facebook.drawee.view.*;
 import xyzs.hy.com.xyzs.R;
 import xyzs.hy.com.xyzs.entity.Found;
 
-
+/**
+ * 寻物适配器
+ */
 public class FoundAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    private static final int ITEM_VIEW = 0;
+    private static final int ITEM_VIEW = 0;//有图片
     private static final int FOOT_VIEW = 1;//无图片
     private LayoutInflater mInflater;
-    private ArrayList<Found> mFoundDatas;
-    private OnItemClickListener mOnItemClickListener;
+    private ArrayList<Found> mFoundDatas;//数据源
+    private OnItemClickListener mOnItemClickListener;//点击回调
 
     public FoundAdapter(Context context, ArrayList<Found> mFoundDatas) {
         this.mFoundDatas = mFoundDatas;
@@ -41,6 +43,7 @@ public class FoundAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         this.mOnItemClickListener = mOnItemClickListener;
     }
 
+    //用的多布局，根据类型选择布局
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if (viewType == FOOT_VIEW) {
@@ -57,6 +60,7 @@ public class FoundAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         return null;
     }
 
+    //多布局
     @Override
     public int getItemViewType(int position) {
         if (mFoundDatas.get(position).getStatus() == 0) {
@@ -67,9 +71,10 @@ public class FoundAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         return super.getItemViewType(position);
     }
 
-
+    //结果处理
     @Override
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
+        //如果holder是ItemViewHolder则进行以下操作
         if (holder instanceof ItemViewHolder) {
             ((ItemViewHolder) holder).tv_describe.setText(mFoundDatas.get(position).getDescribe());
             ((ItemViewHolder) holder).tv_phone.setText(mFoundDatas.get(position).getPhone());
@@ -79,6 +84,7 @@ public class FoundAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             ((ItemViewHolder) holder).tv_time.setText(mFoundDatas.get(position).getUpdatedAt());
             Uri uri = Uri.parse(mFoundDatas.get(position).getPublisher().getHeadSculpture());
             ((ItemViewHolder) holder).head.setImageURI(uri);
+            //给item设置监听
             ((ItemViewHolder) holder).itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -144,11 +150,6 @@ public class FoundAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         return mFoundDatas == null ? 0 : mFoundDatas.size();
     }
 
-
-    public void refreshDatas() {
-        mFoundDatas.clear();
-        notifyDataSetChanged();
-    }
 
     //刷新新数据
     public void addItem(List<Found> mNewData) {

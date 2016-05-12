@@ -18,6 +18,9 @@ import android.content.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * 注册页
+ */
 public class RegisterActivity extends Activity implements OnClickListener {
     private Button btnCaptcha;
     private Button register;
@@ -53,13 +56,12 @@ public class RegisterActivity extends Activity implements OnClickListener {
         editPassword = (EditText) findViewById(R.id.edit_password);
     }
 
-
-
+    //注册
     private void register() {
         User user = new User();
         user.setMobilePhoneNumber(phone);
         user.setPassword(password);
-        user.setHeadSculpture("http://file.bmob.cn/M03/65/48/oYYBAFcyPeCAOKH5AAASPUfL_KA350.jpg");
+        user.setHeadSculpture("http://file.bmob.cn/M03/65/48/oYYBAFcyPeCAOKH5AAASPUfL_KA350.jpg");//默认头像
         user.signOrLogin(RegisterActivity.this, captchaCode, new SaveListener() {
             @Override
             public void onSuccess() {
@@ -79,8 +81,9 @@ public class RegisterActivity extends Activity implements OnClickListener {
         });
     }
 
+    //验证码
     private void getCaptcha() {
-        if (!IsPhone.isPhone(phone)){
+        if (!IsPhone.isPhone(phone)) {
             Toast.makeText(getApplicationContext(), "请输入正确的手机号", Toast.LENGTH_SHORT)
                     .show();
             return;
@@ -108,7 +111,6 @@ public class RegisterActivity extends Activity implements OnClickListener {
         switch (p1.getId()) {
             case R.id.btn_captcha:
                 if (phone.equals("")) {
-//                    IsPhone.isPhone(phone);
                     Toast.makeText(getApplicationContext(), "手机号码不能为空！", Toast.LENGTH_SHORT)
                             .show();
                 } else {
@@ -116,7 +118,7 @@ public class RegisterActivity extends Activity implements OnClickListener {
                 }
                 break;
             case R.id.btn_register:
-                if (phone.equals("")|| password.equals("") && captchaCode.equals("")) {
+                if (phone.equals("") || password.equals("") && captchaCode.equals("")) {
                     Toast.makeText(getApplicationContext(), "请完善密码和手机号！", Toast.LENGTH_SHORT)
                             .show();
                 } else {

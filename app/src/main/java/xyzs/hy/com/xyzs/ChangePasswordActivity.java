@@ -15,12 +15,15 @@ import cn.bmob.v3.listener.*;
 
 import android.text.*;
 
+/**
+ * 修改密码
+ */
 public class ChangePasswordActivity extends Activity implements View.OnClickListener {
 
     private LinearLayout mChangePassword;
-    private EditText mNewPassWord;
-    private EditText mOldPassWord;
-    private EditText mNewPassWordAgain;
+    private EditText mNewPassWord;//新密码
+    private EditText mOldPassWord;//旧密码
+    private EditText mNewPassWordAgain;//再次确认
     private String newPassword;
     private String oldPassword;
     private String newPasswordAgain;
@@ -53,10 +56,12 @@ public class ChangePasswordActivity extends Activity implements View.OnClickList
                 oldPassword = mOldPassWord.getText().toString();
                 newPassword = mNewPassWord.getText().toString();
                 newPasswordAgain = mNewPassWordAgain.getText().toString();
+                //判断有没有没有输入的
                 if (oldPassword.equals("") || newPassword.equals("") || newPasswordAgain.equals("")) {
                     Toast.makeText(getApplication(), "请完善信息...", Toast.LENGTH_SHORT).show();
                     return;
                 }
+                //验证两次新密码是否一致
                 if (!newPassword.equals(newPasswordAgain)) {
                     Toast.makeText(getApplication(), "新密码两次输入不相同", Toast.LENGTH_SHORT).show();
                     return;
@@ -79,6 +84,9 @@ public class ChangePasswordActivity extends Activity implements View.OnClickList
         }
     }
 
+    /***
+     * 修改密码
+     */
     private void changePassword() {
 
         BmobUser.updateCurrentUserPassword(ChangePasswordActivity.this, oldPassword, newPassword, new UpdateListener() {
@@ -87,6 +95,7 @@ public class ChangePasswordActivity extends Activity implements View.OnClickList
             public void onSuccess() {
                 Toast.makeText(getApplication(), "修改成功，请重新登录", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent();
+                BmobUser.logOut(ChangePasswordActivity.this);
                 intent.setClass(ChangePasswordActivity.this, LoginActivity.class);
                 startActivity(intent);
                 ChangePasswordActivity.this.setResult(RESULT_OK, intent);

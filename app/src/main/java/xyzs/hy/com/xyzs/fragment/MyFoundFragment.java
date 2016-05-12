@@ -32,7 +32,9 @@ import cn.bmob.v3.*;
 import xyzs.hy.com.xyzs.entity.*;
 import cn.bmob.v3.listener.*;
 
-
+/**
+ * 寻物，我的碎片
+ */
 public class MyFoundFragment extends Fragment {
     private ArrayList<Found> mFoundDatas;
     private RecyclerView mRecycleView;
@@ -89,9 +91,11 @@ public class MyFoundFragment extends Fragment {
                 }
             }
 
+            //长按删除
             @Override
             public boolean OnItemLongClick(int position) {
                 final int pos = position;
+                //对话框
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                 builder.setMessage("确定要删除吗？").setTitle("温馨提示").setPositiveButton("确认", new DialogInterface.OnClickListener() {
                     @Override

@@ -32,7 +32,9 @@ import xyzs.hy.com.xyzs.entity.*;
 import cn.bmob.v3.*;
 import cn.bmob.v3.listener.*;
 
-
+/**
+ * 我的失物
+ */
 public class MyLostFragment extends Fragment {
     private ArrayList<Lost> mLostDatas;
     private RecyclerView mRecycleView;

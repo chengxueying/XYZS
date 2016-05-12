@@ -24,6 +24,9 @@ import android.database.*;
 import cn.bmob.v3.datatype.*;
 import cn.bmob.v3.listener.*;
 
+/**
+ * 个人中心
+ */
 public class UserCenterActivity extends Activity implements OnClickListener {
     public static final int TAKE_PHOTO = 1;
     public static final int CROP_PHOTO = 2;
@@ -102,21 +105,37 @@ public class UserCenterActivity extends Activity implements OnClickListener {
                 Toast.makeText(UserCenterActivity.this, "亲，暂时不提供账号修改...", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.person_exit:
-                BmobUser.logOut(this);
-                Intent intent4 = new Intent();
-                intent4.setClass(UserCenterActivity.this, LoginActivity.class);
-                startActivity(intent4);
-                this.setResult(RESULT_OK, intent4);
-                finish();
+                AlertDialog.Builder builder = new AlertDialog.Builder(UserCenterActivity.this);
+                builder.setMessage("亲，确定要注销吗？").setTitle("温馨提示").setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        exit();
+                        dialog.dismiss();
+                    }
+                }).setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                }).create().show();
+
                 break;
             case R.id.change_password:
                 Intent intent2 = new Intent();
                 intent2.setClass(UserCenterActivity.this, ChangePasswordActivity.class);
-                startActivityForResult(intent2,REQUES);
-//                startActivity(intent2);
+                startActivityForResult(intent2, REQUES);
 
                 break;
         }
+    }
+
+    private void exit() {
+        BmobUser.logOut(this);
+        Intent intent4 = new Intent();
+        intent4.setClass(UserCenterActivity.this, LoginActivity.class);
+        startActivity(intent4);
+        this.setResult(RESULT_OK, intent4);
+        finish();
     }
 
     @Override
@@ -171,7 +190,7 @@ public class UserCenterActivity extends Activity implements OnClickListener {
 //
                 break;
             case REQUES:
-                if (resultCode==RESULT_OK){
+                if (resultCode == RESULT_OK) {
                     this.setResult(RESULT_OK, data);
                     finish();
                 }

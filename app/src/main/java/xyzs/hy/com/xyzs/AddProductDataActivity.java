@@ -26,6 +26,9 @@ import android.app.*;
 import cn.bmob.v3.*;
 import xyzs.hy.com.xyzs.entity.*;
 
+/**
+ * 添加商品
+ */
 public class AddProductDataActivity extends Activity implements OnClickListener, TextWatcher {
 
     public static final int TAKE_PHOTO = 1;
@@ -86,44 +89,44 @@ public class AddProductDataActivity extends Activity implements OnClickListener,
         if (imagePath == null) {
             Product product = new Product(title, describe, phone, null, 0, user);
             product.save(this, new SaveListener() {
-					@Override
-					public void onSuccess() {
-						Intent intent = new Intent(getApplication(), ProductActivity.class);
-						startActivity(intent);
-						finish();
-					}
+                @Override
+                public void onSuccess() {
+                    Intent intent = new Intent(getApplication(), ProductActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
 
-					@Override
-					public void onFailure(int p1, String p2) {
-					}
-				});
+                @Override
+                public void onFailure(int p1, String p2) {
+                }
+            });
         } else {
             final BmobFile bmobFile = new BmobFile(new File(imagePath));
             bmobFile.uploadblock(mContext, new UploadFileListener() {
-					@Override
-					public void onSuccess() {
-						String image = bmobFile.getFileUrl(mContext);
-						Product product = new Product(title, describe, phone, image, 1, user);
-						product.save(mContext, new SaveListener() {
-								@Override
-								public void onSuccess() {
-									Toast.makeText(getApplicationContext(), "发布成功！", Toast.LENGTH_SHORT)
-										.show();
-									Intent intent = new Intent(getApplication(), ProductActivity.class);
-									startActivity(intent);
-									finish();
-								}
+                @Override
+                public void onSuccess() {
+                    String image = bmobFile.getFileUrl(mContext);
+                    Product product = new Product(title, describe, phone, image, 1, user);
+                    product.save(mContext, new SaveListener() {
+                        @Override
+                        public void onSuccess() {
+                            Toast.makeText(getApplicationContext(), "发布成功！", Toast.LENGTH_SHORT)
+                                    .show();
+                            Intent intent = new Intent(getApplication(), ProductActivity.class);
+                            startActivity(intent);
+                            finish();
+                        }
 
-								@Override
-								public void onFailure(int p1, String p2) {
-								}
-							});
-					}
+                        @Override
+                        public void onFailure(int p1, String p2) {
+                        }
+                    });
+                }
 
-					@Override
-					public void onFailure(int p1, String p2) {
-					}
-				});
+                @Override
+                public void onFailure(int p1, String p2) {
+                }
+            });
         }
     }
 
@@ -134,7 +137,7 @@ public class AddProductDataActivity extends Activity implements OnClickListener,
             case R.id.add_found_imageview:
                 // 创建File对象，用于存储选择的照片
                 File outputImage = new File(Environment.
-											getExternalStorageDirectory(), "tempImage.jpg");
+                        getExternalStorageDirectory(), "tempImage.jpg");
                 try {
                     if (outputImage.exists()) {
                         outputImage.delete();
@@ -183,8 +186,8 @@ public class AddProductDataActivity extends Activity implements OnClickListener,
                 if (resultCode == RESULT_OK) {
                     try {
                         bitmap = BitmapFactory.decodeStream
-						(getContentResolver()
-						 .openInputStream(imageUri));
+                                (getContentResolver()
+                                        .openInputStream(imageUri));
                         image.setImageBitmap(bitmap); // 将裁剪后的照片显示出
                         Uri uri;
                         if (data.getData() == null) {
@@ -224,8 +227,8 @@ public class AddProductDataActivity extends Activity implements OnClickListener,
     @Override
     public void afterTextChanged(Editable p1) {
         if (titleEdittext.getText().toString() != null &&
-			describeEdittext.getText().toString() != null &&
-			phoneEdittext.getText().toString() != null) {
+                describeEdittext.getText().toString() != null &&
+                phoneEdittext.getText().toString() != null) {
             finish.setEnabled(true);
             finish.setTextColor(Color.BLACK);
         } else {

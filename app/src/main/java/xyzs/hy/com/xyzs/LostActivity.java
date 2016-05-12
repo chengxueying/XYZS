@@ -16,10 +16,12 @@ import xyzs.hy.com.xyzs.fragment.FoundFragment;
 import xyzs.hy.com.xyzs.fragment.LostFragment;
 import xyzs.hy.com.xyzs.fragment.*;
 
-
+/**
+ * 失物主界面
+ */
 public class LostActivity extends Activity implements View.OnClickListener {
-    private LostFragment lostFragment;
-    private MyLostFragment myLostFragment;
+    private LostFragment lostFragment;//全部fragment
+    private MyLostFragment myLostFragment;//我的fragment
 
     private Button toFoundFragment;
     private Button toLostFragment;
@@ -31,9 +33,7 @@ public class LostActivity extends Activity implements View.OnClickListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_lost);
-
         setDefoultFragment();
         initLayout();
     }

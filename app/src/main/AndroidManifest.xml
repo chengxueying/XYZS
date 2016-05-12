@@ -52,7 +52,7 @@
             android:theme="@android:style/Theme.Dialog" />
         <activity android:name=".DetailNoActivity" />
         <activity
-            android:name=".ScoreDialog"
+            android:name=".ScoreActivity"
             android:theme="@android:style/Theme.Dialog" />
         <activity android:name=".PhotoView" />
         <activity android:name=".LiftActivity" />

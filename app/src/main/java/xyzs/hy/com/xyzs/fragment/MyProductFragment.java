@@ -32,7 +32,9 @@ import xyzs.hy.com.xyzs.entity.*;
 import cn.bmob.v3.*;
 import cn.bmob.v3.listener.*;
 
-
+/**
+ * 我的二手市场
+ * */
 public class MyProductFragment extends Fragment {
     private ArrayList<Product> mProductDatas;
     private RecyclerView mRecycleView;

@@ -23,6 +23,9 @@ import android.app.*;
 import cn.bmob.v3.*;
 import xyzs.hy.com.xyzs.entity.*;
 
+/**
+ * 添加失物
+ **/
 public class AddLostDataActivity extends Activity implements OnClickListener, TextWatcher {
     public static final int TAKE_PHOTO = 1;
     public static final int CROP_PHOTO = 2;
@@ -53,14 +56,12 @@ public class AddLostDataActivity extends Activity implements OnClickListener, Te
         titleEdittext = (EditText) findViewById(R.id.add_lost_title);
         phoneEdittext = (EditText) findViewById(R.id.add_lost_phone);
         describeEdittext = (EditText) findViewById(R.id.add_lost_describe);
+        image = (ImageView) findViewById(R.id.add_lost_datasImageView);
+        finish = (Button) findViewById(R.id.add_lost_finish);
+
         titleEdittext.addTextChangedListener(this);
         phoneEdittext.addTextChangedListener(this);
         describeEdittext.addTextChangedListener(this);
-
-        image = (ImageView) findViewById(R.id.add_lost_datasImageView);
-
-        finish = (Button) findViewById(R.id.add_lost_finish);
-
         image.setOnClickListener(this);
         finish.setOnClickListener(this);
     }

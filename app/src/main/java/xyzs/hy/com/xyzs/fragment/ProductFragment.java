@@ -29,7 +29,9 @@ import xyzs.hy.com.xyzs.entity.Found;
 import xyzs.hy.com.xyzs.entity.*;
 import xyzs.hy.com.xyzs.adapter.*;
 
-
+/**
+ * 二手市场
+ */
 public class ProductFragment extends Fragment {
     private ArrayList<Product> mProductDatas;
     private RecyclerView mRecycleView;
@@ -46,8 +48,8 @@ public class ProductFragment extends Fragment {
         mSwipeRefreshLayout = (SwipeRefreshLayout) mFoundView.findViewById(R.id.SwipeRefreshLayout_found);
         mSwipeRefreshLayout.setColorSchemeColors(Color.BLUE);
         mSwipeRefreshLayout.setProgressViewOffset(false, 0, (int) TypedValue
-												  .applyDimension(TypedValue.COMPLEX_UNIT_DIP, 24, getResources()
-																  .getDisplayMetrics()));
+                .applyDimension(TypedValue.COMPLEX_UNIT_DIP, 24, getResources()
+                        .getDisplayMetrics()));
         initData();
         initView();
         return mFoundView;
@@ -65,37 +67,37 @@ public class ProductFragment extends Fragment {
         mRecycleView.setLayoutManager(lin);
         refreshDatas();
         mProductAdapter.setmOnItemClickListener(new ProductAdapter.OnItemClickListener() {
-				@Override
-				public void OnItemClick(int position) {
-					Intent intent;
-					if (mProductDatas.get(position).getStatus() == 0) {
-						intent = new Intent(getActivity(), DetailNoActivity.class);
-						intent.putExtra("name", mProductDatas.get(position).getPublisher().getUsername());
-						intent.putExtra("time", mProductDatas.get(position).getUpdatedAt());
-						intent.putExtra("title", mProductDatas.get(position).getTitle());
-						intent.putExtra("describe", mProductDatas.get(position).getDescribe());
-						intent.putExtra("phone", mProductDatas.get(position).getPhone());
-						intent.putExtra("headURL", mProductDatas.get(position).getPublisher().getHeadSculpture());
-						startActivity(intent);
-					} else {
-						intent = new Intent(getActivity(), DetailActivity.class);
-						intent.putExtra("name", mProductDatas.get(position).getPublisher().getUsername());
-						intent.putExtra("time", mProductDatas.get(position).getUpdatedAt());
-						intent.putExtra("title", mProductDatas.get(position).getTitle());
-						intent.putExtra("describe", mProductDatas.get(position).getDescribe());
-						intent.putExtra("phone", mProductDatas.get(position).getPhone());
-						intent.putExtra("headURL", mProductDatas.get(position).getPublisher().getHeadSculpture());
-						intent.putExtra("url", mProductDatas.get(position).getImageURL());
-						startActivity(intent);
+            @Override
+            public void OnItemClick(int position) {
+                Intent intent;
+                if (mProductDatas.get(position).getStatus() == 0) {
+                    intent = new Intent(getActivity(), DetailNoActivity.class);
+                    intent.putExtra("name", mProductDatas.get(position).getPublisher().getUsername());
+                    intent.putExtra("time", mProductDatas.get(position).getUpdatedAt());
+                    intent.putExtra("title", mProductDatas.get(position).getTitle());
+                    intent.putExtra("describe", mProductDatas.get(position).getDescribe());
+                    intent.putExtra("phone", mProductDatas.get(position).getPhone());
+                    intent.putExtra("headURL", mProductDatas.get(position).getPublisher().getHeadSculpture());
+                    startActivity(intent);
+                } else {
+                    intent = new Intent(getActivity(), DetailActivity.class);
+                    intent.putExtra("name", mProductDatas.get(position).getPublisher().getUsername());
+                    intent.putExtra("time", mProductDatas.get(position).getUpdatedAt());
+                    intent.putExtra("title", mProductDatas.get(position).getTitle());
+                    intent.putExtra("describe", mProductDatas.get(position).getDescribe());
+                    intent.putExtra("phone", mProductDatas.get(position).getPhone());
+                    intent.putExtra("headURL", mProductDatas.get(position).getPublisher().getHeadSculpture());
+                    intent.putExtra("url", mProductDatas.get(position).getImageURL());
+                    startActivity(intent);
 
-					}
-				}
+                }
+            }
 
-				@Override
-				public boolean OnItemLongClick(int position) {
-					return false;
-				}
-			});
+            @Override
+            public boolean OnItemLongClick(int position) {
+                return false;
+            }
+        });
 
     }
 
@@ -106,48 +108,48 @@ public class ProductFragment extends Fragment {
         query.include("publisher");
         query.order("-updatedAt");
         query.findObjects(getActivity(), new FindListener<Product>() {
-				@Override
-				public void onSuccess(List<Product> object) {
-					mProductDatas.addAll(object);
-					initView();
-					refreshDatas();
-				}
+            @Override
+            public void onSuccess(List<Product> object) {
+                mProductDatas.addAll(object);
+                initView();
+                refreshDatas();
+            }
 
-				@Override
-				public void onError(int code, String msg) {
-					Toast.makeText(getActivity(), code + msg, Toast.LENGTH_LONG).show();
-				}
-			});
+            @Override
+            public void onError(int code, String msg) {
+                Toast.makeText(getActivity(), code + msg, Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
     //下拉刷新
     private void refreshDatas() {
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-				@Override
-				public void onRefresh() {
-					new Handler().postDelayed(new Runnable() {
-							@Override
-							public void run() {
-								BmobQuery<Product> query = new BmobQuery<Product>();
-								query.include("publisher");
-								query.order("-updatedAt");
-								query.findObjects(getActivity(), new FindListener<Product>() {
-										@Override
-										public void onSuccess(List<Product> object) {
-											mProductAdapter.addItem(object);
+            @Override
+            public void onRefresh() {
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        BmobQuery<Product> query = new BmobQuery<Product>();
+                        query.include("publisher");
+                        query.order("-updatedAt");
+                        query.findObjects(getActivity(), new FindListener<Product>() {
+                            @Override
+                            public void onSuccess(List<Product> object) {
+                                mProductAdapter.addItem(object);
 
-										}
+                            }
 
-										@Override
-										public void onError(int code, String msg) {
-											Toast.makeText(getActivity(), code + msg, Toast.LENGTH_LONG).show();
-										}
-									});
-								Toast.makeText(getActivity(), "刷新成功", Toast.LENGTH_LONG).show();
-								mSwipeRefreshLayout.setRefreshing(false);
-							}
-						}, 1000);
-				}
-			});
+                            @Override
+                            public void onError(int code, String msg) {
+                                Toast.makeText(getActivity(), code + msg, Toast.LENGTH_LONG).show();
+                            }
+                        });
+                        Toast.makeText(getActivity(), "刷新成功", Toast.LENGTH_LONG).show();
+                        mSwipeRefreshLayout.setRefreshing(false);
+                    }
+                }, 1000);
+            }
+        });
     }
 }

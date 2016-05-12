@@ -11,7 +11,10 @@ import android.widget.LinearLayout;
 
 import xyzs.hy.com.xyzs.common.HttpUtils;
 
-public class ScoreDialog extends Activity implements OnClickListener {
+/**
+ * 成绩查询，对话框
+ */
+public class ScoreActivity extends Activity implements OnClickListener {
 
 
     @Override
@@ -30,7 +33,7 @@ public class ScoreDialog extends Activity implements OnClickListener {
 
     @Override
     public void onClick(View v) {
-        Intent intent = new Intent(ScoreDialog.this, QueryActivity.class);
+        Intent intent = new Intent(ScoreActivity.this, QueryActivity.class);
         switch (v.getId()) {
 
             case R.id.score_linearlayout:

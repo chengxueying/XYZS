@@ -26,6 +26,9 @@ import android.app.*;
 import cn.bmob.v3.*;
 import xyzs.hy.com.xyzs.entity.*;
 
+/**
+ * 添加失物页面
+ */
 public class AddFoundDataActivity extends Activity implements OnClickListener, TextWatcher {
 
     public static final int TAKE_PHOTO = 1;
@@ -33,9 +36,9 @@ public class AddFoundDataActivity extends Activity implements OnClickListener, T
     private String imagePath = null;
     private Bitmap bitmap;
 
-    private EditText titleEdittext;
-    private EditText phoneEdittext;
-    private EditText describeEdittext;
+    private EditText titleEdittext;//标题
+    private EditText phoneEdittext;//手机
+    private EditText describeEdittext;//内容
 
     private Uri imageUri;
 
@@ -48,7 +51,6 @@ public class AddFoundDataActivity extends Activity implements OnClickListener, T
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //	supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.add_found_datas);
         mContext = AddFoundDataActivity.this;
         initLayout();
@@ -163,9 +165,11 @@ public class AddFoundDataActivity extends Activity implements OnClickListener, T
         }
     }
 
+    //结果处理
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
+            //裁剪图片
             case TAKE_PHOTO:
                 if (resultCode == RESULT_OK) {
                     if (data != null) {

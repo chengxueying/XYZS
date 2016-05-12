@@ -14,6 +14,9 @@ import xyzs.hy.com.xyzs.entity.User;
 
 import android.content.*;
 
+/**
+ * 登录页
+ */
 public class LoginActivity extends Activity implements OnClickListener {
     private Button login;
     private Button register;
@@ -30,6 +33,9 @@ public class LoginActivity extends Activity implements OnClickListener {
         initLayout();
     }
 
+    /**
+     * 初始化数据
+     */
     private void initLayout() {
         login = (Button) findViewById(R.id.btn_login);
         register = (Button) findViewById(R.id.btn_register);

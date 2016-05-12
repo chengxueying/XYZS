@@ -5,6 +5,7 @@ import java.util.regex.Pattern;
 
 /**
  * 用于验证手机号是否合法
+ * 开通13全号段，14去除5和7,15去除4,17全号段，18全号段
  */
 public class IsPhone {
 

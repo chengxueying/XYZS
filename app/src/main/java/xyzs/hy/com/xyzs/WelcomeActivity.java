@@ -11,7 +11,9 @@ import android.view.WindowManager;
 import cn.bmob.v3.*;
 import xyzs.hy.com.xyzs.entity.User;
 
-
+/**
+ * 欢迎页
+ */
 public class WelcomeActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,13 +22,14 @@ public class WelcomeActivity extends Activity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_welcome);
-
+        //bmob唯一标识
         Bmob.initialize(this, "f1e40b53a6e2d8c021db58e4e0b8fa43");
 
         new Handler().postDelayed(new Runnable() {
 
             @Override
             public void run() {
+                //自动登录
                 User user = BmobUser.getCurrentUser(WelcomeActivity.this, User.class);
                 if (user != null) {
                     Intent intent = new Intent(WelcomeActivity.this,

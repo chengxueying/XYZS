@@ -1,6 +1,7 @@
 package xyzs.hy.com.xyzs;
 
 import android.app.*;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.*;
 import android.view.inputmethod.InputMethodManager;
@@ -12,22 +13,26 @@ import cn.bmob.v3.*;
 import xyzs.hy.com.xyzs.entity.*;
 import cn.bmob.v3.listener.*;
 
+/***
+ * 修改用户名
+ */
 
 public class ChangeNameActivity extends Activity implements View.OnClickListener {
-    private EditText mNewName;
-    private LinearLayout mChangeName;
+    private EditText mNewName;//用户名
+    private LinearLayout mChangeName;//确认修改
     private String name;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        this.requestWindowFeature(Window.FEATURE_NO_TITLE);//设置无title
         setContentView(R.layout.activity_changename);
         mNewName = (EditText) findViewById(R.id.new_person_name);
         mChangeName = (LinearLayout) findViewById(R.id.changename_linearlayout);
         mChangeName.setOnClickListener(this);
     }
 
+    //结果返回
     private void sendIntent(String name) {
         Intent mIntent = new Intent();
         mIntent.putExtra("name", name);
@@ -49,6 +54,28 @@ public class ChangeNameActivity extends Activity implements View.OnClickListener
             Toast.makeText(getApplication(), "请输入新的用户名", Toast.LENGTH_SHORT).show();
             return;
         }
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(ChangeNameActivity.this);
+        builder.setMessage("您确定修改用户名吗？").setTitle("温馨提示").setPositiveButton("确定", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                changeName();
+                dialog.dismiss();
+            }
+        }).setNegativeButton("取消", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        }).create().show();
+
+
+    }
+
+    /**
+     * 修改名字
+     */
+    private void changeName() {
         User user = new User();
         user.setUsername(name);
         BmobUser bmobUser = BmobUser.getCurrentUser(ChangeNameActivity.this);
@@ -72,4 +99,5 @@ public class ChangeNameActivity extends Activity implements View.OnClickListener
 
 
     }
+
 }

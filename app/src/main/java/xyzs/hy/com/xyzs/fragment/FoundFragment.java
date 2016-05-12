@@ -27,18 +27,20 @@ import xyzs.hy.com.xyzs.R;
 import xyzs.hy.com.xyzs.adapter.FoundAdapter;
 import xyzs.hy.com.xyzs.entity.Found;
 
-
+/**
+ * 寻物全部碎片
+ */
 public class FoundFragment extends Fragment {
-    private ArrayList<Found> mFoundDatas;
-    private RecyclerView mRecycleView;
-    private SwipeRefreshLayout mSwipeRefreshLayout;
-    private FoundAdapter mFoundAdapter;
+    private ArrayList<Found> mFoundDatas;//数据源
+    private RecyclerView mRecycleView;//列表控件
+    private SwipeRefreshLayout mSwipeRefreshLayout;//下拉刷新控件
+    private FoundAdapter mFoundAdapter;//适配器
     private View mFoundView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
+        //引入布局，固定用法，详情百度fragment用法
         mFoundView = inflater.inflate(R.layout.fragment_found, container, false);
         //设置SwipeRefreshLayout
         mSwipeRefreshLayout = (SwipeRefreshLayout) mFoundView.findViewById(R.id.SwipeRefreshLayout_found);
@@ -59,6 +61,7 @@ public class FoundFragment extends Fragment {
         mRecycleView = (RecyclerView) mFoundView.findViewById(R.id.recyclerview_found);
         mFoundAdapter = new FoundAdapter(getActivity(), mFoundDatas);
         mRecycleView.setAdapter(mFoundAdapter);
+        //设置布局管理
         LinearLayoutManager lin = new LinearLayoutManager(getActivity());
         mRecycleView.setLayoutManager(lin);
         refreshDatas();
@@ -66,6 +69,7 @@ public class FoundFragment extends Fragment {
             @Override
             public void OnItemClick(int position) {
                 Intent intent;
+                //根据标识，跳转不同详情页
                 if (mFoundDatas.get(position).getStatus() == 0) {
                     intent = new Intent(getActivity(), DetailNoActivity.class);
                     intent.putExtra("name", mFoundDatas.get(position).getPublisher().getUsername());
@@ -97,7 +101,9 @@ public class FoundFragment extends Fragment {
 
     }
 
-    //初始化数据
+    /**
+     * 初始化数据
+     */
     private void initData() {
         mFoundDatas = new ArrayList<Found>();
         BmobQuery<Found> query = new BmobQuery<Found>();
@@ -131,6 +137,7 @@ public class FoundFragment extends Fragment {
                         query.findObjects(getActivity(), new FindListener<Found>() {
                             @Override
                             public void onSuccess(List<Found> object) {
+                                //添加新的数据
                                 mFoundAdapter.addItem(object);
 
                             }

@@ -14,13 +14,16 @@ import xyzs.hy.com.xyzs.fragment.FoundFragment;
 import xyzs.hy.com.xyzs.fragment.LostFragment;
 import xyzs.hy.com.xyzs.fragment.*;
 
+/**
+ * 寻物主界面
+ **/
 public class FoundActivity extends Activity implements OnClickListener {
-	private MyFoundFragment myFoundFragment;
-    private FoundFragment foundFragment;
+    private MyFoundFragment myFoundFragment;//我的fragment
+    private FoundFragment foundFragment;//全部fragment
 
     private Button toFoundFragment;
     private Button toLostFragment;
-    private Button addDates;
+    private Button addDates;//添加
     private boolean isLost = true;
 
     private FragmentManager FragmentManager;
@@ -28,14 +31,14 @@ public class FoundActivity extends Activity implements OnClickListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_found);
-
         setDefoultFragment();
         initLayout();
     }
 
-    //初始化控件
+    /**
+     * 初始化界面
+     */
     private void initLayout() {
         toLostFragment = (Button) findViewById(R.id.main_my);
         toFoundFragment = (Button) findViewById(R.id.main_found);
@@ -54,6 +57,7 @@ public class FoundActivity extends Activity implements OnClickListener {
 
         switch (v.getId()) {
             case R.id.main_found:
+                //修改全部与我的按钮颜色及字体颜色
                 toFoundFragment.setBackgroundResource(R.color.white);
                 toLostFragment.setBackgroundResource(R.drawable.all_right_bg);
                 toFoundFragment.setTextColor(Color.rgb(102, 204, 255));
@@ -103,6 +107,9 @@ public class FoundActivity extends Activity implements OnClickListener {
         }
     }
 
+    /**
+     * 添加fragment
+     */
     private void setDefoultFragment() {
         FragmentManager = getFragmentManager();
         FragmentTransaction Transaction = FragmentManager.beginTransaction();

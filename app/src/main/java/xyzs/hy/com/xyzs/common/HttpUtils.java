@@ -1,7 +1,7 @@
 package xyzs.hy.com.xyzs.common;
 
 /**
- * Created by Administrator on 2016/5/11.
+ * 存放的跳转网址
  */
 public class HttpUtils {
     //美团
@@ -24,6 +24,18 @@ public class HttpUtils {
     public static String FOUR_SCORE = "http://cet.99sushe.com/";
     //成绩查询
     public static String SCORE = "http://jwglxt.qau.edu.cn/";
+    //青岛农业大学
+    public static String SCHOOL_PHOTO = "http://file.bmob.cn/M03/67/3F/oYYBAFczS2mAJM1uAAGbqOqUt-g644.png";
+    public static String SCHOOL = "http://www.qau.edu.cn/info.jsp?navID=75";
+    //支援农村教育
+    public static String VILLAGE_PHOTO = "http://news.qau.edu.cn/upload/2016/05/16050417121823.jpg";
+    public static String VILLAGE = "http://news.qau.edu.cn/n35214c21.aspx";
+    //第十一届大学生科技文化艺术节
+    public static String CULTURE_PHOTO = "http://file.bmob.cn/M03/67/3F/oYYBAFczS5iANZ8JAAE-Z5Spzhg368.jpg";
+    public static String CULTURE = "http://news.qau.edu.cn/n35283c21.aspx";
+    //全国植物逆境生物学学术研讨会
+    public static String DISCUSS_PHOTO = "http://file.bmob.cn/M03/67/3F/oYYBAFczS4aAU-pPAAKAh1DGmi4659.jpg";
+    public static String DISCUSS = "http://news.qau.edu.cn/n35285c1.aspx";
 
 
 }

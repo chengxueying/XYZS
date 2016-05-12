@@ -16,7 +16,9 @@ import xyzs.hy.com.xyzs.fragment.FoundFragment;
 import xyzs.hy.com.xyzs.fragment.LostFragment;
 import xyzs.hy.com.xyzs.fragment.*;
 
-
+/**
+ * 二手市场主界面
+ */
 public class ProductActivity extends Activity implements View.OnClickListener {
     private ProductFragment productFragment;
     private MyProductFragment myProductFragment;
@@ -24,7 +26,6 @@ public class ProductActivity extends Activity implements View.OnClickListener {
     private Button toFoundFragment;
     private Button toLostFragment;
     private Button addDates;
-	private Button btn;
     private boolean isLost = true;
 
     private FragmentManager fragmentManager;
@@ -35,7 +36,7 @@ public class ProductActivity extends Activity implements View.OnClickListener {
         setContentView(R.layout.activity_product);
 
         setDefoultFragment();
-		
+
         initLayout();
     }
 
