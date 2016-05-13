@@ -32,16 +32,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-		<activity android:name=".ProductActivity"></activity>
-		<activity android:name=".AddProductDataActivity"></activity>
-        <activity android:name=".MainActivity"></activity>
-        <activity android:name=".UserCenterActivity"></activity>
-        <activity android:name=".RegisterActivity"></activity>
-        <activity android:name=".LoginActivity"></activity>
-        <activity android:name=".AddLostDataActivity"></activity>
-        <activity android:name=".AddFoundDataActivity"></activity>
-        <activity android:name=".LostActivity"></activity>
-        <activity android:name=".FoundActivity"></activity>
+        <activity android:name=".ProductActivity"/>
+        <activity android:name=".AddProductDataActivity"/>
+        <activity android:name=".MainActivity"/>
+        <activity android:name=".UserCenterActivity"/>
+        <activity android:name=".RegisterActivity"/>
+        <activity android:name=".LoginActivity"/>
+        <activity android:name=".AddLostDataActivity"/>
+        <activity android:name=".AddFoundDataActivity"/>
+        <activity android:name=".LostActivity"/>
+        <activity android:name=".FoundActivity"/>
         <activity android:name=".QueryActivity" />
         <activity android:name=".DetailActivity" />
         <activity
@@ -54,7 +54,9 @@
         <activity
             android:name=".ScoreActivity"
             android:theme="@android:style/Theme.Dialog" />
-        <activity android:name=".PhotoView" />
+        <activity
+            android:name=".PhotoView"
+            android:theme="@android:style/Theme.Dialog" />
         <activity android:name=".LiftActivity" />
     </application>
 
