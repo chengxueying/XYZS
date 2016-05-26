@@ -168,25 +168,27 @@ public class MyFoundFragment extends Fragment {
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        User user = BmobUser.getCurrentUser(getActivity(), User.class);
-                        BmobQuery<Found> query = new BmobQuery<Found>();
-                        query.addWhereEqualTo("publisher", user);
-                        query.order("-updatedAt");
-                        query.include("publisher");
-                        query.findObjects(getActivity(), new FindListener<Found>() {
-                            @Override
-                            public void onSuccess(List<Found> object) {
-                                mFoundAdapter.addItem(object);
+                        if (getActivity()!=null) {
+                            User user = BmobUser.getCurrentUser(getActivity(), User.class);
+                            BmobQuery<Found> query = new BmobQuery<Found>();
+                            query.addWhereEqualTo("publisher", user);
+                            query.order("-updatedAt");
+                            query.include("publisher");
+                            query.findObjects(getActivity(), new FindListener<Found>() {
+                                @Override
+                                public void onSuccess(List<Found> object) {
+                                    mFoundAdapter.addItem(object);
 
-                            }
+                                }
 
-                            @Override
-                            public void onError(int code, String msg) {
-                                Toast.makeText(getActivity(), code + msg, Toast.LENGTH_LONG).show();
-                            }
-                        });
-                        Toast.makeText(getActivity(), "刷新成功", Toast.LENGTH_LONG).show();
-                        mSwipeRefreshLayout.setRefreshing(false);
+                                @Override
+                                public void onError(int code, String msg) {
+                                    Toast.makeText(getActivity(), code + msg, Toast.LENGTH_LONG).show();
+                                }
+                            });
+                            Toast.makeText(getActivity(), "刷新成功", Toast.LENGTH_LONG).show();
+                            mSwipeRefreshLayout.setRefreshing(false);
+                        }
                     }
                 }, 1000);
             }

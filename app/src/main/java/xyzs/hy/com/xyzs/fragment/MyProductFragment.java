@@ -167,12 +167,13 @@ public class MyProductFragment extends Fragment {
 					new Handler().postDelayed(new Runnable() {
 							@Override
 							public void run() {
-								User user = BmobUser.getCurrentUser(getActivity(), User.class);
-								BmobQuery<Product> query = new BmobQuery<Product>();
-								query.addWhereEqualTo("publisher", user);
-								query.order("-updatedAt");
-								query.include("publisher");
-								query.findObjects(getActivity(), new FindListener<Product>() {
+								if(getActivity()!=null) {
+									User user = BmobUser.getCurrentUser(getActivity(), User.class);
+									BmobQuery<Product> query = new BmobQuery<Product>();
+									query.addWhereEqualTo("publisher", user);
+									query.order("-updatedAt");
+									query.include("publisher");
+									query.findObjects(getActivity(), new FindListener<Product>() {
 										@Override
 										public void onSuccess(List<Product> object) {
 											mProductAdapter.addItem(object);
@@ -183,8 +184,9 @@ public class MyProductFragment extends Fragment {
 											Toast.makeText(getActivity(), code + msg, Toast.LENGTH_LONG).show();
 										}
 									});
-								Toast.makeText(getActivity(), "刷新成功", Toast.LENGTH_LONG).show();
-								mSwipeRefreshLayout.setRefreshing(false);
+									Toast.makeText(getActivity(), "刷新成功", Toast.LENGTH_LONG).show();
+									mSwipeRefreshLayout.setRefreshing(false);
+								}
 							}
 						}, 1000);
 				}

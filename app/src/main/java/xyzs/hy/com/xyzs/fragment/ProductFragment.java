@@ -133,20 +133,23 @@ public class ProductFragment extends Fragment {
                         BmobQuery<Product> query = new BmobQuery<Product>();
                         query.include("publisher");
                         query.order("-updatedAt");
-                        query.findObjects(getActivity(), new FindListener<Product>() {
-                            @Override
-                            public void onSuccess(List<Product> object) {
-                                mProductAdapter.addItem(object);
+                        if (getActivity() != null) {
+                            query.findObjects(getActivity(), new FindListener<Product>() {
+                                @Override
+                                public void onSuccess(List<Product> object) {
+                                    mProductAdapter.addItem(object);
 
-                            }
+                                }
 
-                            @Override
-                            public void onError(int code, String msg) {
-                                Toast.makeText(getActivity(), code + msg, Toast.LENGTH_LONG).show();
-                            }
-                        });
+                                @Override
+                                public void onError(int code, String msg) {
+                                    Toast.makeText(getActivity(), code + msg, Toast.LENGTH_LONG).show();
+                                }
+                            });
+
                         Toast.makeText(getActivity(), "刷新成功", Toast.LENGTH_LONG).show();
                         mSwipeRefreshLayout.setRefreshing(false);
+                        }
                     }
                 }, 1000);
             }

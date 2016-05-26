@@ -134,21 +134,23 @@ public class FoundFragment extends Fragment {
                         BmobQuery<Found> query = new BmobQuery<Found>();
                         query.include("publisher");
                         query.order("-updatedAt");
-                        query.findObjects(getActivity(), new FindListener<Found>() {
-                            @Override
-                            public void onSuccess(List<Found> object) {
-                                //添加新的数据
-                                mFoundAdapter.addItem(object);
+                        if (getActivity() != null) {
+                            query.findObjects(getActivity(), new FindListener<Found>() {
+                                @Override
+                                public void onSuccess(List<Found> object) {
+                                    //添加新的数据
+                                    mFoundAdapter.addItem(object);
 
-                            }
+                                }
 
-                            @Override
-                            public void onError(int code, String msg) {
-                                Toast.makeText(getActivity(), code + msg, Toast.LENGTH_LONG).show();
-                            }
-                        });
-                        Toast.makeText(getActivity(), "刷新成功", Toast.LENGTH_LONG).show();
-                        mSwipeRefreshLayout.setRefreshing(false);
+                                @Override
+                                public void onError(int code, String msg) {
+                                    Toast.makeText(getActivity(), code + msg, Toast.LENGTH_LONG).show();
+                                }
+                            });
+                            Toast.makeText(getActivity(), "刷新成功", Toast.LENGTH_LONG).show();
+                            mSwipeRefreshLayout.setRefreshing(false);
+                        }
                     }
                 }, 1000);
             }
