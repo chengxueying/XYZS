@@ -54,6 +54,7 @@ public class AddFoundDataActivity extends Activity implements OnClickListener, T
         setContentView(R.layout.add_found_datas);
         mContext = AddFoundDataActivity.this;
         initLayout();
+
     }
 
     //初始化控件

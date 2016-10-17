@@ -7,6 +7,8 @@ import android.widget.*;
 import android.view.View.*;
 import android.view.*;
 
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import cn.bmob.v3.*;
 import cn.bmob.v3.listener.*;
 import cn.bmob.v3.exception.*;
@@ -30,6 +32,7 @@ public class LoginActivity extends Activity implements OnClickListener {
         super.onCreate(savedInstanceState);
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_login);
+        ButterKnife.bind(LoginActivity.this);
         initLayout();
     }
 
@@ -39,8 +42,8 @@ public class LoginActivity extends Activity implements OnClickListener {
     private void initLayout() {
         login = (Button) findViewById(R.id.btn_login);
         register = (Button) findViewById(R.id.btn_register);
-        login.setOnClickListener(this);
-        register.setOnClickListener(this);
+//        login.setOnClickListener(this);
+//        register.setOnClickListener(this);
 
         editUsername = (EditText) findViewById(R.id.edit_username);
         editPassword = (EditText) findViewById(R.id.edit_password);
@@ -65,7 +68,7 @@ public class LoginActivity extends Activity implements OnClickListener {
         });
     }
 
-    @Override
+    @OnClick({R.id.btn_login, R.id.btn_register})
     public void onClick(View p1) {
         switch (p1.getId()) {
             case R.id.btn_login:
