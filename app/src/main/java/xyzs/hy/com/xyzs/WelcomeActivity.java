@@ -23,7 +23,7 @@ public class WelcomeActivity extends Activity {
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_welcome);
         //bmob唯一标识
-        Bmob.initialize(this, "f1e40b53a6e2d8c021db58e4e0b8fa43");
+        Bmob.initialize(this, "dc329fe9b06f7f54dcbb3fa626cc5eb6");
 
         new Handler().postDelayed(new Runnable() {
 

@@ -26,7 +26,7 @@ public class HttpUtils {
     public static String SCORE = "http://jwglxt.qau.edu.cn/";
     //青岛农业大学
     public static String SCHOOL_PHOTO = "http://file.bmob.cn/M03/67/3F/oYYBAFczS2mAJM1uAAGbqOqUt-g644.png";
-    public static String SCHOOL = "http://www.qau.edu.cn/info.jsp?navID=75";
+    public static String SCHOOL = "http://www.qau.edu.cn/staticpage/zhuye/ndzy/channel/xuexiaogaikuang.html";
     //支援农村教育
     public static String VILLAGE_PHOTO = "http://news.qau.edu.cn/upload/2016/05/16050417121823.jpg";
     public static String VILLAGE = "http://news.qau.edu.cn/n35214c21.aspx";

@@ -1,72 +1,105 @@
 package xyzs.hy.com.xyzs;
 
-import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
-import android.view.Window;
-import android.widget.*;
-import android.view.View.*;
-import android.view.*;
+import android.os.Handler;
+import android.text.TextUtils;
+import android.util.Log;
+import android.view.KeyEvent;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.inputmethod.EditorInfo;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
 
-import cn.bmob.v3.*;
-import cn.bmob.v3.listener.*;
-import cn.bmob.v3.exception.*;
+import java.util.Timer;
+import java.util.TimerTask;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import cn.bmob.v3.BmobSMS;
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.RequestSMSCodeListener;
+import cn.bmob.v3.listener.SaveListener;
 import xyzs.hy.com.xyzs.common.IsPhone;
 import xyzs.hy.com.xyzs.entity.User;
-
-import android.content.*;
-
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import xyzs.hy.com.xyzs.ui.activity.BaseActivity;
 
 /**
  * 注册页
  */
-public class RegisterActivity extends Activity implements OnClickListener {
-    private Button btnCaptcha;
-    private Button register;
-    private EditText editUsername;
-    private EditText editCaptcha;
-    private EditText editPassword;
-    private String phone;
-    private String captchaCode;
-    private String password;
+public class RegisterActivity extends BaseActivity implements TextView.OnEditorActionListener {
+    @BindView(R.id.user_phone_edit)
+    EditText editUserPhone;
+    @BindView(R.id.verification_code_edit)
+    EditText editVerification;
+    @BindView(R.id.btn_verification)
+    Button btnVerification;
+    @BindView(R.id.pwd_edit)
+    EditText editPwd;
+    @BindView(R.id.btn_enroll)
+    Button btnEnroll;
+    private String userPhone;
+    private String verificationCode;
+    private String userPwd;
     private String imagePath = null;
+    private Timer timeTimer;
+    private final Object timerSync = new Object();
+    private volatile int time = 60000;
+    private double lastCurrentTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.activity_register);
-
         initLayout();
+    }
+
+    @Override
+    public int getLayoutResId() {
+        return R.layout.activity_register;
     }
 
     /**
      * 初始化视图
      */
     private void initLayout() {
-        btnCaptcha = (Button) findViewById(R.id.btn_captcha);
-        register = (Button) findViewById(R.id.btn_register);
-        btnCaptcha.setOnClickListener(this);
-        register.setOnClickListener(this);
+        editUserPhone.setOnEditorActionListener(this);
+        editVerification.setOnEditorActionListener(this);
+        editPwd.setOnEditorActionListener(this);
 
-        editUsername = (EditText) findViewById(R.id.edit_username);
-        editCaptcha = (EditText) findViewById(R.id.edit_captcha);
-        editPassword = (EditText) findViewById(R.id.edit_password);
     }
 
     //注册
-    private void register() {
+    private void getRegister() {
+        userPhone = editUserPhone.getText().toString();
+        verificationCode = editVerification.getText().toString();
+        userPwd = editPwd.getText().toString();
+        if (TextUtils.isEmpty(userPhone)) {
+            needToast(this, "手机号码不能为空");
+            return;
+        }
+        if (TextUtils.isEmpty(verificationCode)) {
+            needToast(this, "验证码不能为空");
+            return;
+        }
+        if (TextUtils.isEmpty(userPwd)) {
+            needToast(this, "密码不能为空");
+            return;
+        }
+        if (!IsPhone.isPhone(userPhone)) {
+            needToast(this, "手机号码不合法");
+            return;
+        }
         User user = new User();
-        user.setMobilePhoneNumber(phone);
-        user.setPassword(password);
+        user.setMobilePhoneNumber(userPhone);
+        user.setPassword(userPwd);
         user.setHeadSculpture("http://file.bmob.cn/M03/65/48/oYYBAFcyPeCAOKH5AAASPUfL_KA350.jpg");//默认头像
-        user.signOrLogin(RegisterActivity.this, captchaCode, new SaveListener() {
+        user.signOrLogin(RegisterActivity.this, verificationCode, new SaveListener() {
             @Override
             public void onSuccess() {
-                Toast.makeText(getApplicationContext(), "注册成功！", Toast.LENGTH_SHORT)
-                        .show();
                 Intent intent = new Intent();
                 intent.setClass(RegisterActivity.this, LoginActivity.class);
                 startActivity(intent);
@@ -75,57 +108,123 @@ public class RegisterActivity extends Activity implements OnClickListener {
 
             @Override
             public void onFailure(int p1, String p2) {
-                Toast.makeText(getApplicationContext(), "注册失败！", Toast.LENGTH_SHORT)
-                        .show();
+                needToast(RegisterActivity.this, p2);
             }
         });
     }
 
     //验证码
     private void getCaptcha() {
-        if (!IsPhone.isPhone(phone)) {
-            Toast.makeText(getApplicationContext(), "请输入正确的手机号", Toast.LENGTH_SHORT)
-                    .show();
+        userPhone = editUserPhone.getText().toString();
+        if (TextUtils.isEmpty(userPhone)) {
+            needToast(this, "手机号码不能为空");
             return;
         }
-        BmobSMS.requestSMSCode(this, phone, "XYZS", new RequestSMSCodeListener() {
+        if (!IsPhone.isPhone(userPhone)) {
+            needToast(this, "手机号码不合法");
+            return;
+        }
+        BmobSMS.requestSMSCode(this, userPhone, "XYZS", new RequestSMSCodeListener() {
             @Override
             public void done(Integer p1, BmobException p2) {
                 if (p2 == null) {
-                    Toast.makeText(getApplicationContext(), "短信已发送，注意查收！！", Toast.LENGTH_SHORT)
-                            .show();
+                    destroyTimer();
+                    initTimeText(1, 0);
+                    createTimer();
+                    needToast(RegisterActivity.this, "短信已发送，注意查收");
                 } else {
-                    Toast.makeText(getApplicationContext(), "发送失败，请重试！", Toast.LENGTH_SHORT)
-                            .show();
+                    destroyTimer();
+                    needToast(RegisterActivity.this, p2.getMessage().toString());
                 }
             }
         });
     }
 
-
-    @Override
-    public void onClick(View p1) {
-        phone = editUsername.getText().toString();
-        captchaCode = editCaptcha.getText().toString();
-        password = editPassword.getText().toString();
-        switch (p1.getId()) {
-            case R.id.btn_captcha:
-                if (phone.equals("")) {
-                    Toast.makeText(getApplicationContext(), "手机号码不能为空！", Toast.LENGTH_SHORT)
-                            .show();
-                } else {
-                    getCaptcha();
-                }
+    @OnClick({R.id.btn_verification, R.id.btn_enroll})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.btn_verification:
+                getCaptcha();
                 break;
-            case R.id.btn_register:
-                if (phone.equals("") || password.equals("") && captchaCode.equals("")) {
-                    Toast.makeText(getApplicationContext(), "请完善密码和手机号！", Toast.LENGTH_SHORT)
-                            .show();
-                } else {
-                    register();
-                }
+            case R.id.btn_enroll:
+                getRegister();
                 break;
         }
     }
 
+    private void initTimeText(int minutes, int seconds) {
+        time = 60000;
+        lastCurrentTime = System.currentTimeMillis();
+        btnVerification.setText(String.format("%1$d:%2$02d", minutes, seconds));
+        btnVerification.setClickable(false);
+    }
+
+    private void destroyTimer() {
+        try {
+            synchronized (timerSync) {
+                if (timeTimer != null) {
+                    timeTimer.cancel();
+                    timeTimer = null;
+                }
+            }
+        } catch (Exception e) {
+            Log.e("TAG", e.toString());
+        }
+    }
+
+    private void createTimer() {
+        if (timeTimer != null) {
+
+            return;
+        }
+        timeTimer = new Timer();
+        timeTimer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                double currentTime = System.currentTimeMillis();
+                double diff = currentTime - lastCurrentTime;
+                time -= diff;
+                lastCurrentTime = currentTime;
+                new Handler(getApplicationContext().getMainLooper()).post(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (time > 0) {
+                            int minutes = time / 1000 / 60;
+                            int seconds = time / 1000 - minutes * 60;
+                            btnVerification.setText(String.format("%1$d:%2$02d", minutes, seconds));
+                        } else {
+                            btnVerification.setText("获取验证码");
+                            btnVerification.setClickable(true);
+                            destroyTimer();
+                        }
+                    }
+                });
+            }
+        }, 0, 1000);
+    }
+
+    @Override
+    public boolean onEditorAction(TextView v, int i, KeyEvent event) {
+        switch (v.getId()) {
+            case R.id.user_phone_edit:
+                if (i == EditorInfo.IME_ACTION_NEXT) {
+                    editVerification.requestFocus();
+                    return true;
+                }
+                break;
+            case R.id.verification_code_edit:
+                if (i == EditorInfo.IME_ACTION_NEXT) {
+                    editPwd.requestFocus();
+                    return true;
+                }
+                break;
+            case R.id.pwd_edit:
+                if (i == EditorInfo.IME_ACTION_DONE) {
+                    getRegister();
+                    return true;
+                }
+                break;
+        }
+        return false;
+    }
 }
